@@ -46,6 +46,9 @@ INSTALLED_APPS = [
 
     'core',
     'games',
+    'users',
+
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -56,9 +59,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'gamedi.urls'
+
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES_DIR = BASE_DIR / 'templates'
 
