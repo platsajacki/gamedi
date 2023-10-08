@@ -18,6 +18,15 @@ class Gener(NameString, Discription, models.Model):
 
 class Game(NameString, Discription, models.Model):
     """Модель для хранения информации о игре."""
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        help_text=(
+            'Укажите адрес для страницы игры. Используйте только '
+            'латиницу, цифры, дефисы и знаки подчёркивания'
+        ),
+        verbose_name='Адрес игры (slug)'
+    )
     genre = models.ForeignKey(
         Gener,
         on_delete=models.PROTECT,
