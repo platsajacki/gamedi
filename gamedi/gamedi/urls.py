@@ -3,8 +3,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from users.views import UserCreateView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('django.contrib.auth.urls')),
+    path(
+        'registration/',
+        UserCreateView.as_view(),
+        name='registration'
+    ),
     path('', include('games.urls', namespace='games')),
 ]
 

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="">
+    <div class="">
+      <div class="">
+        Вы вышли из системы!
+      </div>
+      <div class="">
+        <p><a class="" href="{% url 'login' %}">Войти снова</a></p>
+        <p><a class="" href="{% url 'games:home' %}">На главную</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
