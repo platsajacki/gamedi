@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404
-from django.db. models import QuerySet
 from django.views import generic
 
 from .models import Game
