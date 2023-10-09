@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Редактирование профиля {{ object.username }}
+{% endblock %}
+
+{% block content %}
+  <h2>Редактирование профиля {{ user.username }}:</h2>
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="" type="submit">Обновить</button>
+  </form>
+{% endblock %}

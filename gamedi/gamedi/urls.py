@@ -14,6 +14,7 @@ urlpatterns = [
         name='registration'
     ),
     path('', include('games.urls', namespace='games')),
+    path('profile/', include('users.urls', namespace='users')),
 ]
 
 if settings.DEBUG:
