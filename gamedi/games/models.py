@@ -4,10 +4,10 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from .utils import get_file_path
-from core.models import NameString, Discription
+from core.models import NameString, Discription, SlugModel
 
 
-class Gener(NameString, Discription, models.Model):
+class Gener(NameString, Discription, SlugModel, models.Model):
     """Модель для хранения информации о жанре игр."""
     ...
 
@@ -16,17 +16,8 @@ class Gener(NameString, Discription, models.Model):
         verbose_name_plural = 'Жанры'
 
 
-class Game(NameString, Discription, models.Model):
+class Game(NameString, Discription, SlugModel, models.Model):
     """Модель для хранения информации о игре."""
-    slug = models.SlugField(
-        max_length=100,
-        unique=True,
-        help_text=(
-            'Укажите адрес для страницы игры. Используйте только '
-            'латиницу, цифры, дефисы и знаки подчёркивания'
-        ),
-        verbose_name='Адрес игры (slug)'
-    )
     genre = models.ForeignKey(
         Gener,
         on_delete=models.PROTECT,
