@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Главная страница
+{% endblock %}
+
+{% block content %}
+  {% for game in game_list %}
+    {% include "includes/game_card.html" %}
+  {% endfor %}
+{% endblock %}

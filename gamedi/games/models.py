@@ -4,10 +4,10 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from .utils import get_file_path
-from core.models import NameString, Discription
+from core.models import NameString, Discription, SlugModel
 
 
-class Gener(NameString, Discription, models.Model):
+class Gener(NameString, Discription, SlugModel, models.Model):
     """Модель для хранения информации о жанре игр."""
     ...
 
@@ -16,7 +16,7 @@ class Gener(NameString, Discription, models.Model):
         verbose_name_plural = 'Жанры'
 
 
-class Game(NameString, Discription, models.Model):
+class Game(NameString, Discription, SlugModel, models.Model):
     """Модель для хранения информации о игре."""
     genre = models.ForeignKey(
         Gener,

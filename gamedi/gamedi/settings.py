@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'core',
     'games',
+    'orders',
     'users',
 
     'debug_toolbar',
@@ -63,9 +64,15 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 ROOT_URLCONF = 'gamedi.urls'
 
 AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = 'games:home'
 
 TEMPLATES_DIR = BASE_DIR / 'templates'
 

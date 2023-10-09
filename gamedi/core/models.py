@@ -26,3 +26,19 @@ class Discription(models.Model):
 
     class Meta:
         abstract = True
+
+
+class SlugModel(models.Model):
+    """Модель для хранения информации о игре."""
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        help_text=(
+            'Укажите адрес страницы. Используйте только '
+            'латиницу, цифры, дефисы и знаки подчёркивания'
+        ),
+        verbose_name='Адрес (slug)'
+    )
+
+    class Meta:
+        abstract = True
