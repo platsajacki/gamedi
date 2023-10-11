@@ -5,13 +5,18 @@ from games.models import Game, Gener
 
 @pytest.fixture
 def user(django_user_model):
-    return django_user_model.objects.create(username='Клиент')
+    return django_user_model.objects.create(username='first_user')
 
 
 @pytest.fixture
 def user_client(user, client):
     client.force_login(user)
     return client
+
+
+@pytest.fixture
+def username(user):
+    return user.username,
 
 
 @pytest.fixture
