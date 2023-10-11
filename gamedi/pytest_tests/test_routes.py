@@ -11,6 +11,8 @@ from django.urls import reverse
         ('games:home', None),
         ('login', None),
         ('registration', None),
+        ('pages:about', None),
+        ('pages:rules', None),
         ('games:detail', pytest.lazy_fixture('game_slug'))
     )
 )
@@ -37,7 +39,7 @@ def test_pages_availability_for_anonymous_user(client, name, args):
         (
             'users:profile',
             pytest.lazy_fixture('admin_client'),
-            HTTPStatus.FORBIDDEN
+            HTTPStatus.NOT_FOUND
         ),
         (
             'users:update',
@@ -52,7 +54,7 @@ def test_pages_availability_for_anonymous_user(client, name, args):
         (
             'users:update',
             pytest.lazy_fixture('admin_client'),
-            HTTPStatus.FORBIDDEN
+            HTTPStatus.NOT_FOUND
         ),
     )
 )

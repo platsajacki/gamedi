@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'core',
     'games',
     'orders',
+    'pages',
     'users',
 
     'debug_toolbar',
@@ -72,9 +73,13 @@ ROOT_URLCONF = 'gamedi.urls'
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_URL = 'login'
+
 LOGIN_REDIRECT_URL = 'games:home'
 
 TEMPLATES_DIR = BASE_DIR / 'templates'
+
+CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
 
 TEMPLATES = [
     {
