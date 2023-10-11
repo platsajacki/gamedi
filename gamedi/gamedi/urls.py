@@ -14,8 +14,13 @@ urlpatterns = [
         name='registration'
     ),
     path('', include('games.urls', namespace='games')),
+    path('info/', include('pages.urls', namespace='pages')),
     path('profile/', include('users.urls', namespace='users')),
 ]
+
+handler403 = 'pages.views.page_not_found'
+handler404 = 'pages.views.page_not_found'
+handler500 = 'pages.views.server_error'
 
 if settings.DEBUG:
     urlpatterns += [path('__debug__/', include('debug_toolbar.urls'))]

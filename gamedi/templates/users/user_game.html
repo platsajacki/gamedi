@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ game.name }}
+{% endblock %}
+
+{% block content %}
+    Игра {{ request.user.username }}
+    {% include "includes/game_card.html" %}
+{% endblock %}

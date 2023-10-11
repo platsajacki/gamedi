@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ProfileDetailView, ProfileUpdateView
+from .views import ProfileDetailView, ProfileUpdateView, ProfileGameDetailView
 
 app_name = 'users'
 
@@ -14,5 +14,10 @@ urlpatterns = [
         '<slug:username>/update/',
         ProfileUpdateView.as_view(),
         name='update'
+    ),
+    path(
+        '<slug:username>/games/<slug:slug>',
+        ProfileGameDetailView.as_view(),
+        name='game'
     ),
 ]
