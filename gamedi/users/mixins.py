@@ -9,7 +9,6 @@ from .models import User
 class UserAttribute:
     """Миксин для добавления атрибутов к представлению пользователя."""
     model = User
-    queryset = User.objects.all()
     slug_field = 'username'
     slug_url_kwarg = 'username'
 
