@@ -1,5 +1,7 @@
 from django.db import models
 
+from games.utils import get_file_path
+
 
 class NameString(models.Model):
     """
@@ -29,7 +31,7 @@ class Discription(models.Model):
 
 
 class SlugModel(models.Model):
-    """Модель для хранения информации о игре."""
+    """Абстарктная модель с полем 'slug'."""
     slug = models.SlugField(
         max_length=100,
         unique=True,
@@ -39,6 +41,23 @@ class SlugModel(models.Model):
         ),
         verbose_name='Адрес (slug)'
     )
+
+    class Meta:
+        abstract = True
+
+
+class FileModel(models.Model):
+    """Абстарктная модель с полем 'file' и методом 'get_files_filds'."""
+    file = models.FileField(
+        upload_to=get_file_path,
+        verbose_name='Файл',
+        unique=True
+    )
+
+    @staticmethod
+    def get_files_filds() -> tuple[str]:
+        """Получает строчное наименование полей с файлами."""
+        return ('file',)
 
     class Meta:
         abstract = True
