@@ -15,6 +15,14 @@
        url('/static/fonts/circe-light.ttf') format('truetype');
 }
 
+header {
+  font-family: 'Circe Bold', sans-serif;
+}
+
+footer {
+  font-family: 'Circe Bold', sans-serif;
+}
+
 /* Основные стили для меню */
 .nav-menu {
   font-size: 19px;
@@ -24,7 +32,6 @@
   padding: 10px;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Circe Bold', sans-serif;
   border: 3px solid #FF65B3;
   border-top: 0;
   border-radius: 0 0 40px 40px;
@@ -64,3 +71,15 @@
   margin: auto;
   display: block;
 }
+
+/* Основные стили для footer */
+.main-footer {
+  font-size: 22px;
+  color: #FF65B3;
+  display: block;
+  text-align: center;
+}
+
+/* .mirror {
+  transform: scaleX(-1);
+} */

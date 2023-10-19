@@ -3,8 +3,8 @@ from typing import Any
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from .utils import get_file_path
-from core.models import NameString, Discription, SlugModel
+from .utils import get_cover_path, get_hover_path
+from core.models import NameString, Discription, SlugModel, FileModel
 
 
 class Gener(NameString, Discription, SlugModel, models.Model):
@@ -18,6 +18,16 @@ class Gener(NameString, Discription, SlugModel, models.Model):
 
 class Game(NameString, Discription, SlugModel, models.Model):
     """Модель для хранения информации о игре."""
+    cover = models.ImageField(
+        upload_to=get_cover_path,
+        verbose_name='Обложка',
+        unique=True
+    )
+    hover_cover = models.ImageField(
+        upload_to=get_hover_path,
+        verbose_name='Наведение на обложку',
+        unique=True
+    )
     genre = models.ForeignKey(
         Gener,
         on_delete=models.PROTECT,
@@ -68,25 +78,39 @@ class Game(NameString, Discription, SlugModel, models.Model):
         self.final_price = round(self.price * (1 - self.discount / 100), 0)
         return super().save(*args, **kwargs)
 
+    @staticmethod
+    def get_files_filds() -> tuple[str]:
+        """Получает строчное наименование полей с файлами."""
+        return ('cover', 'hover_cover')
+
     class Meta:
         verbose_name = 'Игра'
         verbose_name_plural = 'Игры'
 
 
-class GameFile(NameString, models.Model):
+class AdminGameFile(NameString, FileModel, models.Model):
     """Модель для хранения файлов, принадлежащих играм."""
     game = models.ForeignKey(
         Game,
         on_delete=models.CASCADE,
-        related_name='files',
+        related_name='admin_files',
         verbose_name='Игра',
-    )
-    file = models.FileField(
-        upload_to=get_file_path,
-        verbose_name='Файл',
-        unique=True
     )
 
     class Meta:
-        verbose_name = 'Файл игры'
-        verbose_name_plural = 'Файлы игр'
+        verbose_name = 'Файл игры для администратора'
+        verbose_name_plural = 'Файлы игр для администратора'
+
+
+class UserGameFile(NameString, FileModel, models.Model):
+    """Модель для хранения файлов, принадлежащих играм."""
+    game = models.ForeignKey(
+        Game,
+        on_delete=models.CASCADE,
+        related_name='users_files',
+        verbose_name='Игра',
+    )
+
+    class Meta:
+        verbose_name = 'Файл игры для пользователя'
+        verbose_name_plural = 'Файлы игр для пользователя'

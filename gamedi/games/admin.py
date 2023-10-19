@@ -1,11 +1,23 @@
 from django.contrib import admin
 
-from .models import Game, Gener, GameFile
+from .models import Game, Gener, AdminGameFile, UserGameFile
 
 
-class GameFileInline(admin.TabularInline):
-    """Встроенное отображение файлов игры в административной панели."""
-    model = GameFile
+class AdminGameFileInline(admin.TabularInline):
+    """
+    Встроенное отображение файлов
+    для администратора игры в административной панели.
+    """
+    model = AdminGameFile
+    extra = 0
+
+
+class UserGameFileInline(admin.TabularInline):
+    """
+    Встроенное отображение файлов
+    для пользователя игры в административной панели.
+    """
+    model = UserGameFile
     extra = 0
 
 
@@ -25,6 +37,8 @@ class GameAdmin(admin.ModelAdmin):
         'discount', 'final_price',
     )
     list_display_links = ('name',)
-    inlines = [GameFileInline]
+    inlines = [
+        AdminGameFileInline, UserGameFileInline
+    ]
     search_fields = ('name',)
     list_filter = ('genre',)
