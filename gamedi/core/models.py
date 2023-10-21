@@ -53,11 +53,16 @@ class FileModel(models.Model):
         verbose_name='Файл',
         unique=True
     )
+    order_number = models.PositiveSmallIntegerField(
+        verbose_name='Порядковый номер'
+    )
+
+    class Meta:
+        abstract = True
+        unique_together = ('game', 'order_number',)
+        ordering = ('game', 'order_number',)
 
     @staticmethod
     def get_files_filds() -> tuple[str]:
         """Получает строчное наименование полей с файлами."""
         return ('file',)
-
-    class Meta:
-        abstract = True

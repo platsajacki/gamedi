@@ -6,7 +6,24 @@
 {% endblock %}
 
 {% block content %}
+  <div class="slogan">
+    <div class="circle"></div>
+    <span>
+      Загадки и друзья:<br>
+      рецепт идиального вечера
+    </span>
+    <div class="circle"></div>
+  </div>
+  <div class="games-list">
   {% for game in game_list %}
-    Тут {{ game }}
+    <div class="game">
+      <div class="img-home">
+          <img src="{{ game.cover.url }}">
+      </div>
+      <div class="discription">
+        {{ game }}
+      </div>
+    </div>
   {% endfor %}
+  </div>
 {% endblock %}

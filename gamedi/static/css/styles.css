@@ -23,6 +23,10 @@ footer {
   font-family: 'Circe Bold', sans-serif;
 }
 
+main {
+  font-family: 'Circe Light', sans-serif;
+}
+
 /* Основные стили для меню */
 .nav-menu {
   font-size: 19px;
@@ -80,6 +84,82 @@ footer {
   text-align: center;
 }
 
-/* .mirror {
-  transform: scaleX(-1);
-} */
+/* Стили слогана на главном экране */
+.slogan {
+    overflow: hidden;
+    text-align: center;
+    font-size: 70px;
+}
+
+.slogan span {
+    font-family: 'Circe Bold', sans-serif;
+    display: inline-block;
+    vertical-align: middle;
+    color: #EA8C55;
+}
+
+.slogan:before,
+.slogan:after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    height: 3px;
+    background-color: #EA8C55;
+    position: relative;
+    margin: -20px;
+}
+
+.slogan:before {
+    margin-left: -100%;
+}
+
+.slogan:after {
+    margin-right: -100%;
+}
+
+.circle {
+  height: 15px;
+  width: 15px;
+  background-color: #EA8C55;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+/* Стили игр на главном экране */
+.games-list {
+  text-align: center;
+}
+
+.games-list .game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.games-list .game .img-home {
+	width: 660px;
+	height: 380px;
+	background: #FF65B3;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.games-list .game .img-home img {
+  border-radius: 30px;
+  width: 640px;
+	height: 360px;
+  object-fit: cover;
+  max-width: 96%;
+}
+
+.games-list .game .discription {
+  width: 660px;
+	height: 380px;
+}

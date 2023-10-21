@@ -2,6 +2,7 @@ import os
 from typing import Any
 
 from django.db.models import Model
+from django.db.models.fields import Field
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
 
@@ -11,7 +12,9 @@ from .models import Game, AdminGameFile, UserGameFile
 @receiver(pre_delete, sender=Game)
 @receiver(pre_delete, sender=AdminGameFile)
 @receiver(pre_delete, sender=UserGameFile)
-def delete_gamefile(sender, instance, **kwargs: dict[str, Any]) -> None:
+def delete_gamefile(
+    sender: Model, instance: Model, **kwargs: dict[str, Any]
+) -> None:
     """Удаляет файл, связанный с объектом, если он существует."""
     for field_name in sender.get_files_filds():
         path = getattr(instance, field_name).path
@@ -31,7 +34,7 @@ def update_gamefile(
     """
     for field_name in sender.get_files_filds():
         if (old_instance := sender.objects.filter(id=instance.id)).exists():
-            old_file = getattr(old_instance.first(), field_name)
-            file = getattr(instance, field_name)
+            old_file: Field = getattr(old_instance.first(), field_name)
+            file: Field = getattr(instance, field_name)
             if old_file != file and os.path.isfile(old_file.path):
                 os.remove(old_file.path)

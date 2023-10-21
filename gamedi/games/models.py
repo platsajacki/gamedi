@@ -63,6 +63,10 @@ class Game(NameString, Discription, SlugModel, models.Model):
         verbose_name='Дата создания'
     )
 
+    class Meta:
+        verbose_name = 'Игра'
+        verbose_name_plural = 'Игры'
+
     def clean(self) -> None | ValidationError:
         """Проверка валидности полей 'min_players' и 'max_players'."""
         if self.min_players > self.max_players:
@@ -82,10 +86,6 @@ class Game(NameString, Discription, SlugModel, models.Model):
     def get_files_filds() -> tuple[str]:
         """Получает строчное наименование полей с файлами."""
         return ('cover', 'hover_cover')
-
-    class Meta:
-        verbose_name = 'Игра'
-        verbose_name_plural = 'Игры'
 
 
 class AdminGameFile(NameString, FileModel, models.Model):
