@@ -1,6 +1,7 @@
 const currentUrl = window.location.pathname;
 const links = document.querySelectorAll('.nav-menu li a');
 const burger = document.getElementById('burger')
+const arrow = document.getElementById('arrow')
 const burgerLinks = document.getElementById('burger-links')
 
 /*
@@ -17,21 +18,28 @@ function getActiveLink(currentUrl, links) {
 
 
 /* Раскрыввает и закрывает бургер меню. */
-function getBurgerLinks(burgerLinks) {
-  if (burgerLinks.style.display === 'none') {
+function getBurgerLinks(elem, burgerLinks) {
+  if (elem === burger) {
     burgerLinks.style.display = 'flex';
+    burger.style.display = 'none';
+    arrow.style.display = 'block';
   } else {
     burgerLinks.style.display = 'none';
+    burger.style.display = 'block';
+    arrow.style.display = 'none';
   }
 }
 
 
-function rollBurgerMenu(burger, burgerLinks) {
+function rollBurgerMenu(burger, arrow, burgerLinks) {
   burger.addEventListener('click', function (event) {
-    getBurgerLinks(burgerLinks)
+    getBurgerLinks(burger, burgerLinks)
   })
+  arrow.addEventListener('click', function (event) {
+    getBurgerLinks(arrow, burgerLinks);
+  });
 }
 
 
-rollBurgerMenu(burger, burgerLinks)
+rollBurgerMenu(burger, arrow, burgerLinks)
 getActiveLink(currentUrl, links);
