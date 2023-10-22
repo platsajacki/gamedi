@@ -1,0 +1,10 @@
+<li><a href="{% url 'games:home' %}">Главная</a></li>
+<li><a href="{% url 'pages:rules' %}">Правила</a></li>
+<li><a href="{% url 'pages:about' %}">О нас</a></li>
+{% if request.user.is_authenticated  %}
+  <li><a class="user-menu"href="{% url 'users:profile' request.user.username %}">Профиль</a></li>
+  <li><a class="user-menu" href="{% url 'logout' %}">Выйти</a></li>
+{% else %}
+  <li><a class="user-menu" href="{% url 'login' %}">Вход</a></li>
+  <li><a class="user-menu" href="{% url 'registration' %}">Регистрация</a></li>
+{% endif %}

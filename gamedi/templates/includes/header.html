@@ -2,21 +2,25 @@
 
 <header>
   <script src="/static/js/includes/header.js" defer></script>
-  <nav class="nav-menu" >
+  <nav class="nav-menu">
     <a href="{% url 'games:home' %}" class="logo-link">
       <img src="{% static 'img/logo.png' %}" alt="GAME DI" class="logo">
     </a>
-    <ul>
-      <li><a href="{% url 'games:home' %}">Главная</a></li>
-      <li><a href="{% url 'pages:rules' %}">Правила</a></li>
-      <li><a href="{% url 'pages:about' %}">О нас</a></li>
-      {% if request.user.is_authenticated  %}
-        <li><a class="user-menu"href="{% url 'users:profile' request.user.username %}">Профиль</a></li>
-        <li><a class="user-menu" href="{% url 'logout' %}">Выйти</a></li>
-      {% else %}
-        <li><a class="user-menu" href="{% url 'login' %}">Вход</a></li>
-        <li><a class="user-menu" href="{% url 'registration' %}">Регистрация</a></li>
-      {% endif %}
-    </ul>
+    <div class="menu">
+      <ul>
+        {% include "includes/menu.html" %}
+      </ul>
+    </div>
+    <div class="burger-menu">
+      <div id="burger" class="burger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div id="burger-links" class="burger-links">
+        <ul>
+          {% include "includes/menu.html" %}
+        </ul>
+      </div>
+    </div>
   </nav>
 </header>
