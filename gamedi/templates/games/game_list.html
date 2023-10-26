@@ -10,7 +10,7 @@
     <div class="circle"></div>
     <span>
       Загадки и друзья:<br>
-      рецепт идиального вечера
+      рецепт идеального вечера
     </span>
     <div class="circle"></div>
   </div>
@@ -21,7 +21,14 @@
           <img src="{{ game.cover.url }}">
       </div>
       <div class="discription">
-        {{ game }}
+        <span>Назвние игры:</span> {{ game.name }}<br>
+        Описание: {{ game.discription }}<br>
+        Игроков:
+        {% if game.min_players ==  game.max_players %}
+          {{ game.max_players }}
+        {% else %}
+          {{ game.min_players }}-{{ game.max_players }}
+        {% endif %}<br>
       </div>
     </div>
   {% endfor %}

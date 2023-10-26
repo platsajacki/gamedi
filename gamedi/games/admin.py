@@ -10,6 +10,11 @@ class AdminGameFileInline(admin.TabularInline):
     """
     model = AdminGameFile
     extra = 0
+    ordering = ('order_number',)
+    fields = (
+        'name', 'order_number',
+        'is_published', 'file',
+    )
 
 
 class UserGameFileInline(admin.TabularInline):
@@ -19,26 +24,67 @@ class UserGameFileInline(admin.TabularInline):
     """
     model = UserGameFile
     extra = 0
+    ordering = ('order_number',)
+    fields = (
+        'name', 'order_number',
+        'is_published', 'file',
+    )
 
 
 @admin.register(Gener)
 class GenerAdmin(admin.ModelAdmin):
     """Настройка панели администратора для модели 'Gener'."""
-    list_display = ('id', 'name', 'discription',)
+    list_display = (
+        'id', 'name', 'discription',
+        'is_published', 'created'
+    )
     list_display_links = ('name',)
     search_fields = ('name',)
+    fields = (
+        'name', 'slug',
+        'is_published', 'discription',
+    )
 
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
     """Настройка панели администратора для модели 'Game'."""
     list_display = (
-        'id', 'name', 'genre', 'price',
+        'order_number', 'is_published',
+        'name', 'genre', 'price',
         'discount', 'final_price',
+        'id', 'created'
     )
     list_display_links = ('name',)
     inlines = [
         AdminGameFileInline, UserGameFileInline
     ]
     search_fields = ('name',)
-    list_filter = ('genre',)
+    ordering = ('order_number',)
+    fieldsets = (
+        (
+            'Наименование и публикация',
+            {
+                'fields': (
+                    'name', 'slug',
+                    'order_number', 'is_published',
+                ),
+            }
+        ),
+        (
+            'Параметры',
+            {
+                'fields': (
+                    'genre', 'discription',
+                    'min_players', 'max_players',
+                    'price', 'discount',
+                ),
+            }
+        ),
+        (
+            'Файлы',
+            {
+                'fields': ('cover', 'hover_cover',),
+            }
+        ),
+    )

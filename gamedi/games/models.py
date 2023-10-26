@@ -3,21 +3,34 @@ from typing import Any
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from .validators import validate_order_number
 from .utils import get_cover_path, get_hover_path
-from core.models import NameString, Discription, SlugModel, FileModel
+from core.models import (
+    NameString, Discription, SlugModel,
+    FileModel, PublishedModel, OrderNumberModel
+)
 
 
-class Gener(NameString, Discription, SlugModel, models.Model):
+class Gener(NameString, Discription, SlugModel,
+            PublishedModel, models.Model):
     """Модель для хранения информации о жанре игр."""
-    ...
+    name = models.CharField(
+        max_length=128, unique=True,
+        verbose_name='Наименование'
+    )
 
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
 
 
-class Game(NameString, Discription, SlugModel, models.Model):
+class Game(NameString, Discription, SlugModel,
+           OrderNumberModel, PublishedModel, models.Model):
     """Модель для хранения информации о игре."""
+    name = models.CharField(
+        max_length=128, unique=True,
+        verbose_name='Наименование'
+    )
     cover = models.ImageField(
         upload_to=get_cover_path,
         verbose_name='Обложка',
@@ -35,10 +48,10 @@ class Game(NameString, Discription, SlugModel, models.Model):
         verbose_name='Жанр'
     )
     min_players = models.PositiveSmallIntegerField(
-        verbose_name='Минимальное количество играков'
+        verbose_name='Минимальное количество игроков'
     )
     max_players = models.PositiveSmallIntegerField(
-        verbose_name='Максимальное количество играков'
+        verbose_name='Максимальное количество игроков'
     )
     price = models.DecimalField(
         max_digits=7,
@@ -58,29 +71,30 @@ class Game(NameString, Discription, SlugModel, models.Model):
         null=True,
         editable=False,
     )
-    created = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Дата создания'
-    )
 
     class Meta:
         verbose_name = 'Игра'
         verbose_name_plural = 'Игры'
+        ordering = ('order_number',)
 
     def clean(self) -> None | ValidationError:
-        """Проверка валидности полей 'min_players' и 'max_players'."""
-        if self.min_players > self.max_players:
+        """Проверка валидности полей."""
+        if (
+            self.min_players and self.max_players
+            and self.min_players > self.max_players
+        ):
             raise ValidationError(
                 'Минимальное количество игроков '
                 'не может быть больше максимального.'
             )
-        return super().clean()
+        validate_order_number(self.order_number, self.is_published)
+        super().clean()
 
     def save(
             self, *args: tuple[Any], **kwargs: dict[str, Any]
     ) -> None:
         self.final_price = round(self.price * (1 - self.discount / 100), 0)
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @staticmethod
     def get_files_filds() -> tuple[str]:
@@ -90,6 +104,10 @@ class Game(NameString, Discription, SlugModel, models.Model):
 
 class AdminGameFile(NameString, FileModel, models.Model):
     """Модель для хранения файлов, принадлежащих играм."""
+    name = models.CharField(
+        max_length=128,
+        verbose_name='Наименование'
+    )
     game = models.ForeignKey(
         Game,
         on_delete=models.CASCADE,
@@ -100,10 +118,16 @@ class AdminGameFile(NameString, FileModel, models.Model):
     class Meta:
         verbose_name = 'Файл игры для администратора'
         verbose_name_plural = 'Файлы игр для администратора'
+        unique_together = ('game', 'name',)
+        ordering = ('game', 'order_number',)
 
 
 class UserGameFile(NameString, FileModel, models.Model):
     """Модель для хранения файлов, принадлежащих играм."""
+    name = models.CharField(
+        max_length=128,
+        verbose_name='Наименование'
+    )
     game = models.ForeignKey(
         Game,
         on_delete=models.CASCADE,
@@ -114,3 +138,5 @@ class UserGameFile(NameString, FileModel, models.Model):
     class Meta:
         verbose_name = 'Файл игры для пользователя'
         verbose_name_plural = 'Файлы игр для пользователя'
+        unique_together = ('game', 'name',)
+        ordering = ('game', 'order_number',)

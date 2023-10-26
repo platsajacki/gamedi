@@ -1,17 +1,14 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
+from games.validators import validate_order_number
 from games.utils import get_file_path
 
 
 class NameString(models.Model):
     """
-    Абстарктная модель с полем 'name' и его строковым предсталением.
+    Абстарктная модель со строковым предсталением поля 'name'.
     """
-    name = models.CharField(
-        max_length=128, unique=True,
-        verbose_name='Наименование'
-    )
-
     class Meta:
         abstract = True
 
@@ -46,21 +43,48 @@ class SlugModel(models.Model):
         abstract = True
 
 
-class FileModel(models.Model):
+class OrderNumberModel(models.Model):
+    """Абстрактная модель с полем 'order_number'."""
+    order_number = models.PositiveSmallIntegerField(
+        verbose_name='Порядковый номер',
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        abstract = True
+
+
+class PublishedModel(models.Model):
+    """Абстарктная модель с полями 'is_published' и 'created'."""
+    is_published = models.BooleanField(
+        default=True,
+        verbose_name='Опубликовано'
+    )
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата создания'
+    )
+
+    class Meta:
+        abstract = True
+
+
+class FileModel(OrderNumberModel, PublishedModel, models.Model):
     """Абстарктная модель с полем 'file' и методом 'get_files_filds'."""
     file = models.FileField(
         upload_to=get_file_path,
         verbose_name='Файл',
         unique=True
     )
-    order_number = models.PositiveSmallIntegerField(
-        verbose_name='Порядковый номер'
-    )
 
     class Meta:
         abstract = True
-        unique_together = ('game', 'order_number',)
-        ordering = ('game', 'order_number',)
+
+    def clean(self) -> None | ValidationError:
+        """Проверка валидности полей."""
+        validate_order_number(self.order_number, self.is_published)
+        super().clean()
 
     @staticmethod
     def get_files_filds() -> tuple[str]:
