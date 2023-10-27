@@ -30,14 +30,16 @@ class UserCreateView(generic.CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileDetailView(LoginRequiredMixin, UserAttribute,
-                        UserDispatch, generic.DetailView):
+class ProfileDetailView(
+    LoginRequiredMixin, UserAttribute, UserDispatch, generic.DetailView
+):
     """Представление личного кабинета пользователя."""
-    ...
+    queryset = User.objects.related_games()
 
 
-class ProfileUpdateView(LoginRequiredMixin, UserAttribute,
-                        UserDispatch, generic.UpdateView):
+class ProfileUpdateView(
+    LoginRequiredMixin, UserAttribute, UserDispatch, generic.UpdateView
+):
     """Представление личного кабинета пользователя."""
     form_class = UserUpdateForm
 
@@ -52,8 +54,9 @@ class ProfileUpdateView(LoginRequiredMixin, UserAttribute,
         )
 
 
-class ProfileGameDetailView(LoginRequiredMixin, UserDispatch,
-                            generic.DetailView):
+class ProfileGameDetailView(
+    LoginRequiredMixin, UserDispatch, generic.DetailView
+):
     """Представление игры в профиле пользователя."""
     template_name = 'users/user_game.html'
 

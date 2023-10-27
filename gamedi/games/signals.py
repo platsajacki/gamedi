@@ -50,9 +50,9 @@ def update_orders_numbers(
     Меняет порядковые номера элементов при создании или изменении элемента.
     """
     if sender == Game:
-        queryset = sender.objects.all()
+        queryset: QuerySet = sender.objects.all()
     else:
-        queryset = sender.objects.filter(game=instance.game)
+        queryset: QuerySet = sender.objects.filter(game=instance.game)
     # Если в модели нет элементов.
     if not queryset:
         if instance.is_published:
@@ -128,9 +128,9 @@ def delete_orders_numbers(
 ) -> None:
     """Меняет порядковые номера элементов при удалении элемента."""
     if sender == Game:
-        queryset = sender.objects.all()
+        queryset: QuerySet = sender.objects.all()
     else:
-        queryset = sender.objects.filter(game=instance.game)
+        queryset: QuerySet = sender.objects.filter(game=instance.game)
     queryset.filter(
         order_number__gt=instance.order_number
     ).update(

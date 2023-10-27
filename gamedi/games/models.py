@@ -3,6 +3,7 @@ from typing import Any
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from .managers import GameQuerySet, GameManager
 from .validators import validate_order_number
 from .utils import get_cover_path, get_hover_path
 from core.models import (
@@ -11,7 +12,7 @@ from core.models import (
 )
 
 
-class Gener(NameString, Discription, SlugModel,
+class Genre(NameString, Discription, SlugModel,
             PublishedModel, models.Model):
     """Модель для хранения информации о жанре игр."""
     name = models.CharField(
@@ -42,7 +43,7 @@ class Game(NameString, Discription, SlugModel,
         unique=True
     )
     genre = models.ForeignKey(
-        Gener,
+        Genre,
         on_delete=models.PROTECT,
         related_name='games',
         verbose_name='Жанр'
@@ -71,6 +72,9 @@ class Game(NameString, Discription, SlugModel,
         null=True,
         editable=False,
     )
+
+    objects = GameQuerySet.as_manager()
+    published = GameManager()
 
     class Meta:
         verbose_name = 'Игра'

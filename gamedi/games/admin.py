@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Game, Gener, AdminGameFile, UserGameFile
+from .models import Game, Genre, AdminGameFile, UserGameFile
 
 
 class AdminGameFileInline(admin.TabularInline):
@@ -31,8 +31,8 @@ class UserGameFileInline(admin.TabularInline):
     )
 
 
-@admin.register(Gener)
-class GenerAdmin(admin.ModelAdmin):
+@admin.register(Genre)
+class GenreAdmin(admin.ModelAdmin):
     """Настройка панели администратора для модели 'Gener'."""
     list_display = (
         'id', 'name', 'discription',

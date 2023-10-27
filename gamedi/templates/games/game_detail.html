@@ -6,5 +6,23 @@
 {% endblock %}
 
 {% block content %}
-    Тут игра {{ game.name }}
+    <div>
+      <div>
+          <img src="{{ game.cover.url }}">
+      </div>
+      <div>
+        Назвние игры: {{ game.name }}<br>
+        Жанр: {{ game.genre.name }}<br>
+        Описание: {{ game.discription }}<br>
+        Игроков:
+        {% if game.min_players ==  game.max_players %}
+          {{ game.max_players }}
+        {% else %}
+          {{ game.min_players }}-{{ game.max_players }}
+        {% endif %}<br>
+        Цена: {{ game.price }}<br>
+        Скидка: {{ game.discount }}<br>
+        Окончательная цена: {{ game.final_price }}<br>
+      </div>
+    </div>
 {% endblock %}
