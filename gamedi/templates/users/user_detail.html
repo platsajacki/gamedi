@@ -10,7 +10,14 @@
   <h3>Список игр пользователя:</h3>
   <ul>
     {% for game in user.games.all %}
-      <li>{{ game.name }}</li>
+      <li>
+        <a href="{% url 'users:game' user.username game.slug %}">
+          {{ game.name }}
+        </a>
+      </li>
+      <li>{{ game.genre.name }}</li>
+      <li>{{ game.users_files.all }}</li>
+      <li>{{ game.admin_files.all }}</li>
     {% endfor %}
   </ul>
 {% endblock %}

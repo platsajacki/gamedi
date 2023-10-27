@@ -21,7 +21,10 @@
           <img src="{{ game.cover.url }}">
       </div>
       <div class="discription">
-        <span>Назвние игры:</span> {{ game.name }}<br>
+        Назвние игры: 
+        <a href="{% url 'games:detail' game.slug %}">
+          {{ game.name }}
+        </a><br>
         Жанр: {{ game.genre.name }}<br>
         Описание: {{ game.discription }}<br>
         Игроков:
