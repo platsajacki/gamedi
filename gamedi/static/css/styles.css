@@ -29,16 +29,15 @@ main {
 
 /* Основные стили для меню */
 .nav-menu {
-  font-size: 19px;
   display: flex;
-  height: 80px;
+  height: 9vh;
   margin: auto;
-  padding: 10px;
+  padding: 1vh;
   justify-content: space-between;
   align-items: center;
-  border: 3px solid #FF65B3;
+  border: 0.4vh solid #FF65B3;
   border-top: 0;
-  border-radius: 0 0 40px 40px;
+  border-radius: 0 0 5vh 5vh;
 }
 
 .nav-menu ul {
@@ -52,17 +51,18 @@ main {
 }
 
 .nav-menu a:not(.logo-link) {
+  font-size: 2.1vh;
   text-decoration: none;
   color: #FF65B3;
   display: block;
-  padding: 0 10px;
-  border: 3px solid #FF65B3;
-  margin-right: 10px;
-  border-radius: 40px;
-  width: 120px;
-  height: 40px;
+  padding: 0 1.5vh;
+  border: 0.4vh solid #FF65B3;
+  margin-right: 1vh;
+  border-radius: 6.5vh;
+  width: 13vh;
+  height: 4vh;
   text-align: center;
-  line-height: 40px;
+  line-height: 4vh;
 }
 
 .nav-menu li a.active {
@@ -70,10 +70,10 @@ main {
 }
 
 .logo {
-  width: 150px;
+  width: 20vh;
   height: auto;
   margin: auto;
-  margin-left: 5px;
+  margin-left: 1vh;
   display: block;
 }
 
@@ -90,15 +90,15 @@ main {
 }
 
 .burger-menu .burger {
-  margin: 10px;
+  margin: 1vh;
 }
 
 .bar {
-  width: 55px;
-  height: 10px;
+  width: 11vh;
+  height: 2vh;
   background-color: #FF65B3;
-  margin: 4px;
-  border-radius: 40px;
+  margin: 0.4vh;
+  border-radius: 5.5vh;
 }
 
 .burger-menu .burger-links {
@@ -189,20 +189,9 @@ main {
   }
 }
 
-/* Медиа-запрос для адаптивного дизайна и отображения/скрытия бургер-меню */
-@media (max-width: 978px) {
-  .menu {
-    display: none;
-  }
-
-  .burger-menu {
-    display: flex;
-  }
-}
-
 /* Основные стили для footer */
 .main-footer {
-  font-size: 22px;
+  font-size: 3vh;
   color: #FF65B3;
   display: block;
   text-align: center;
@@ -212,7 +201,7 @@ main {
 .slogan {
   overflow: hidden;
   text-align: center;
-  font-size: 58px;
+  font-size: 7.7vh;
 }
 
 .slogan span {
@@ -228,10 +217,10 @@ main {
   display: inline-block;
   vertical-align: middle;
   width: 100%;
-  height: 3px;
+  height: 0.4vh;
   background-color: #FCD72C;
   position: relative;
-  margin: -20px;
+  margin: -4vh;
 }
 
 .slogan:before {
@@ -243,8 +232,8 @@ main {
 }
 
 .circle {
-  height: 15px;
-  width: 15px;
+  height: 2.5vh;
+  width: 2.5vh;
   background-color: #FCD72C;
   border-radius: 50%;
   display: inline-block;
@@ -255,35 +244,72 @@ main {
 /* Стили игр на главном экране */
 .games-list {
   text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
 }
 
 .games-list .game {
   display: flex;
-  justify-content: center;
+  padding-bottom: 6%;
   align-items: center;
+  justify-content: space-between;
 }
 
-.games-list .game .img-home {
-	width: 660px;
-	height: 380px;
-	background: #FF65B3;
-  border-radius: 30px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  position: relative;
-  overflow: hidden;
-}
 
-.games-list .game .img-home img {
-  border-radius: 30px;
-  width: 640px;
-	height: 360px;
-  object-fit: cover;
-  max-width: 96%;
+.games-list .game img {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10vh;
+  display: block;
+  border: 2.5vh solid #FF65B3;
+  max-width: 50%;
 }
 
 .games-list .game .discription {
-  width: 660px;
-	height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+  margin-left: 3%;
+  text-align: left;
+  font-size: 2.2vh;
+}
+
+.games-list .game .discription .text-discription {
+  display: flex;
+  margin-bottom: 2%;
+}
+
+.game-name {
+  margin-bottom: 2%;
+}
+
+.game-name a {
+  text-decoration: none;
+}
+
+/* Медиа-запрос для адаптивного дизайна и отображения/скрытия бургер-меню */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .burger-menu {
+    display: flex;
+  }
+
+  .games-list .game {
+    flex-wrap: wrap;
+    padding-right: 5%;
+  }
+
+  .games-list .game img {
+    max-width: 100%;
+  }
+
+  .games-list .game .discription {
+    width: 100%;
+  }
 }

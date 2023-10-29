@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+  <script type="module" src="/static/js/games/games_list.js" defer></script>
   <div class="slogan">
     <div class="circle"></div>
     <span>
@@ -17,25 +18,26 @@
   <div class="games-list">
   {% for game in game_list %}
     <div class="game">
-      <div class="img-home">
-          <img src="{{ game.cover.url }}">
-      </div>
-      <div class="discription">
-        Назвние игры: 
-        <a href="{% url 'games:detail' game.slug %}">
-          {{ game.name }}
-        </a><br>
-        Жанр: {{ game.genre.name }}<br>
-        Описание: {{ game.discription }}<br>
-        Игроков:
-        {% if game.min_players ==  game.max_players %}
-          {{ game.max_players }}
-        {% else %}
-          {{ game.min_players }}-{{ game.max_players }}
-        {% endif %}<br>
-        Цена: {{ game.price }}<br>
-        Скидка: {{ game.discount }}<br>
-        Окончательная цена: {{ game.final_price }}<br>
+      <img id="game-list-img" src="{{ game.cover.url }}">
+      <div id="games-list-discription" class="discription">
+        <div class="game-name">
+          <a href="{% url 'games:detail' game.slug %}">
+            {{ game.name }}
+          </a>
+        </div>
+        <div class="text-discription">
+          {{ game.discription }}
+        </div>
+        <div class="param-discription">
+          {% if game.min_players ==  game.max_players %}
+            {{ game.max_players }}
+          {% else %}
+            {{ game.min_players }}-{{ game.max_players }}
+          {% endif %}<br>
+          {{ game.price }}<br>
+          {{ game.discount }}%<br>
+          {{ game.final_price }}<br>
+        </div>
       </div>
     </div>
   {% endfor %}
