@@ -35,14 +35,14 @@ class UserGameFileInline(admin.TabularInline):
 class GenreAdmin(admin.ModelAdmin):
     """Настройка панели администратора для модели 'Gener'."""
     list_display = (
-        'id', 'name', 'discription',
+        'id', 'name', 'description',
         'is_published', 'created'
     )
     list_display_links = ('name',)
     search_fields = ('name',)
     fields = (
         'name', 'slug',
-        'is_published', 'discription',
+        'is_published', 'description',
     )
 
 
@@ -75,7 +75,7 @@ class GameAdmin(admin.ModelAdmin):
             'Параметры',
             {
                 'fields': (
-                    'genre', 'discription',
+                    'genre', 'description',
                     'min_players', 'max_players',
                     'price', 'discount',
                 ),

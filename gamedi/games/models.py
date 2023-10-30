@@ -7,12 +7,12 @@ from .managers import GameQuerySet, GameManager
 from .validators import validate_order_number
 from .utils import get_cover_path, get_hover_path
 from core.models import (
-    NameString, Discription, SlugModel,
+    NameString, description, SlugModel,
     FileModel, PublishedModel, OrderNumberModel
 )
 
 
-class Genre(NameString, Discription, SlugModel,
+class Genre(NameString, description, SlugModel,
             PublishedModel, models.Model):
     """Модель для хранения информации о жанре игр."""
     name = models.CharField(
@@ -25,7 +25,7 @@ class Genre(NameString, Discription, SlugModel,
         verbose_name_plural = 'Жанры'
 
 
-class Game(NameString, Discription, SlugModel,
+class Game(NameString, description, SlugModel,
            OrderNumberModel, PublishedModel, models.Model):
     """Модель для хранения информации о игре."""
     name = models.CharField(

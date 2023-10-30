@@ -4,6 +4,12 @@
 }
 
 @font-face {
+  font-family: 'Macherie';
+  src: url('/static/fonts/macherie.woff2') format('woff2'),
+       url('/static/fonts/macherie.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Circe Bold';
   src: url('/static/fonts/circe-bold.woff2') format('woff2'),
        url('/static/fonts/circe-bold.ttf') format('truetype');
@@ -27,22 +33,31 @@ main {
   font-family: 'Circe Light', sans-serif;
 }
 
+.adaptive {
+  width: 1440px;
+  height: 100%;
+  margin: auto;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Основные стили для меню */
 .nav-menu {
-  display: flex;
-  height: 9vh;
-  margin: auto;
-  padding: 1vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
-  align-items: center;
-  border: 0.4vh solid #FF65B3;
+  border: 3px solid #FF65B3;
   border-top: 0;
-  border-radius: 0 0 5vh 5vh;
+  border-radius: 0 0 40px 40px;
+  padding: 1%;
+  align-items: center;
 }
 
 .nav-menu ul {
   list-style: none;
-  display: inline-flex;
+  display: flex;
 }
 
 .nav-menu li a.user-menu {
@@ -51,18 +66,9 @@ main {
 }
 
 .nav-menu a:not(.logo-link) {
-  font-size: 2.1vh;
   text-decoration: none;
   color: #FF65B3;
-  display: block;
-  padding: 0 1.5vh;
-  border: 0.4vh solid #FF65B3;
-  margin-right: 1vh;
-  border-radius: 6.5vh;
-  width: 13vh;
-  height: 4vh;
-  text-align: center;
-  line-height: 4vh;
+  font-size: 1em;
 }
 
 .nav-menu li a.active {
@@ -70,11 +76,7 @@ main {
 }
 
 .logo {
-  width: 20vh;
-  height: auto;
-  margin: auto;
-  margin-left: 1vh;
-  display: block;
+  width: 20%;
 }
 
 .burger-menu {
@@ -82,50 +84,21 @@ main {
 }
 
 .burger-menu ul {
-  display: block;
 }
 
 .burger-menu li {
-  margin: 8px;
 }
 
 .burger-menu .burger {
-  margin: 1vh;
 }
 
 .bar {
-  width: 11vh;
-  height: 2vh;
-  background-color: #FF65B3;
-  margin: 0.4vh;
-  border-radius: 5.5vh;
 }
 
 .burger-menu .burger-links {
-  display: none;
-  position: absolute;
-  flex-direction: column;
-  top: 0;
-  right: 0;
-  height: 300px;
-  width: 200px;
-  background-color: #fff;
-  border: 3px solid #FF65B3;
-  border-right: 0;
-  border-radius: 40px 0 0 40px;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
 }
 
 .burger-menu .burger-links a {
-  border: 2px solid #FF65B3;
-  width: 135px;
-  height: 30px;
-  font-size: 16px;
-  line-height: 30px;
-  padding: 0;
-  margin: 0;
 }
 
 .arrow {
@@ -191,23 +164,15 @@ main {
 
 /* Основные стили для footer */
 .main-footer {
-  font-size: 3vh;
   color: #FF65B3;
-  display: block;
-  text-align: center;
 }
 
 /* Стили слогана на главном экране */
 .slogan {
-  overflow: hidden;
-  text-align: center;
-  font-size: 7.7vh;
+  font-family: 'Macherie', sans-serif;
 }
 
 .slogan span {
-  font-family: 'Circe Bold', sans-serif;
-  display: inline-block;
-  vertical-align: middle;
   color: #FCD72C;
 }
 
@@ -217,10 +182,8 @@ main {
   display: inline-block;
   vertical-align: middle;
   width: 100%;
-  height: 0.4vh;
   background-color: #FCD72C;
   position: relative;
-  margin: -4vh;
 }
 
 .slogan:before {
@@ -232,57 +195,46 @@ main {
 }
 
 .circle {
-  height: 2.5vh;
-  width: 2.5vh;
+  height: 2vh;
+  width: 2vh;
   background-color: #FCD72C;
   border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
   position: relative;
+  margin: 2vh;
 }
 
 /* Стили игр на главном экране */
-.games-list {
+.content {
+  display: grid;
+  grid-template-columns: 0.9fr;
+  justify-content: center;
   text-align: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 1%;
 }
 
-.games-list .game {
-  display: flex;
-  padding-bottom: 6%;
-  align-items: center;
-  justify-content: space-between;
+.content .game {
 }
 
-
-.games-list .game img {
+.content .game img {
   flex-shrink: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10vh;
   display: block;
-  border: 2.5vh solid #FF65B3;
+  border: 2vh solid #FF65B3;
   max-width: 50%;
 }
 
-.games-list .game .discription {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.content .game .description {
   width: 50%;
-  margin-left: 3%;
   text-align: left;
-  font-size: 2.2vh;
 }
 
-.games-list .game .discription .text-discription {
-  display: flex;
-  margin-bottom: 2%;
+.content .game .description .text-description {
+  overflow: hidden;
 }
+
 
 .game-name {
+  font-family: 'Macherie', sans-serif;
   margin-bottom: 2%;
 }
 
@@ -291,25 +243,32 @@ main {
 }
 
 /* Медиа-запрос для адаптивного дизайна и отображения/скрытия бургер-меню */
+@media (max-width: 1440px) {
+  .adaptive {
+    width: 1200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .adaptive {
+    width: 1000px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .adaptive {
+    width: 768px;
+  }
+}
+
 @media (max-width: 768px) {
-  .menu {
-    display: none;
+  .adaptive {
+    width: 480px;
   }
+}
 
-  .burger-menu {
-    display: flex;
-  }
-
-  .games-list .game {
-    flex-wrap: wrap;
-    padding-right: 5%;
-  }
-
-  .games-list .game img {
-    max-width: 100%;
-  }
-
-  .games-list .game .discription {
+@media (max-width: 480px) {
+  .adaptive {
     width: 100%;
   }
 }

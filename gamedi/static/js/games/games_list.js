@@ -1,4 +1,4 @@
-import getSizeDiscription from "../main.js"
+import getSizeDescription from "../main.js"
 
 const actions = ['DOMContentLoaded', 'resize']
 
@@ -7,8 +7,8 @@ function wiretapping () {
   console.log('fll')
   for (let action of actions) {
       window.addEventListener(action,
-      () =>  getSizeDiscription(
-        'game-list-img', 'games-list-discription'
+      () =>  getSizeDescription(
+        'game-list-img', 'games-list-description'
       )
     )
   }
