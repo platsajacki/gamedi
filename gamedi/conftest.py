@@ -30,7 +30,7 @@ def genre():
     """Фикстура, создающая и возвращающая объект жанра."""
     genre = Gener.objects.create(
         name='Жанр',
-        discription='Описание',
+        description='Описание',
     )
     return genre
 
@@ -40,7 +40,7 @@ def game(genre):
     """Фикстура, создающая и возвращающая объект игры."""
     game = Game.objects.create(
         name='Игра',
-        discription='Описание',
+        description='Описание',
         slug='slug',
         genre=genre,
         min_players=8,

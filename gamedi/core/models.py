@@ -17,9 +17,9 @@ class NameString(models.Model):
         return self.name
 
 
-class Discription(models.Model):
-    """Абстарктная модель с полем 'discription'."""
-    discription = models.TextField(
+class description(models.Model):
+    """Абстарктная модель с полем 'description'."""
+    description = models.TextField(
         max_length=1024, verbose_name='Описание'
     )
 

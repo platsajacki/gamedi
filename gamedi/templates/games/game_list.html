@@ -15,20 +15,20 @@
     </span>
     <div class="circle"></div>
   </div>
-  <div class="games-list">
+  <div class="content">
   {% for game in game_list %}
     <div class="game">
       <img id="game-list-img" src="{{ game.cover.url }}">
-      <div id="games-list-discription" class="discription">
+      <div id="games-list-description" class="description">
         <div class="game-name">
           <a href="{% url 'games:detail' game.slug %}">
             {{ game.name }}
           </a>
         </div>
-        <div class="text-discription">
-          {{ game.discription }}
+        <div class="text-description">
+          {{ game.description }}
         </div>
-        <div class="param-discription">
+        <div class="param-description">
           {% if game.min_players ==  game.max_players %}
             {{ game.max_players }}
           {% else %}
