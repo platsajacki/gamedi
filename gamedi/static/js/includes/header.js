@@ -1,7 +1,7 @@
 const currentUrl = window.location.pathname;
 const links = document.querySelectorAll('.nav-menu li a');
 const burger = document.getElementById('burger')
-const arrow = document.getElementById('arrow')
+const cross = document.getElementById('cross')
 const burgerLinks = document.getElementById('burger-links')
 
 /**
@@ -22,25 +22,25 @@ function getBurgerLinks(elem, burgerLinks) {
   if (elem === burger) {
     burgerLinks.style.display = 'flex'
     burger.style.display = 'none'
-    arrow.style.display = 'block'
+    cross.style.display = 'block'
   } else {
     burgerLinks.style.display = 'none'
     burger.style.display = 'block'
-    arrow.style.display = 'none'
+    cross.style.display = 'none'
   }
 }
 
 
 /** Включает прослушку для открытия и закрытия меню. */
-function rollBurgerMenu(burger, arrow, burgerLinks) {
+function rollBurgerMenu(burger, cross, burgerLinks) {
   burger.addEventListener('click', function (event) {
     getBurgerLinks(burger, burgerLinks)
   })
-  arrow.addEventListener('click', function (event) {
-    getBurgerLinks(arrow, burgerLinks)
+  cross.addEventListener('click', function (event) {
+    getBurgerLinks(cross, burgerLinks)
   })
 }
 
 
-rollBurgerMenu(burger, arrow, burgerLinks)
+rollBurgerMenu(burger, cross, burgerLinks)
 getActiveLink(currentUrl, links)
