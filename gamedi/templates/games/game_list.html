@@ -16,30 +16,30 @@
     <div class="circle"></div>
   </div>
   <div class="content">
-  {% for game in game_list %}
-    <div class="game">
-      <img id="game-list-img" src="{{ game.cover.url }}">
-      <div id="games-list-description" class="description">
-        <div class="game-name">
-          <a href="{% url 'games:detail' game.slug %}">
-            {{ game.name }}
-          </a>
-        </div>
-        <div class="text-description">
-          {{ game.description }}
-        </div>
-        <div class="param-description">
-          {% if game.min_players ==  game.max_players %}
-            {{ game.max_players }}
-          {% else %}
-            {{ game.min_players }}-{{ game.max_players }}
-          {% endif %}<br>
-          {{ game.price }}<br>
-          {{ game.discount }}%<br>
-          {{ game.final_price }}<br>
+    {% for game in game_list %}
+      <div class="game">
+        <img id="game-list-img" src="{{ game.cover.url }}">
+        <div id="games-list-description" class="description">
+          <div class="game-name">
+            <a href="{% url 'games:detail' game.slug %}">
+              {{ game.name }}
+            </a>
+          </div>
+          <div class="text-description">
+            {{ game.description }}
+          </div>
+          <div class="param-description">
+            {% if game.min_players ==  game.max_players %}
+              {{ game.max_players }}
+            {% else %}
+              {{ game.min_players }}-{{ game.max_players }}
+            {% endif %}<br>
+            {{ game.price }}<br>
+            {{ game.discount }}%<br>
+            {{ game.final_price }}<br>
+          </div>
         </div>
       </div>
-    </div>
-  {% endfor %}
+    {% endfor %}
   </div>
 {% endblock %}
