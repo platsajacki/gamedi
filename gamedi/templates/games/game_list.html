@@ -18,14 +18,14 @@
   <div class="content">
     {% for game in game_list %}
       <div class="game">
-        <img id="game-list-img" src="{{ game.cover.url }}">
-        <div id="games-list-description" class="description">
+        <img src="{{ game.cover.url }}">
+        <div class="description">
           <div class="game-name">
             <a href="{% url 'games:detail' game.slug %}">
               {{ game.name }}
             </a>
           </div>
-          <div class="text-description">
+          <div id="text-description" class="text-description">
             {{ game.description }}
           </div>
           <div class="param-description">
@@ -34,9 +34,7 @@
             {% else %}
               {{ game.min_players }}-{{ game.max_players }}
             {% endif %}<br>
-            {{ game.price }}<br>
-            {{ game.discount }}%<br>
-            {{ game.final_price }}<br>
+            {{ game.price }} - {{ game.discount }}% - {{ game.final_price }}<br>
           </div>
         </div>
       </div>
