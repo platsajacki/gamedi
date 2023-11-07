@@ -8,7 +8,7 @@ const burgerLinks = document.getElementById('burger-links')
  * Определяет активную ссылку в меню
  * на основе текущего URL и добавляет класс "active".
 */
-function getActiveLink(currentUrl, links) {
+async function getActiveLink(currentUrl, links) {
   links.forEach(function (link) {
     if (link.getAttribute('href') === currentUrl) {
       link.classList.add('active')
@@ -18,21 +18,21 @@ function getActiveLink(currentUrl, links) {
 
 
 /** Раскрыввает и закрывает выплывающее меню. */
-function getBurgerLinks(elem, burgerLinks) {
+async function getBurgerLinks(elem, burgerLinks) {
   if (elem === burger) {
     burgerLinks.style.display = 'flex'
     burger.style.display = 'none'
     cross.style.display = 'block'
-  } else {
-    burgerLinks.style.display = 'none'
-    burger.style.display = 'block'
-    cross.style.display = 'none'
+    return
   }
+  burgerLinks.style.display = 'none'
+  burger.style.display = 'block'
+  cross.style.display = 'none'
 }
 
 
 /** Включает прослушку для открытия и закрытия меню. */
-function rollBurgerMenu(burger, cross, burgerLinks) {
+async function rollBurgerMenu(burger, cross, burgerLinks) {
   burger.addEventListener('click', function (event) {
     getBurgerLinks(burger, burgerLinks)
   })

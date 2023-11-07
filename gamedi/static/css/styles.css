@@ -17,7 +17,7 @@
 }
 
 html {
-  font-size: 23px;
+  font-size: 20px;
 }
 
 header {
@@ -158,12 +158,15 @@ main {
 /* Основные стили для footer */
 .main-footer {
   color: #FF65B3;
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 /* Стили слогана на главном экране */
 .slogan {
   font-family: 'Macherie', sans-serif;
   text-align: center;
+  justify-content: center;
   font-size: 5rem;
   margin-top: 3rem;
   margin-bottom: 4rem;
@@ -219,32 +222,48 @@ main {
 }
 
 .content .game {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 4rem;
 }
 
 .content .game img {
-  flex-shrink: 0;
-  display: block;
-  border: 2vh solid #FF65B3;
-  max-width: 50%;
+  box-sizing: border-box;
+  width: 100%;
+  border: 0.7rem solid #FF65B3;
+  flex-shrink: 1;
 }
 
 .content .game .description {
-  width: 50%;
+  display: grid;
+  font-size: calc(12px + 13 * (100vw - 320px) / 2240);
+  grid-template-rows: 10% 65% 25%;
+  box-sizing: border-box;
   text-align: left;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 1.5rem;
+  width: 100%;
 }
 
 .content .game .description .text-description {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1%;
 }
 
 
-.game-name {
+.content .game-name {
   font-family: 'Macherie', sans-serif;
+  font-size: 1.4em;
   margin-bottom: 2%;
 }
 
-.game-name a {
+.content .game-name a {
+  display: flex;
   text-decoration: none;
+  color: #FF65B3;
+  align-items: end;
 }
 
 /* Медиа-запрос для адаптивного дизайна и отображения/скрытия бургер-меню */
@@ -256,11 +275,15 @@ main {
   .adaptive {
     width: 100%;
   }
+
+  .content .game .description .text-description {
+    font-size: 1.15em;
+  }
 }
 
 @media (max-width: 2000px) {
   html {
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .slogan {
@@ -273,9 +296,15 @@ main {
   }
 }
 
+@media (max-width: 1800px) {
+  .content .game .description .text-description {
+    font-size: 1em;
+  }
+}
+
 @media (max-width: 1440px) {
   html {
-    font-size: 18px;
+    font-size: 16.5px;
   }
 
   .slogan {
@@ -286,13 +315,13 @@ main {
     margin-left: -6.5rem;
     margin-right: -6.5rem;
   }
+
+  .content .game .description .text-description {
+    font-size: 0.88em;
+  }
 }
 
 @media (max-width: 1200px) {
-  html {
-    font-size: 17px;
-  }
-
   .slogan {
     font-size: 3.6rem;
   }
@@ -305,7 +334,7 @@ main {
 
 @media (max-width: 1000px) {
   html {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .slogan {
@@ -323,6 +352,20 @@ main {
 
   .burger-menu {
     display: block;
+  }
+
+  .content .game {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+ .content .game img {
+    height: 50vw;
+    margin-bottom: 1rem;
+  }
+
+  .content .game .description {
+    padding: 0;
   }
 }
 
@@ -364,16 +407,11 @@ main {
   }
 
   .slogan {
-    font-size: 1.25rem;
+    white-space: wrap;
   }
 
-  .slogan:before,
-  .slogan:after {
-    display: none;
-  }
-
-
-  .slogan .circle {
-    display: none;
+  .slogan span {
+    margin-left: 2rem;
+    margin-right: 2rem;
   }
 }
