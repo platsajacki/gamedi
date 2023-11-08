@@ -33,11 +33,11 @@ async function getBurgerLinks(elem, burgerLinks) {
 
 /** Включает прослушку для открытия и закрытия меню. */
 async function rollBurgerMenu(burger, cross, burgerLinks) {
-  burger.addEventListener('click', function (event) {
-    getBurgerLinks(burger, burgerLinks)
+  burger.addEventListener('click', async function (event) {
+    await getBurgerLinks(burger, burgerLinks)
   })
-  cross.addEventListener('click', function (event) {
-    getBurgerLinks(cross, burgerLinks)
+  cross.addEventListener('click', async function (event) {
+    await getBurgerLinks(cross, burgerLinks)
   })
 }
 

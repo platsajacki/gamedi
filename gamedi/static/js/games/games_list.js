@@ -1,17 +1,17 @@
 import { getMaxWordsInElement, setBorderRadiusBasedOnHeight } from "../main.js"
 
-const actions = ['DOMContentLoaded', 'resize']
+const actions = ['resize', 'load']
 const maxWordsInGame = 60
 
 /** Активирует все прослушки 'games_list'. */
 async function wiretapping () {
-  getMaxWordsInElement('text-description', maxWordsInGame)
   for (const action of actions) {
       window.addEventListener(action,
-        () => setBorderRadiusBasedOnHeight('.game img')
+        async () => await setBorderRadiusBasedOnHeight('.game img.main', 0.15)
       )
   }
 }
 
 
+await getMaxWordsInElement('text-description', maxWordsInGame)
 wiretapping()
