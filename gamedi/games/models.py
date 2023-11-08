@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 from django.db import models
 
 from .managers import GameQuerySet, GameManager
@@ -54,19 +55,28 @@ class Game(NameString, Description, SlugModel,
     max_players = models.PositiveSmallIntegerField(
         verbose_name='Максимальное количество игроков'
     )
+    time = models.PositiveSmallIntegerField(
+        validators=[
+            MaxValueValidator(
+                limit_value=24,
+                message='Количество часов должно быть меньше или равно 24'
+            )
+        ],
+        verbose_name='Количество игровых часов'
+    )
     price = models.DecimalField(
         max_digits=7,
-        decimal_places=2,
+        decimal_places=0,
         verbose_name='Цена'
     )
     discount = models.DecimalField(
         max_digits=5,
-        decimal_places=2,
+        decimal_places=0,
         verbose_name='Скидка (%)'
     )
     final_price = models.DecimalField(
         max_digits=7,
-        decimal_places=2,
+        decimal_places=0,
         verbose_name='Окончательная цена',
         blank=True,
         null=True,

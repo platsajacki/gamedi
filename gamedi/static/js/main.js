@@ -17,7 +17,7 @@ async function containsPunctuation(str) {
 }
 
 
-/** Устанавливает количество символов в элементе. */
+/** Устанавливает количество слов в элементе. */
 export async function getMaxWordsInElement(className, maxWords) {
   const elements = document.getElementsByClassName(className)
   for (const element of elements) {
@@ -37,10 +37,10 @@ export async function getMaxWordsInElement(className, maxWords) {
 }
 
 
-/** Устанавливает 'border-radius' в зависимостиот высоты объекта. */
-export async function setBorderRadiusBasedOnHeight(className) {
+/** Устанавливает 'border-radius' в зависимости от coef высоты объекта. */
+export async function setBorderRadiusBasedOnHeight(className, coef) {
   const elements = document.querySelectorAll(className)
   elements.forEach(element => {
-    element.style.borderRadius = element.height * 0.15 + 'px'
+    element.style.borderRadius = element.height * coef + 'px'
   })
 }

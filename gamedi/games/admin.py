@@ -76,7 +76,7 @@ class GameAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     'genre', 'description',
-                    'min_players', 'max_players',
+                    'min_players', 'max_players', 'time',
                     'price', 'discount',
                 ),
             }

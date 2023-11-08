@@ -18,7 +18,7 @@
   <div class="content">
     {% for game in game_list %}
       <div class="game">
-        <img src="{{ game.cover.url }}">
+        <img class="main" src="{{ game.cover.url }}">
         <div class="description">
           <div class="game-name">
             <a href="{% url 'games:detail' game.slug %}">
@@ -28,13 +28,20 @@
           <div id="text-description" class="text-description">
             {{ game.description }}
           </div>
-          <div class="param-description">
-            {% if game.min_players ==  game.max_players %}
-              {{ game.max_players }}
-            {% else %}
-              {{ game.min_players }}-{{ game.max_players }}
-            {% endif %}<br>
-            {{ game.price }} - {{ game.discount }}% - {{ game.final_price }}<br>
+          <a class="detailed" href="{% url 'games:detail' game.slug %}">
+            Подробнее...
+          </a>
+          <div class="price">
+            <div class="final">
+              {{ game.final_price }}&nbsp;<b>₽</b>
+            </div>
+            <div class="main">
+              {{ game.price }}
+            </div>
+            <a class="buy" href="#">Купить</a>
+          </div>
+          <div class="line-circle">
+            <div class="circle"></div><div class="line"></div>
           </div>
         </div>
       </div>
