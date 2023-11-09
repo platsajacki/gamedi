@@ -37,9 +37,9 @@ async function rollBurgerMenu(burger, cross, burgerLinks) {
     await getBurgerLinks(burger, burgerLinks)
   })
   cross.addEventListener('click', async function (event) {
-    await getBurgerLinks(cross, burgerLinks)
-  })
-}
+      await getBurgerLinks(cross, burgerLinks)
+    })
+  }
 
 
 rollBurgerMenu(burger, cross, burgerLinks)

@@ -3,7 +3,7 @@
  * букв латинского и кириллического алфавитов.
  */
 async function isAlpha(str) {
-  return /^[a-zA-Zа-яА-Я]+$/.test(str);
+  return /^[a-zA-Zа-яА-Я]+$/.test(str)
 }
 
 
@@ -13,7 +13,7 @@ async function isAlpha(str) {
  * исключая кавычки.
  */
 async function containsPunctuation(str) {
-  return /^[.,!?;:-]+$/.test(str);
+  return /^[.,!?;:-]+$/.test(str)
 }
 
 

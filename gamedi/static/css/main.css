@@ -1,0 +1,188 @@
+@font-face {
+  font-family: 'Macherie';
+  src: url('/static/fonts/macherie.woff2') format('woff2'),
+       url('/static/fonts/macherie.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Circe Bold';
+  src: url('/static/fonts/circe-bold.woff2') format('woff2'),
+       url('/static/fonts/circe-bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Circe Light';
+  src: url('/static/fonts/circe-light.woff2') format('woff2'),
+       url('/static/fonts/circe-light.ttf') format('truetype');
+}
+
+html {
+  font-size: 20px;
+  overflow-x: hidden;
+}
+
+header {
+  font-family: 'Circe Bold', sans-serif;
+}
+
+footer {
+  font-family: 'Circe Bold', sans-serif;
+}
+
+main {
+  font-family: 'Circe Light', sans-serif;
+}
+
+:root {
+  --main-pink: #FF65B3;
+  --main-yellow: #FCD72C;
+  --main-grey: #C8C8C8;
+  --main-orange: #EA8C55;
+}
+
+.adaptive {
+  max-width: 2560px;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Основные стили для меню */
+.nav-menu {
+  display: flex;
+  height: 4.7rem;
+  justify-content: space-between;
+  border: 3px solid var(--main-pink);
+  border-top: 0;
+  border-radius: 0 0 2.35rem 2.35rem;
+  align-items: center;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  padding-top: 0.6%;
+  padding-bottom: 0.6%;
+}
+
+.nav-menu ul {
+  list-style: none;
+  display: flex;
+}
+
+.nav-menu li a.user-menu {
+  background-color: var(--main-pink);
+  color: #fff;
+}
+
+.nav-menu a:not(.logo-link) {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--main-pink);
+  display: block;
+  width: 8rem;
+  margin-left: 0.6rem;
+  border: 0.2rem solid var(--main-pink);
+  border-radius: 2rem;
+  text-align: center;
+}
+
+.nav-menu a.active {
+  background-color: #70efeb;
+}
+
+.logo {
+  width: 9rem;
+}
+
+.burger-menu {
+  display: none;
+}
+
+.bar {
+  width: 4rem;
+  height: 0.8rem;
+  background-color: var(--main-pink);
+  margin-bottom: 0.2rem;
+  border-radius: 0.45rem;
+}
+
+@keyframes slideInBurger-links {
+  0% {
+    right: -13rem;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+.burger-menu .burger-links {
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  height: 21rem;
+  width: 13rem;
+  background-color: #fff;
+  border: 3px solid var(--main-pink);
+  border-right: 0;
+  border-radius: 40px 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  animation: slideInBurger-links 0.65s ease forwards;
+}
+
+.burger-menu .burger-links ul {
+  flex-direction: column;
+  padding: 0;
+}
+
+.burger-menu .burger-links a {
+  text-decoration: none;
+  border: 3px solid var(--main-pink);
+  width: 8.5rem;
+  height: 2rem;
+  margin-bottom: 0.6rem;
+  margin-left: 0;
+  line-height: 2rem;
+}
+
+.cross {
+  display: none;
+  cursor: pointer;
+  margin: 2rem;
+}
+
+.cross div:before,
+.cross div:after {
+  content: '';
+  position: absolute;
+  width: 3.5rem;
+  height: 0.9rem;
+  border-radius: 0.45rem;
+  background-color: var(--main-pink);
+}
+
+.cross div:before {
+  transform: rotate(45deg);
+}
+
+.cross div:after {
+  transform: rotate(-45deg);
+}
+
+/* Основные стили для footer */
+.main-footer {
+  color: var(--main-pink);
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 0.9fr;
+  justify-content: center;
+}
