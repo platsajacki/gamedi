@@ -1,0 +1,19 @@
+.game-detail {
+  display: grid;
+  grid-template-rows: 1fr auto;
+	margin-top: 3rem;
+}
+
+.game-detail .game-name {
+	display: grid;
+	justify-self: center;
+}
+
+.game-name a.name-detail {
+	font-size: calc(0.9em + 15 * (100vw - 320px) / 2240);
+}
+
+img.main-detail {
+  width: 70%;
+	justify-self: center;
+}
