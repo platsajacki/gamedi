@@ -44,3 +44,22 @@ export async function setBorderRadiusBasedOnHeight(className, coef) {
     element.style.borderRadius = element.height * coef + 'px'
   })
 }
+
+
+/** Изменяет изображение при наведении. */
+export async function changeImage(classImgName, changedAttr) {
+  const imgs = document.querySelectorAll(classImgName)
+
+  imgs.forEach(img => {
+    const originalSrc = img.src
+    const hoverSrc = img.getAttribute(changedAttr)
+
+    img.addEventListener('mouseover', () => {
+      img.src = hoverSrc;
+    })
+    img.addEventListener('mouseout', () => {
+      img.src = originalSrc;
+    })
+  })
+}
+

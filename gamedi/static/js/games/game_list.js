@@ -1,7 +1,10 @@
-import { getMaxWordsInElement, setBorderRadiusBasedOnHeight } from '../main.js'
+import {
+  getMaxWordsInElement, setBorderRadiusBasedOnHeight, changeImage
+} from '../main.js'
 
 const maxWordsInGame = 60
 const gameImgMain = '.game img.main'
+const hoverSrcGameImgMain = 'hover-src'
 const textDescription = 'text-description'
 const games = document.getElementsByClassName('game')
 const orangeColor = 'var(--main-orange)'
@@ -35,16 +38,17 @@ async function setGameIterStyle(games, color) {
 
 /** Активирует все прослушки 'games_list'. */
 async function wiretapping () {
-  for (const action of ['resize', 'load']) {
-      window.addEventListener(action,
-        async () => await setBorderRadiusBasedOnHeight(gameImgMain, 0.15)
-      )
-  }
   for (const action of ['DOMContentLoaded', 'resize']) {
       window.addEventListener(action,
         async () => await setGameIterStyle(games, orangeColor)
       )
   }
+  for (const action of ['resize', 'load']) {
+      window.addEventListener(action,
+        async () => await setBorderRadiusBasedOnHeight(gameImgMain, 0.15)
+      )
+  }
+  await changeImage(gameImgMain, hoverSrcGameImgMain)
 }
 
 

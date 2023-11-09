@@ -31,12 +31,32 @@
   margin: -1.7rem;
 }
 
+@keyframes move-slogan-before {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
 .slogan:before {
   margin-left: -100%;
+  animation: move-slogan-before 1s ease forwards;
+}
+
+@keyframes move-slogan-after {
+  0% {
+    right: -40%;
+  }
+  100% {
+    right: 0;
+  }
 }
 
 .slogan:after {
   margin-right: -100%;
+  animation: move-slogan-after 1s ease forwards;
 }
 
 .slogan .circle {
@@ -47,6 +67,32 @@
   display: inline-block;
   vertical-align: middle;
   position: relative;
+}
+
+@keyframes move-slogan-circle-r {
+  0% {
+    left: 40%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.slogan .circle.right {
+  animation: move-slogan-circle-r 1s ease forwards;
+}
+
+@keyframes move-slogan-circle-l {
+  0% {
+    right: 40%;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+.slogan .circle.left {
+  animation: move-slogan-circle-l 1s ease forwards;
 }
 
 /* Стили игр на главном экране */
@@ -62,6 +108,11 @@ img.main {
   width: 100%;
   border: 0.7rem solid var(--main-pink);
   transition: border-radius 0.45s;
+}
+
+img.main:hover {
+  border-color: transparent;
+  transform: scale(1.1);
 }
 
 img.avatar {
@@ -147,9 +198,20 @@ a.buy {
   line-height: 1.4em;
 }
 
+
+@keyframes move-line-circle-right {
+  0% {
+    margin-left: 100%;
+  }
+  100% {
+    margin-left: 7%;
+  }
+}
+
 .line-circle-right {
   display: flex;
   margin-left: 7%;
+  animation: move-line-circle-right 1s ease forwards;
 }
 
 .line-circle-right .circle {
@@ -168,9 +230,19 @@ a.buy {
   margin-right: -12%;
 }
 
+@keyframes move-line-circle-left {
+  0% {
+    margin-right: 100%;
+  }
+  100% {
+    margin-right: 7.5%;
+  }
+}
+
 .line-circle-left {
   display: none;
   margin-right: 7.5%;
+  animation: move-line-circle-left 1s ease forwards;
 }
 
 .line-circle-left .circle {

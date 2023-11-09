@@ -3,15 +3,24 @@ const links = document.querySelectorAll('.nav-menu li a');
 const burger = document.getElementById('burger')
 const cross = document.getElementById('cross')
 const burgerLinks = document.getElementById('burger-links')
+const foxUpperPath = '/static/img/includes/fox_upper.svg'
+const foxBottomPath = '/static/img/includes/fox_bottom.svg'
 
 /**
  * Определяет активную ссылку в меню
  * на основе текущего URL и добавляет класс "active".
 */
-async function getActiveLink(currentUrl, links) {
+async function getActiveLink(currentUrl, links, foxUpperPath, foxBottomPath) {
   links.forEach(function (link) {
     if (link.getAttribute('href') === currentUrl) {
-      link.classList.add('active')
+      const upperImg = document.createElement('img')
+      upperImg.classList.add('active-link')
+      upperImg.src = foxUpperPath
+      link.parentNode.insertBefore(upperImg, link)
+      const bottomImg = document.createElement('img')
+      bottomImg.classList.add('active-link', 'bottom')
+      bottomImg.src = foxBottomPath
+      link.parentNode.insertBefore(bottomImg, link.nextSibling)
     }
   })
 }
@@ -43,4 +52,4 @@ async function rollBurgerMenu(burger, cross, burgerLinks) {
 
 
 rollBurgerMenu(burger, cross, burgerLinks)
-getActiveLink(currentUrl, links)
+getActiveLink(currentUrl, links, foxUpperPath, foxBottomPath)
