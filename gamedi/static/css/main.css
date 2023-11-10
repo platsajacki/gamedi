@@ -70,6 +70,9 @@ main {
   list-style: none;
   display: flex;
 }
+.nav-menu li {
+  position: relative;
+}
 
 .nav-menu li a.user-menu {
   background-color: var(--main-pink);
@@ -88,8 +91,18 @@ main {
   text-align: center;
 }
 
-.nav-menu a.active {
-  background-color: #70efeb;
+.active-link {
+  position: absolute;
+  width: 3.5rem;
+  height: 2rem;
+  z-index: 1;
+  left: 34%;
+  top: -70%;
+}
+
+.active-link.bottom {
+  left: 38%;
+  top: 44%;
 }
 
 .logo {
@@ -98,6 +111,16 @@ main {
 
 .burger-menu {
   display: none;
+}
+
+.burger-menu .active-link {
+  left: 29.5%;
+  top: -50%;
+}
+
+.burger-menu .active-link.bottom {
+  left: 34%;
+  top: 40%;
 }
 
 .bar {

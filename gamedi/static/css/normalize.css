@@ -123,6 +123,10 @@
     width: 105%;
     margin-left: -6%;
   }
+
+  form.main label {
+    width: 170px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -172,6 +176,15 @@
   .content .game .price {
     max-width: 50%;
   }
+
+  .login {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  form.main input {
+    width: 400px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -194,5 +207,17 @@
 
   .content .game .description .text-description {
     font-size: 3vw;
+  }
+
+  .title {
+    font-size: 1.5em;
+  }
+
+  form.main input {
+    width: 85vw;
+  }
+
+  form.main label {
+    width: 45vw;
   }
 }
