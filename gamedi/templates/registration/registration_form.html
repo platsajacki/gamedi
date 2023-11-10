@@ -5,10 +5,16 @@
 {% endblock %}
 
 {% block content %}
-  <h2>Регистрация</h2>
-  <form method="post" action="{% url 'registration' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button class="" type="submit">Зарегистрироваться</button>
-  </form>
+  <div class="content">
+    <div class="login">
+      <div class="title">Регистрация</div>
+      <form class="main" method="post" action="{% url 'registration' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="buttons">
+            <button class="log-button-style" type="submit">Зарегистрироваться</button>
+          </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

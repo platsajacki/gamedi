@@ -1,28 +1,28 @@
 .login {
-    font-family: 'Circe Bold', sans-serif;
-    display: grid;
-    grid-template-rows: 15% 85%;
-    width: 500px;
-    height: 370px;
-    row-gap: 0.5rem;
-    justify-self: center;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    border: 0.2rem solid var(--main-orange);
-    border-radius: 25px;
-    padding: 1.5rem;
-		align-content: center;
+  font-family: 'Circe Bold', sans-serif;
+  display: grid;
+  grid-template-rows: 15% 85%;
+  width: 500px;
+  height: 370px;
+  row-gap: 0.5rem;
+  justify-self: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  border: 0.2rem solid var(--main-orange);
+  border-radius: 25px;
+  padding: 1.5rem;
+	align-content: center;
 }
 
 .title {
-    display: flex;
-    font-size: 1.8em;
-    color: var(--main-orange);
-    align-items: end;
-    justify-content: center;
+  display: flex;
+  font-size: 1.8em;
+  color: var(--main-orange);
+  align-items: end;
+  justify-content: center;
 }
 
-.login .bottoms {
+.login .buttons {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 1rem;
@@ -71,7 +71,7 @@ form.main input {
   box-sizing: border-box;
   border: 1px solid var(--main-orange);
   border-radius: 17.5px;
-	text-align: center;
+  text-align: center;
 	padding-top: 10px;
 }
 
@@ -80,7 +80,7 @@ form.main input:focus-visible {
 }
 
 
-form.main button {
+.log-button-style {
 	font-family: 'Circe Bold', sans-serif;
   width: 7em;
 	height: 1.8em;
@@ -91,7 +91,7 @@ form.main button {
 	background-color: #fff;
 }
 
-form.main button:hover {
+.log-button-style:hover {
   background-color: var(--main-orange);
   color: #fff;
 }
@@ -114,4 +114,28 @@ form.main .errorlist {
 	color: red;
 	z-index: 1;
 	padding-inline-end: 40px;
+}
+
+.logout {
+  grid-template-rows: 50% 25% 25%;
+  align-items: center;
+}
+
+.logout .title {
+  font-size: 2em;
+}
+
+img.sad-fox {
+  width: 20em;
+  height: 10em;
+  justify-self: center;
+  align-self: center;
+}
+
+a.log-button-style {
+  display: inline-flex;
+  text-decoration: none;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
 }
