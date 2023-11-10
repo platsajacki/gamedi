@@ -96,7 +96,7 @@ main {
   width: 3.5rem;
   height: 2rem;
   z-index: 1;
-  left: 35%;
+  left: 34%;
   top: -70%;
 }
 
@@ -114,7 +114,7 @@ main {
 }
 
 .burger-menu .active-link {
-  left: 30%;
+  left: 29.5%;
   top: -50%;
 }
 

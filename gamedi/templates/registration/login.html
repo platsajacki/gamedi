@@ -5,10 +5,21 @@
 {% endblock %}
 
 {% block content %}
-  <h2>Вход</h2>
-  <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button class="" type="submit">Вход</button>
-  </form>
+  <script type="module" src="/static/js/registration/login.js" defer></script>
+  <div class="content">
+    <div class="login">
+      <div class="title">Войди и раскрой тайны игр</div>
+      <form class="main" method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <a class="forgot-pass" href="{% url 'password_reset' %}">Забыли пароль?</a>
+          <div class="bottoms">
+            <button type="submit">Вход</button>
+            <button  id="registration-button" data-url="{% url 'registration' %}" type="submit">
+              Регистрация
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

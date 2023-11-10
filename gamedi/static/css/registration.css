@@ -1,0 +1,117 @@
+.login {
+    font-family: 'Circe Bold', sans-serif;
+    display: grid;
+    grid-template-rows: 15% 85%;
+    width: 500px;
+    height: 370px;
+    row-gap: 0.5rem;
+    justify-self: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    border: 0.2rem solid var(--main-orange);
+    border-radius: 25px;
+    padding: 1.5rem;
+		align-content: center;
+}
+
+.title {
+    display: flex;
+    font-size: 1.8em;
+    color: var(--main-orange);
+    align-items: end;
+    justify-content: center;
+}
+
+.login .bottoms {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+}
+
+form.main {
+  display: grid;
+	gap: 0.3rem;
+	grid-template-rows: auto;
+	justify-items: center;
+  align-items: center;
+	margin-top: 1rem;
+	align-content: center;
+}
+
+form.main p {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 1rem;
+	margin-top: 0;
+	position: relative;
+}
+
+form.main label {
+	display: flex;
+  position: absolute;
+	z-index: 1;
+	top: -10px;
+	left: 20px;
+	width: 180px;
+	height: 25px;
+	color: var(--main-orange);
+	border: 1px solid var(--main-orange);
+  border-radius: 17.5px;
+	background-color: #fff;
+	justify-content: flex-start;
+	align-items: center;
+	padding-left: 15px;
+}
+
+form.main input {
+  width: 450px;
+	height: 50px;
+	font-size: 1.15em;
+  box-sizing: border-box;
+  border: 1px solid var(--main-orange);
+  border-radius: 17.5px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+form.main input:focus-visible {
+	outline: var(--main-orange);
+}
+
+
+form.main button {
+	font-family: 'Circe Bold', sans-serif;
+  width: 7em;
+	height: 1.8em;
+  font-size: 1.2em;
+  color: var(--main-orange);
+  border: 0.2rem solid var(--main-orange);
+  border-radius: 2em;
+	background-color: #fff;
+}
+
+form.main button:hover {
+  background-color: var(--main-orange);
+  color: #fff;
+}
+
+form a.forgot-pass {
+  color: var(--main-grey);
+  width: 8em;
+  height: 1.4em;
+	font-size: 0.9em;
+	text-align: center;
+	justify-self: center;
+	padding-bottom: 0.7em;
+}
+
+form.main .errorlist {
+	font-family: 'Circe Light', sans-serif;
+	font-size: 0.9em;
+	list-style-type: none;
+	margin-top: -1.5rem;
+	color: red;
+	z-index: 1;
+	padding-inline-end: 40px;
+}

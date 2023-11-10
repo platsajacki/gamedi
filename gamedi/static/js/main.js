@@ -63,3 +63,12 @@ export async function changeImage(classImgName, changedAttr) {
   })
 }
 
+
+/** Присваивает по 'ID' ссылку указанную в 'data-url' в теге. */
+export async function getUrlById(id) {
+  document.getElementById(id).addEventListener(
+    'click', function() {
+      window.location.href = this.getAttribute('data-url')
+    }
+  )
+}
