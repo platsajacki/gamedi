@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="">
-    <div class="">
-      <div class="">
-        Вы вышли из системы!
+  <div class="content">
+    <div class="login logout">
+      <img class="sad-fox" src="/static/img/registration/sad_fox.svg">
+      <div class="title">
+        Вы вышли из системы
       </div>
-      <div class="">
-        <p><a class="" href="{% url 'login' %}">Войти снова</a></p>
-        <p><a class="" href="{% url 'games:home' %}">На главную</a></p>
+      <div class="buttons">
+        <a class="log-button-style" href="{% url 'login' %}">Войти снова</a>
+        <a class="log-button-style" href="{% url 'games:home' %}">На главную</a>
       </div>
     </div>
   </div>
