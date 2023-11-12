@@ -8,7 +8,7 @@
     width: 100%;
   }
 
-  .content .game .description .text-description {
+  .game .description .text-description {
     font-size: 1.15em;
   }
 }
@@ -29,7 +29,7 @@
 }
 
 @media (max-width: 1800px) {
-  .content .game .description .text-description {
+  .game .description .text-description {
     font-size: 1em;
   }
 }
@@ -48,7 +48,7 @@
     margin-right: -6.5rem;
   }
 
-  .content .game .description .text-description {
+  .game .description .text-description {
     font-size: 0.88em;
   }
 }
@@ -63,7 +63,7 @@
     margin-right: -6rem;
   }
 
-  .content .game .price {
+  .price {
     font-size: 1.2em;
   }
 }
@@ -90,26 +90,24 @@
     display: block;
   }
 
-  .content .game {
+  .game {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 1fr);
-    align-items: start;
   }
 
- .content .game img {
+  .game img {
     height: 50vw;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  .content .game .description {
+  .game .description {
     padding: 0;
   }
 
-  .content .game .description .text-description {
+  .game .description .text-description {
     font-size: 1.2em;
   }
 
-  .content .game .price {
+  .price {
     max-width: 30%;
     font-size: 1.5em;
   }
@@ -126,6 +124,14 @@
 
   form.main label {
     width: 170px;
+  }
+
+  .game-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .game-detail img.main {
+    margin-bottom: 2rem;
   }
 }
 
@@ -160,20 +166,16 @@
     margin-right: -4rem;
   }
 
-  .content .game img {
-    align-items: end;
-  }
-
-  .content .game .description {
+  .game .description {
     padding: 0;
     grid-template-rows: 15% auto;
   }
 
-  .content .game .description .text-description {
+  .game .description .text-description {
     font-size: 1.1em;
   }
 
-  .content .game .price {
+  .price {
     max-width: 50%;
   }
 
@@ -201,11 +203,11 @@
     margin-right: 2rem;
   }
 
-  .content .game-name {
+  .game-name {
     font-size: 1.25em;
   }
 
-  .content .game .description .text-description {
+  .game .description .text-description {
     font-size: 3vw;
   }
 

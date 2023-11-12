@@ -1,19 +1,38 @@
 .game-detail {
   display: grid;
-  grid-template-rows: 1fr auto;
-	margin-top: 3rem;
+  grid-template-columns: 40% 60%;
+	margin-top: 4rem;
+  gap: 1rem;
 }
 
-.game-detail .game-name {
-	display: grid;
-	justify-self: center;
+.game-detail .description {
+  padding-left: 0;
 }
 
-.game-name a.name-detail {
-	font-size: calc(0.9em + 15 * (100vw - 320px) / 2240);
+.game-detail img.main:hover {
+  transform: scale(1.2);
 }
 
-img.main-detail {
-  width: 70%;
-  justify-self: center;
+.game-detail .left {
+  display: grid;
+  grid-template-rows: 10% 90%;
+}
+
+.game-detail .line-circle-left {
+  display: flex;
+}
+
+.game-detail .line-circle-left .circle {
+  background-color: var(--main-pink);
+}
+
+.game-detail .line-circle-left .line {
+  width: 112.5%;
+  margin-top: 0.30em;
+  background-color: var(--main-pink);
+  margin-left: -15%;
+}
+
+.game-detail .price {
+  max-width: 30%;
 }

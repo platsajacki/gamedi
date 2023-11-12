@@ -9,13 +9,27 @@
   <script type="module" src="/static/js/games/game_detail.js" defer></script>
   <div class="content">
     <div class="game-detail">
-      <div class="game-name">
-        <a class="name-detail" href="{% url 'games:detail' game.slug %}">
-          {{ game.name }}
-        </a>
+      <div class="left">
+        <div class="line-circle-left">
+          <div class="line"></div><div class="circle"></div>
+         </div>
+        <img class="main main-detail" src="{{ game.cover.url }}" hover-src="{{ game.hover_cover.url }}">
       </div>
-      <img class="main main-detail" src="{{ game.cover.url }}" hover-src="{{ game.hover_cover.url }}">
       <div class="description">
+        <div class="game-name">
+          <a class="name-detail" href="{% url 'games:detail' game.slug %}">
+            {{ game.name }}
+          </a>
+        </div>
+        <div class="price">
+          <div class="final">
+            {{ game.final_price }}&nbsp;<b>₽</b>
+          </div>
+          <div class="main">
+            {{ game.price }}
+          </div>
+          <a class="buy" href="#">Купить</a>
+        </div>
         <div id="text-description" class="text-description">
           {{ game.description }}
         </div>
@@ -26,9 +40,6 @@
             {{ game.min_players }}-{{ game.max_players }}
           {% endif %}
           <img class="avatar" src="{% static 'img/games/avatar_description.png' %}">
-          <div class="price">
-            {{ game.price }} - {{ game.discount }}% - {{ game.final_price }}<br>
-          </div>
         </div>
       </div>
     </div>

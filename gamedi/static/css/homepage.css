@@ -123,7 +123,7 @@ img.avatar {
   margin-bottom: -0.05em;
 }
 
-.game .description {
+.description {
   display: grid;
   font-size: calc(12px + 13 * (100vw - 320px) / 2240);
   grid-template-rows: 15% auto;
@@ -135,7 +135,7 @@ img.avatar {
   width: 100%;
 }
 
-.game .description .text-description {
+.description .text-description {
   display: flex;
   align-items: center;
   padding-bottom: 1%;
@@ -164,7 +164,7 @@ img.avatar {
   height: 1.4em;
 }
 
-.game .price {
+.price {
   font-family: 'Circe Bold', sans-serif;
   font-size: 1.5em;
   display: grid;
@@ -173,14 +173,14 @@ img.avatar {
   align-items: center;
 }
 
-.game .price .final {
+.price .final {
   display: flex;
   font-size: 1.3em;
   color: var(--main-pink);
   margin-right: 0.3em;
 }
 
-.game .price .main {
+.price .main {
   color: var(--main-grey);
   text-decoration: line-through;
   font-size: 0.9em;

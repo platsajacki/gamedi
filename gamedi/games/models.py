@@ -64,6 +64,15 @@ class Game(NameString, Description, SlugModel,
         ],
         verbose_name='Количество игровых часов'
     )
+    age_restriction = models.PositiveSmallIntegerField(
+        validators=[
+            MaxValueValidator(
+                limit_value=18,
+                message='Возрастные ограничения могут быть от 0+ до 18+.'
+            )
+        ],
+        verbose_name='Возрастные ограничения'
+    )
     price = models.DecimalField(
         max_digits=7,
         decimal_places=0,
