@@ -11,7 +11,7 @@
   border: 0.2rem solid var(--main-orange);
   border-radius: 25px;
   padding: 1.5rem;
-	align-content: center;
+	align-content: space-around;
 }
 
 .title {
@@ -109,11 +109,12 @@ form a.forgot-pass {
 form.main .errorlist {
 	font-family: 'Circe Light', sans-serif;
 	font-size: 0.85em;
-	margin-top: -1.5rem;
+	margin-top: -0.85rem;
   margin-bottom: 1rem;
   margin-right: 1rem;
 	color: red;
   width: 75%;
+  text-align: justify;
 }
 
 .logout {
@@ -143,7 +144,7 @@ a.log-button-style {
 .registration {
   align-self: center;
   align-items: center;
-  height: 480px;
+  height: 530px;
   grid-template-rows: 15% 85%;
 }
 
@@ -155,14 +156,6 @@ a.log-button-style {
 
 .registration .log-button-style {
   width: 11em;
-}
-
-.registration ul:not(.errorlist) {
-  display: none;
-}
-
-.registration .helptext {
-  display: none;
 }
 
 .reset {
@@ -182,4 +175,23 @@ form.reset {
 
 .reset .log-button-style {
   width: 11em;
+}
+
+
+.reset-done {
+  grid-template-rows: auto;
+}
+
+.reset-done .title {
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.text-style {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.05em;
+  color: var(--main-orange);
+  justify-content: center;
+  text-align: justify;
 }

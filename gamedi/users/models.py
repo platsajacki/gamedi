@@ -7,6 +7,10 @@ from games.models import Game
 
 class User(AbstractUser):
     """Модель для хранения информации о пользователях."""
+    email = models.EmailField(
+        blank=False, unique=True,
+        verbose_name='Электронная почта'
+    )
     games = models.ManyToManyField(
         Game,
         related_name='users',

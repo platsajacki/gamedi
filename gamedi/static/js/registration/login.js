@@ -11,4 +11,4 @@ async function wiretapping () {
 
 
 await getUrlById(registrationButton)
-await wiretapping ()
+await wiretapping()

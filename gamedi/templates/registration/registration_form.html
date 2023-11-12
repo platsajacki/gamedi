@@ -11,7 +11,15 @@
       <div class="title">Регистрация</div>
       <form class="main registration" method="post" action="{% url 'registration' %}">
           {% csrf_token %}
-          {{ form.as_p }}
+          {% for field in form %}
+            {{ field.errors }}
+            <p>
+              <label for="{{ field.id_for_label }}">
+                {{ field.label }}:
+              </label>
+              {{ field }}
+            </p>
+          {% endfor %}
           <div class="buttons">
             <button class="log-button-style" type="submit">Зарегистрироваться</button>
           </div>
