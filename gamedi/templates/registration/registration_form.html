@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block content %}
+  <script type="module" src="/static/js/registration/registration.js" defer></script>
   <div class="content">
-    <div class="login">
+    <div class="login registration">
       <div class="title">Регистрация</div>
-      <form class="main" method="post" action="{% url 'registration' %}">
+      <form class="main registration" method="post" action="{% url 'registration' %}">
           {% csrf_token %}
           {{ form.as_p }}
           <div class="buttons">
