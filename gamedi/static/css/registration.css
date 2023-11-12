@@ -21,6 +21,7 @@
   color: var(--main-orange);
   align-items: end;
   justify-content: center;
+  text-align: center;
 }
 
 .login .buttons {
@@ -204,4 +205,14 @@ form.reset {
 
 .button-reset-confirm {
   width: 11em;
+}
+
+.complete {
+  grid-template-rows: auto;
+}
+
+/* Изменение пароля. */
+
+.change_pass {
+  height: 450px;
 }
