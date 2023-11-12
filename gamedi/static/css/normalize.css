@@ -221,3 +221,10 @@
     width: 45vw;
   }
 }
+
+
+@media (max-width: 370px) {
+  form.main label {
+    width: 50vw;
+  }
+}

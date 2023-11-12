@@ -1,3 +1,6 @@
+const mainOrangeColor = 'var(--main-orange)'
+const whiteColor = '#fff'
+
 /**
  * Проверяет, состоит ли строка только из
  * букв латинского и кириллического алфавитов.
@@ -71,4 +74,41 @@ export async function getUrlById(id) {
       window.location.href = this.getAttribute('data-url')
     }
   )
+}
+
+
+/** В форме обновляет цвет 'label' при фокусе на 'input'. */
+export async function setLalbelByFocusInput(formClass) {
+  const form = document.querySelector(formClass)
+  form.querySelectorAll('input').forEach(
+    input => {
+      const label = document.querySelector(`label[for="${input.id}"]`)
+
+      if (label) {
+        async function handleFocus() {
+          label.style.backgroundColor = mainOrangeColor;
+          label.style.color = whiteColor;
+        }
+
+        async function handleBlur() {
+          label.style.backgroundColor = whiteColor;
+          label.style.color = mainOrangeColor;
+        }
+
+        input.addEventListener('focus', handleFocus)
+        input.addEventListener('blur', handleBlur)
+
+        if (input.hasAttribute('autofocus')) {
+          handleFocus()
+        }
+      }
+    }
+  )
+}
+
+
+/** Меняет текст 'label' элемента 'input'. */
+export async function changeTextContentByInput(idInput, textContent) {
+  const input = document.getElementById(idInput)
+  input.previousElementSibling.textContent = textContent
 }
