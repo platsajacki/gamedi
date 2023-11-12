@@ -11,7 +11,7 @@
       <div class="title">Войди и раскрой тайны игр</div>
       <form class="main" method="post" action="{% url 'login' %}">
           {% csrf_token %}
-          {{ form.as_p }}
+          {% include "includes/custom_form.html" %}
           <a class="forgot-pass" href="{% url 'password_reset' %}">Забыли пароль?</a>
           <div class="buttons">
             <button class="log-button-style" type="submit">Вход</button>

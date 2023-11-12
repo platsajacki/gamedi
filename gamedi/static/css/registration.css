@@ -1,3 +1,4 @@
+/* Вход-основа. */
 .login {
   font-family: 'Circe Bold', sans-serif;
   display: grid;
@@ -79,7 +80,7 @@ form.main input:focus-visible {
 	outline: var(--main-orange);
 }
 
-
+/* Онова кнопки. */
 .log-button-style {
 	font-family: 'Circe Bold', sans-serif;
   width: 7em;
@@ -117,6 +118,8 @@ form.main .errorlist {
   text-align: justify;
 }
 
+
+/* Выход. */
 .logout {
   grid-template-rows: 50% 25% 25%;
   align-items: center;
@@ -141,6 +144,7 @@ a.log-button-style {
   justify-content: center;
 }
 
+/* Регистрация. */
 .registration {
   align-self: center;
   align-items: center;
@@ -158,6 +162,8 @@ a.log-button-style {
   width: 11em;
 }
 
+
+/* Востановление пароля по почте. */
 .reset {
   grid-template-rows: 35% 65%;
 }
@@ -194,4 +200,8 @@ form.reset {
   color: var(--main-orange);
   justify-content: center;
   text-align: justify;
+}
+
+.button-reset-confirm {
+  width: 11em;
 }
