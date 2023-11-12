@@ -8,6 +8,7 @@
 {% block content %}
   <h2>{{ user.username }}</h2>
   <a href="{% url 'users:update' user.username %}">Обновить профиль</a>
+  <a href="{% url 'password_change' %}">Сменить пароль</a>
   <h3>Список игр пользователя:</h3>
   <ul>
     {% for game in user.games.all %}

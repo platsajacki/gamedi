@@ -110,5 +110,7 @@ export async function setLalbelByFocusInput(formClass) {
 /** Меняет текст 'label' элемента 'input'. */
 export async function changeTextContentByInput(idInput, textContent) {
   const input = document.getElementById(idInput)
-  input.previousElementSibling.textContent = textContent
+  if (input) {
+    input.previousElementSibling.textContent = textContent
+  }
 }

@@ -8,7 +8,7 @@ class UserCreateForm(UserCreationForm):
     """Кастомная форма регистрации пользователя."""
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('username', 'email')
         field_classes = {'username': UsernameField}
 
 

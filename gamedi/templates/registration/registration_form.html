@@ -11,7 +11,7 @@
       <div class="title">Регистрация</div>
       <form class="main registration" method="post" action="{% url 'registration' %}">
           {% csrf_token %}
-          {{ form.as_p }}
+          {% include "includes/custom_form.html" %}
           <div class="buttons">
             <button class="log-button-style" type="submit">Зарегистрироваться</button>
           </div>
