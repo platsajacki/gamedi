@@ -1,5 +1,8 @@
 const mainOrangeColor = 'var(--main-orange)'
 const whiteColor = '#fff'
+export const coefImgMain = 0.15
+export const minRadiusImgMain = 40
+
 
 /**
  * Проверяет, состоит ли строка только из
@@ -41,10 +44,10 @@ export async function getMaxWordsInElement(className, maxWords) {
 
 
 /** Устанавливает 'border-radius' в зависимости от coef высоты объекта. */
-export async function setBorderRadiusBasedOnHeight(className, coef) {
+export async function setBorderRadiusBasedOnHeight(className, coef, minRadius) {
   const elements = document.querySelectorAll(className)
   elements.forEach(element => {
-    element.style.borderRadius = element.height * coef + 'px'
+  element.style.borderRadius = Math.max(element.height * coef, minRadius) + 'px'
   })
 }
 

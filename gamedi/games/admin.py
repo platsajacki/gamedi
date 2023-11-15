@@ -1,4 +1,6 @@
+from django.db.models import QuerySet
 from django.contrib import admin
+from django.http import HttpRequest
 
 from .models import Game, Genre, AdminGameFile, UserGameFile
 
@@ -16,6 +18,10 @@ class AdminGameFileInline(admin.TabularInline):
         'is_published', 'file',
     )
 
+    def get_queryset(self, request: HttpRequest) -> QuerySet:
+        """Получение QuerySet файлов через административный менеджер."""
+        return AdminGameFile.admin_objects.all()
+
 
 class UserGameFileInline(admin.TabularInline):
     """
@@ -29,6 +35,10 @@ class UserGameFileInline(admin.TabularInline):
         'name', 'order_number',
         'is_published', 'file',
     )
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet:
+        """Получение QuerySet файлов через административный менеджер."""
+        return UserGameFile.admin_objects.all()
 
 
 @admin.register(Genre)

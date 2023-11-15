@@ -1,5 +1,6 @@
 import {
-  getMaxWordsInElement, setBorderRadiusBasedOnHeight, changeImage
+  getMaxWordsInElement, setBorderRadiusBasedOnHeight, changeImage,
+  minRadiusImgMain, coefImgMain
 } from '../main.js'
 
 const maxWordsInGame = 60
@@ -45,7 +46,7 @@ async function wiretapping () {
   }
   for (const action of ['resize', 'load']) {
       window.addEventListener(action,
-        async () => await setBorderRadiusBasedOnHeight(gameImgMain, 0.15)
+        async () => await setBorderRadiusBasedOnHeight(gameImgMain, coefImgMain, minRadiusImgMain)
       )
   }
   await changeImage(gameImgMain, hoverSrcGameImgMain)

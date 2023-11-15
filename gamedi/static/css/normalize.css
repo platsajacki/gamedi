@@ -64,7 +64,7 @@
   }
 
   .price {
-    font-size: 1.2em;
+    font-size: 1.3em;
   }
 }
 
@@ -95,7 +95,7 @@
   }
 
   .game img {
-    height: 50vw;
+    height: 90%;
     margin-bottom: 1.5rem;
   }
 
@@ -128,10 +128,11 @@
 
   .game-detail {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
-  .game-detail img.main {
-    margin-bottom: 2rem;
+  .game-detail .description {
+    margin-top: 7%;
   }
 }
 
@@ -168,7 +169,6 @@
 
   .game .description {
     padding: 0;
-    grid-template-rows: 15% auto;
   }
 
   .game .description .text-description {
