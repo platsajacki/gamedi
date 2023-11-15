@@ -4,9 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
 
-from .managers import (
-    GameQuerySet, GameManager, AdminGameFileManager, UserGameFileManager
-)
+from .managers import GameQuerySet, GameManager
 from .validators import validate_order_number
 from .utils import get_cover_path, get_hover_path
 from core.models import (
@@ -140,9 +138,6 @@ class AdminGameFile(NameString, FileModel, models.Model):
         verbose_name='Игра',
     )
 
-    objects = AdminGameFileManager()
-    admin_objects = models.Manager()
-
     class Meta:
         verbose_name = 'Файл игры для администратора'
         verbose_name_plural = 'Файлы игр для администратора'
@@ -162,9 +157,6 @@ class UserGameFile(NameString, FileModel, models.Model):
         related_name='users_files',
         verbose_name='Игра',
     )
-
-    objects = UserGameFileManager()
-    admin_objects = models.Manager()
 
     class Meta:
         verbose_name = 'Файл игры для пользователя'
