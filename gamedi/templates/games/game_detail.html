@@ -9,26 +9,47 @@
   <script type="module" src="/static/js/games/game_detail.js" defer></script>
   <div class="content">
     <div class="game-detail">
-      <div class="game-name">
-        <a class="name-detail" href="{% url 'games:detail' game.slug %}">
-          {{ game.name }}
-        </a>
+      <div class="left">
+        <div class="line-circle-left">
+          <div class="line"></div><div class="circle"></div>
+        </div>
+        <div class="scroll-img">
+          <img class="main main-detail" src="{{ game.cover.url }}" hover-src="{{ game.hover_cover.url }}">
+          <div class="scroll">
+            <button id="scroll-left"></button>
+            {% for admin_file in game.admin_files.all %}
+              <img src="{{ admin_file.file.url }}">
+            {% endfor %}
+            <button id="scroll-right"></button>
+          </div>
+        </div>
       </div>
-      <img class="main main-detail" src="{{ game.cover.url }}" hover-src="{{ game.hover_cover.url }}">
       <div class="description">
+        <div class="game-name">
+          <a class="name-detail" href="{% url 'games:detail' game.slug %}">
+            {{ game.name }}
+          </a>
+        </div>
+        <div class="price">
+          <div class="final">
+            {{ game.final_price }}&nbsp;<b>₽</b>
+          </div>
+          <div class="main">
+            {{ game.price }}
+          </div>
+          <a class="buy" href="#">Купить</a>
+        </div>
         <div id="text-description" class="text-description">
           {{ game.description }}
         </div>
         <div class="param-description">
-          {% if game.min_players == game.max_players %}
+          Возрастные ограничения: <span>{{ game.age_restriction }}+</span><br>
+          Количество участников: <span>{% if game.min_players == game.max_players %}
             {{ game.max_players }}
           {% else %}
             {{ game.min_players }}-{{ game.max_players }}
-          {% endif %}
-          <img class="avatar" src="{% static 'img/games/avatar_description.png' %}">
-          <div class="price">
-            {{ game.price }} - {{ game.discount }}% - {{ game.final_price }}<br>
-          </div>
+          {% endif %}</span><br>
+          Примерное время игры: <span>{{ game.time }} ч.</span>
         </div>
       </div>
     </div>

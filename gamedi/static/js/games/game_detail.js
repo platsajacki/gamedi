@@ -1,17 +1,17 @@
-import { setBorderRadiusBasedOnHeight, changeImage } from '../main.js'
+import { setBorderRadiusBasedOnHeight, minRadiusImgMain, coefImgMain } from '../main.js'
 
 const gameImgMain = '.game-detail img.main'
-const hoverSrcGameImgMain = 'hover-src'
 
 
 /** Активирует все прослушки 'games_list'. */
 async function wiretapping () {
   for (const action of ['resize', 'load']) {
       window.addEventListener(action,
-        async () => await setBorderRadiusBasedOnHeight(gameImgMain, 0.15)
+        async () => await setBorderRadiusBasedOnHeight(
+          gameImgMain, coefImgMain, minRadiusImgMain
+        )
       )
   }
-  await changeImage(gameImgMain, hoverSrcGameImgMain)
 }
 
 

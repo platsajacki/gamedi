@@ -18,7 +18,6 @@ urlpatterns = [
     path('profile/', include('users.urls', namespace='users')),
 ]
 
-handler403 = 'pages.views.page_not_found'
 handler404 = 'pages.views.page_not_found'
 handler500 = 'pages.views.server_error'
 

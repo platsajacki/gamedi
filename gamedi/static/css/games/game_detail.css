@@ -1,19 +1,74 @@
 .game-detail {
   display: grid;
-  grid-template-rows: 1fr auto;
-	margin-top: 3rem;
+  grid-template-columns: 40% 60%;
+	margin-top: 4rem;
+  gap: 2rem;
 }
 
-.game-detail .game-name {
-	display: grid;
-	justify-self: center;
+.game-detail .description {
+  padding: 0;
 }
 
-.game-name a.name-detail {
-	font-size: calc(0.9em + 15 * (100vw - 320px) / 2240);
+.game-detail .text-description {
+  padding: 0;
+  margin-bottom: 2%;
 }
 
-img.main-detail {
-  width: 70%;
-  justify-self: center;
+.game-detail .param-description {
+  color: var(--main-grey);
+  padding: 0;
+  font-weight: bold;
+}
+
+.game-detail .param-description span {
+  color: black;
+  font-weight: lighter;
+}
+
+.game-detail .left {
+  display: grid;
+  grid-template-rows: 10% 90%;
+}
+
+.game-detail .line-circle-left {
+  display: flex;
+  padding-top: 0.3rem;
+}
+
+.game-detail .line-circle-left .circle {
+  background-color: var(--main-pink);
+}
+
+.game-detail .line-circle-left .line {
+  width: 112.5%;
+  margin-top: 0.30em;
+  background-color: var(--main-pink);
+  margin-left: -15%;
+}
+
+.game-detail .price {
+  max-width: 30%;
+  margin-bottom: 2%;
+}
+
+.scroll-img {
+  display: grid;
+  grid-template-rows: min-content auto;
+  gap: 10px;
+}
+
+.scroll-img .scroll {
+  display: grid;
+  grid-template-columns: 5% repeat(4, 20%) 5%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.scroll-img .scroll img {
+  width: 7.5rem;
+  height: 4.7rem;
+}
+
+.scroll-img .scroll button  {
+  background-color: aqua;
 }

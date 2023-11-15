@@ -2,6 +2,7 @@ from django.db.models import QuerySet, Manager
 
 
 class GameQuerySet(QuerySet):
+    """QuerySet для работы с моделью Game."""
     def related_tables(self) -> 'GameQuerySet':
         """
         Отимизирует запрос, присоединяя таблицы.
@@ -10,8 +11,8 @@ class GameQuerySet(QuerySet):
 
     def published(self) -> 'GameQuerySet':
         """
-        Возвращает QuerySet, который фильтрует опубликованые игры
-        и принадлежат опубликованным жанрам.
+        Возвращает QuerySet, фильтрующий опубликованные игры,
+        принадлежащие опубликованным жанрам.
         """
         return self.filter(
             is_published=True,
@@ -20,13 +21,54 @@ class GameQuerySet(QuerySet):
 
 
 class GameManager(Manager):
-    """
-    Возвращает QuerySet для модели Game
-    с выбранными связанными таблицами и фильтрацией для опубликованных игр.
-    """
+    """Manager для работы с моделью Game."""
     def get_queryset(self) -> GameQuerySet:
+        """
+        Возвращает QuerySet для модели Game
+        с выбранными связанными таблицами и фильтрацией для опубликованных игр.
+        """
         return (
             GameQuerySet(self.model)
             .related_tables()
             .published()
         )
+
+
+class AdminGameFileQuerySet(QuerySet):
+    """QuerySet для работы с моделью AdminGameFile."""
+    def published(self) -> 'AdminGameFileQuerySet':
+        """
+        Возвращает QuerySet,
+        фильтрующий опубликованные админские файлы игры.
+        """
+        return self.filter(is_published=True)
+
+
+class AdminGameFileManager(Manager):
+    """Manager для работы с моделью AdminGameFile."""
+    def get_queryset(self) -> 'AdminGameFileQuerySet':
+        """
+        Возвращает QuerySet для модели UserGameFile
+        с отфильтрованными опубликованными админскими файлами игры.
+        """
+        return AdminGameFileQuerySet(self.model).published()
+
+
+class UserGameFileQuerySet(QuerySet):
+    """QuerySet для работы с моделью UserGameFile."""
+    def published(self) -> 'UserGameFileQuerySet':
+        """
+        Возвращает QuerySet,
+        фильтрующий опубликованые пользовательские файлы игры.
+        """
+        return self.filter(is_published=True)
+
+
+class UserGameFileManager(Manager):
+    """Manager для работы с моделью UserGameFile."""
+    def get_queryset(self) -> 'UserGameFileQuerySet':
+        """
+        Возвращает QuerySet для модели UserGameFile
+        с отфильтрованными опубликованными пользовательскими файлами игры.
+        """
+        return UserGameFileQuerySet(self.model).published()
