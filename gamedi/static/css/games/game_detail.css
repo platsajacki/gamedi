@@ -53,22 +53,44 @@
 
 .scroll-img {
   display: grid;
-  grid-template-rows: min-content auto;
+  grid-template-rows: min-content 20%;
   gap: 10px;
 }
 
 .scroll-img .scroll {
   display: grid;
-  grid-template-columns: 5% repeat(4, 20%) 5%;
+  grid-template-columns: 10% repeat(4, 20%) 10%;
   margin-left: 1rem;
   margin-right: 1rem;
+  align-items: center;
+  justify-items: center;
 }
 
 .scroll-img .scroll img {
   width: 7.5rem;
   height: 4.7rem;
+  border-radius: 20px;
 }
 
-.scroll-img .scroll button  {
-  background-color: aqua;
+.scroll-arrow  {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.scroll-arrow div:before,
+.scroll-arrow div:after {
+  content: '';
+  position: absolute;
+  width: 3.5rem;
+  height: 0.9rem;
+  border-radius: 0.45rem;
+  background-color: var(--main-grey);
+}
+
+.scroll-arrow div:before {
+  transform: rotate(45deg);
+}
+
+.scroll-arrow div:after {
+  transform: rotate(-45deg);
 }

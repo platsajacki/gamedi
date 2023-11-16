@@ -4,7 +4,9 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
 
-from .managers import GameQuerySet, GameManager
+from .managers import (
+    GameQuerySet, GameManager, AdminGameFileQuerySet, UserGameFileQuerySet
+)
 from .validators import validate_order_number
 from .utils import get_cover_path, get_hover_path
 from core.models import (
@@ -116,6 +118,7 @@ class Game(NameString, Description, SlugModel,
     def save(
             self, *args: tuple[Any], **kwargs: dict[str, Any]
     ) -> None:
+        """Высчитывает final_price перед сохранением."""
         self.final_price = round(self.price * (1 - self.discount / 100), 0)
         super().save(*args, **kwargs)
 
@@ -138,6 +141,8 @@ class AdminGameFile(NameString, FileModel, models.Model):
         verbose_name='Игра',
     )
 
+    objects = AdminGameFileQuerySet.as_manager()
+
     class Meta:
         verbose_name = 'Файл игры для администратора'
         verbose_name_plural = 'Файлы игр для администратора'
@@ -157,6 +162,8 @@ class UserGameFile(NameString, FileModel, models.Model):
         related_name='users_files',
         verbose_name='Игра',
     )
+
+    objects = UserGameFileQuerySet.as_manager()
 
     class Meta:
         verbose_name = 'Файл игры для пользователя'
