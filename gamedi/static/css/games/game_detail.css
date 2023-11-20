@@ -53,8 +53,9 @@
 
 .scroll-img {
   display: grid;
-  grid-template-rows: min-content 20%;
+  grid-template-rows: min-content min-content;
   gap: 10px;
+  justify-items: center
 }
 
 .scroll-img .scroll {
@@ -67,30 +68,40 @@
 }
 
 .scroll-img .scroll img {
-  width: 7.5rem;
-  height: 4.7rem;
-  border-radius: 20px;
+  width: 97.5%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .scroll-arrow  {
-  display: inline-block;
   cursor: pointer;
+}
+
+.scroll-arrow div {
+  position: relative;
+  font-size: calc(7px + 12 * (100vw - 320px) / 2240);;
 }
 
 .scroll-arrow div:before,
 .scroll-arrow div:after {
   content: '';
   position: absolute;
-  width: 3.5rem;
-  height: 0.9rem;
-  border-radius: 0.45rem;
+  width: 2.4em;
+  height: 0.7em;
+  border-radius: 0.45em;
   background-color: var(--main-grey);
 }
 
 .scroll-arrow div:before {
-  transform: rotate(45deg);
+  bottom: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .scroll-arrow div:after {
-  transform: rotate(-45deg);
+  top: 0.6em;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.scroll .left-arrow {
+  scale: -1;
 }
