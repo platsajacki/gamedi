@@ -53,22 +53,69 @@
 
 .scroll-img {
   display: grid;
-  grid-template-rows: min-content auto;
+  grid-template-rows: min-content min-content;
   gap: 10px;
+  justify-items: center
 }
 
 .scroll-img .scroll {
   display: grid;
-  grid-template-columns: 5% repeat(4, 20%) 5%;
+  grid-template-columns: 10% 80% 10%;
   margin-left: 1rem;
   margin-right: 1rem;
+  align-items: center;
+  justify-items: center;
 }
 
-.scroll-img .scroll img {
-  width: 7.5rem;
-  height: 4.7rem;
+.scroll-img .box-img {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  align-items: center;
+  justify-items: center;
+  grid-template-rows: 1fr;
+  grid-auto-rows: 0;
+  row-gap: 0;
 }
 
-.scroll-img .scroll button  {
-  background-color: aqua;
+.scroll-img .scroll .box-img img {
+  width: 97.5%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.scroll-arrow {
+  cursor: pointer;
+}
+
+.scroll-arrow div {
+  position: relative;
+  font-size: calc(7px + 12 * (100vw - 320px) / 2240);
+}
+
+.scroll-arrow div:before,
+.scroll-arrow div:after {
+  content: '';
+  position: absolute;
+  width: 2.4em;
+  height: 0.7em;
+  border-radius: 0.45em;
+  background-color: var(--main-grey);
+}
+
+.scroll-arrow div:before {
+  bottom: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.scroll-arrow div:after {
+  top: 0.6em;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.scroll-arrow div:active {
+  transform: translateX(2px);
+}
+
+.scroll .left-arrow {
+  scale: -1;
 }

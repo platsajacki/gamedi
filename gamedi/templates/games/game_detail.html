@@ -14,13 +14,21 @@
           <div class="line"></div><div class="circle"></div>
         </div>
         <div class="scroll-img">
-          <img class="main main-detail" src="{{ game.cover.url }}" hover-src="{{ game.hover_cover.url }}">
+          <img class="main main-detail" src="{{ game.cover.url }}">
           <div class="scroll">
-            <button id="scroll-left"></button>
-            {% for admin_file in game.admin_files.all %}
-              <img src="{{ admin_file.file.url }}">
-            {% endfor %}
-            <button id="scroll-right"></button>
+            <div class="scroll-arrow left-arrow" id="scroll-left">
+              <div>
+              </div>
+            </div>
+            <div class="box-img">
+              {% for admin_file in game.admin_files.published %}
+                <img src="{{ admin_file.file.url }}">
+              {% endfor %}
+            </div>
+            <div class="scroll-arrow right-arrow" id="scroll-right">
+              <div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

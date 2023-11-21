@@ -117,7 +117,7 @@ img.main {
 
 .description {
   display: grid;
-  font-size: calc(12px + 13 * (100vw - 320px) / 2240);
+  font-size: calc(12px + 12 * (100vw - 320px) / 2240);
   grid-template-rows: auto;
   box-sizing: border-box;
   text-align: left;
