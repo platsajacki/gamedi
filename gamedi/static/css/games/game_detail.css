@@ -60,26 +60,36 @@
 
 .scroll-img .scroll {
   display: grid;
-  grid-template-columns: 10% repeat(4, 20%) 10%;
+  grid-template-columns: 10% 80% 10%;
   margin-left: 1rem;
   margin-right: 1rem;
   align-items: center;
   justify-items: center;
 }
 
-.scroll-img .scroll img {
+.scroll-img .box-img {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  align-items: center;
+  justify-items: center;
+  grid-template-rows: 1fr;
+  grid-auto-rows: 0;
+  row-gap: 0;
+}
+
+.scroll-img .scroll .box-img img {
   width: 97.5%;
   height: 100%;
   object-fit: contain;
 }
 
-.scroll-arrow  {
+.scroll-arrow {
   cursor: pointer;
 }
 
 .scroll-arrow div {
   position: relative;
-  font-size: calc(7px + 12 * (100vw - 320px) / 2240);;
+  font-size: calc(7px + 12 * (100vw - 320px) / 2240);
 }
 
 .scroll-arrow div:before,
@@ -100,6 +110,10 @@
 .scroll-arrow div:after {
   top: 0.6em;
   transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.scroll-arrow div:active {
+  transform: translateX(2px);
 }
 
 .scroll .left-arrow {
