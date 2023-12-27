@@ -14,5 +14,12 @@ async function wiretapping () {
   }
 }
 
+// const scrollRight = document.getElementById('scroll-right')
+// const boxImg = document.getElementById('box-img')
+
+// scrollRight.addEventListener('click', function() {
+//     boxImg
+//   }
+// )
 
 await wiretapping()
