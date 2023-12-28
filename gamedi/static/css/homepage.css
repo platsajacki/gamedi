@@ -106,12 +106,12 @@
 img.main {
   box-sizing: border-box;
   width: 100%;
-  border: 0.7rem solid var(--main-pink);
+  border: calc(6px + 6 * (100vw - 320px) / 2240) solid var(--main-pink);
   transition: border-radius 0.45s;
 }
 
 .game img.main:hover {
-  border-color: transparent;
+  border-color: transparent !important;
   transform: scale(1.1);
 }
 

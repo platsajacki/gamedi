@@ -50,10 +50,8 @@ class GenreAdmin(admin.ModelAdmin):
 class GameAdmin(admin.ModelAdmin):
     """Настройка панели администратора для модели 'Game'."""
     list_display = (
-        'order_number', 'is_published',
-        'name', 'genre', 'price',
-        'discount', 'final_price',
-        'id', 'created'
+        'order_number', 'is_published', 'name', 'genre',
+        'price', 'discount', 'final_price', 'id', 'created'
     )
     list_display_links = ('name',)
     inlines = [
@@ -75,9 +73,9 @@ class GameAdmin(admin.ModelAdmin):
             'Параметры',
             {
                 'fields': (
-                    'genre', 'description',
+                    'genre', 'age_restriction', 'description',
                     'min_players', 'max_players', 'time',
-                    'price', 'discount',
+                    'price', 'discount'
                 ),
             }
         ),

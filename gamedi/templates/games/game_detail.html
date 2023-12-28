@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  {{ game.name }}
+  {{ object.name }}
 {% endblock %}
 
 {% block content %}
@@ -14,50 +14,51 @@
           <div class="line"></div><div class="circle"></div>
         </div>
         <div class="scroll-img">
-          <img class="main main-detail" src="{{ game.cover.url }}">
-          <div class="scroll">
-            <div class="scroll-arrow left-arrow" id="scroll-left">
-              <div>
+          <img class="main main-detail" src="{{ object.cover.url }}">
+          {% if object.users_files.published %}
+            <div class="scroll">
+              <div class="scroll-arrow left-arrow" id="scroll-left">
+                <div></div>
+              </div>
+              <div class="box-img" id="box-img">
+                <img src="{{ object.cover.url }}">
+                {% for users_file in object.users_files.published %}
+                  <img src="{{ users_file.file.url }}">
+                {% endfor %}
+              </div>
+              <div class="scroll-arrow right-arrow" id="scroll-right">
+                <div></div>
               </div>
             </div>
-            <div class="box-img">
-              {% for admin_file in game.admin_files.published %}
-                <img src="{{ admin_file.file.url }}">
-              {% endfor %}
-            </div>
-            <div class="scroll-arrow right-arrow" id="scroll-right">
-              <div>
-              </div>
-            </div>
-          </div>
+          {% endif %}
         </div>
       </div>
       <div class="description">
         <div class="game-name">
           <a class="name-detail" href="{% url 'games:detail' game.slug %}">
-            {{ game.name }}
+            {{ object.name }}
           </a>
         </div>
         <div class="price">
           <div class="final">
-            {{ game.final_price }}&nbsp;<b>₽</b>
+            {{ object.final_price }}&nbsp;<b>₽</b>
           </div>
           <div class="main">
-            {{ game.price }}
+            {{ object.price }}
           </div>
           <a class="buy" href="#">Купить</a>
         </div>
         <div id="text-description" class="text-description">
-          {{ game.description }}
+          {{ object.description }}
         </div>
         <div class="param-description">
-          Возрастные ограничения: <span>{{ game.age_restriction }}+</span><br>
-          Количество участников: <span>{% if game.min_players == game.max_players %}
-            {{ game.max_players }}
+          Возрастные ограничения: <span>{{ object.age_restriction }}+</span><br>
+          Количество участников: <span>{% if object.min_players == object.max_players %}
+            {{ object.max_players }}
           {% else %}
-            {{ game.min_players }}-{{ game.max_players }}
+            {{ object.min_players }}-{{ object.max_players }}
           {% endif %}</span><br>
-          Примерное время игры: <span>{{ game.time }} ч.</span>
+          Примерное время игры: <span>{{ object.time }} ч.</span>
         </div>
       </div>
     </div>
