@@ -12,17 +12,18 @@ const foxBottomPath = '/static/img/includes/fox_bottom.svg'
 */
 async function getActiveLink(currentUrl, links, foxUpperPath, foxBottomPath) {
   links.forEach(function (link) {
-    if (link.getAttribute('href') === currentUrl) {
-      const upperImg = document.createElement('img')
-      upperImg.classList.add('active-link')
-      upperImg.src = foxUpperPath
-      link.parentNode.insertBefore(upperImg, link)
-      const bottomImg = document.createElement('img')
-      bottomImg.classList.add('active-link', 'bottom')
-      bottomImg.src = foxBottomPath
-      link.parentNode.insertBefore(bottomImg, link.nextSibling)
+      if (link.getAttribute('href') === currentUrl) {
+        const upperImg = document.createElement('img')
+        upperImg.classList.add('active-link')
+        upperImg.src = foxUpperPath
+        link.parentNode.insertBefore(upperImg, link)
+        const bottomImg = document.createElement('img')
+        bottomImg.classList.add('active-link', 'bottom')
+        bottomImg.src = foxBottomPath
+        link.parentNode.insertBefore(bottomImg, link.nextSibling)
+      }
     }
-  })
+  )
 }
 
 
@@ -46,9 +47,9 @@ async function rollBurgerMenu(burger, cross, burgerLinks) {
     await getBurgerLinks(burger, burgerLinks)
   })
   cross.addEventListener('click', async function (event) {
-      await getBurgerLinks(cross, burgerLinks)
-    })
-  }
+    await getBurgerLinks(cross, burgerLinks)
+  })
+}
 
 
 rollBurgerMenu(burger, cross, burgerLinks)
