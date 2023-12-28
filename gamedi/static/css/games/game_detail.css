@@ -75,12 +75,18 @@
   flex-grow: 0;
   flex-shrink: 0;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .scroll-img .scroll .box-img img {
   width: 25%;
   height: 100%;
   object-fit: contain;
+  padding-right: 5px;
+}
+
+.scroll-img .scroll .box-img img:last-child {
+  padding-right: 0;
 }
 
 .scroll-arrow {
@@ -89,7 +95,7 @@
 
 .scroll-arrow div {
   position: relative;
-  font-size: calc(7px + 12 * (100vw - 320px) / 2240);
+  font-size: calc(7px + 8 * (100vw - 320px) / 2240);
 }
 
 .scroll-arrow div:before,
