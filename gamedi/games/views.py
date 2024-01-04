@@ -12,4 +12,4 @@ class GameListView(generic.ListView):
 class GameDetailView(generic.DetailView):
     """Представление отдельной странцы игры."""
     model = Game
-    queryset = Game.published.all()  # Prefetch
+    queryset = Game.published.all()

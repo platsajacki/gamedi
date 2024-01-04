@@ -4,28 +4,16 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
 
-from .managers import (
-    GameQuerySet, GameManager, AdminGameFileQuerySet, UserGameFileQuerySet
-)
-from .validators import validate_order_number
-from .utils import get_cover_path, get_hover_path
+from games.managers import GameQuerySet, GameManager
+from games.validators import validate_order_number
+from games.utils import get_cover_path, get_hover_path
 from core.models import (
-    NameString, Description, SlugModel,
-    FileModel, PublishedModel, OrderNumberModel
+    Description,
+    NameString,
+    OrderNumberModel,
+    PublishedModel,
+    SlugModel,
 )
-
-
-class Genre(NameString, Description, SlugModel,
-            PublishedModel, models.Model):
-    """Модель для хранения информации о жанре игр."""
-    name = models.CharField(
-        max_length=128, unique=True,
-        verbose_name='Наименование'
-    )
-
-    class Meta:
-        verbose_name = 'Жанр'
-        verbose_name_plural = 'Жанры'
 
 
 class Game(NameString, Description, SlugModel,
@@ -46,7 +34,7 @@ class Game(NameString, Description, SlugModel,
         unique=True
     )
     genre = models.ForeignKey(
-        Genre,
+        'games.Genre',
         on_delete=models.PROTECT,
         related_name='games',
         verbose_name='Жанр'
@@ -126,47 +114,3 @@ class Game(NameString, Description, SlugModel,
     def get_files_filds() -> tuple[str]:
         """Получает строчное наименование полей с файлами."""
         return ('cover', 'hover_cover')
-
-
-class AdminGameFile(NameString, FileModel, models.Model):
-    """Модель для хранения файлов, принадлежащих играм."""
-    name = models.CharField(
-        max_length=128,
-        verbose_name='Наименование'
-    )
-    game = models.ForeignKey(
-        Game,
-        on_delete=models.CASCADE,
-        related_name='admin_files',
-        verbose_name='Игра',
-    )
-
-    objects = AdminGameFileQuerySet.as_manager()
-
-    class Meta:
-        verbose_name = 'Файл игры для администратора'
-        verbose_name_plural = 'Файлы игр для администратора'
-        unique_together = ('game', 'name',)
-        ordering = ('game', 'order_number',)
-
-
-class UserGameFile(NameString, FileModel, models.Model):
-    """Модель для хранения файлов, принадлежащих играм."""
-    name = models.CharField(
-        max_length=128,
-        verbose_name='Наименование'
-    )
-    game = models.ForeignKey(
-        Game,
-        on_delete=models.CASCADE,
-        related_name='users_files',
-        verbose_name='Игра',
-    )
-
-    objects = UserGameFileQuerySet.as_manager()
-
-    class Meta:
-        verbose_name = 'Файл игры для пользователя'
-        verbose_name_plural = 'Файлы игр для пользователя'
-        unique_together = ('game', 'name',)
-        ordering = ('game', 'order_number',)

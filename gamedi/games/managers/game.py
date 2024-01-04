@@ -1,4 +1,5 @@
-from django.db.models import QuerySet, Manager
+from django import apps
+from django.db.models import QuerySet, Manager, Prefetch
 
 
 class GameQuerySet(QuerySet):
@@ -7,7 +8,15 @@ class GameQuerySet(QuerySet):
         """
         Отимизирует запрос, присоединяя таблицы.
         """
-        return self.select_related('genre')
+        return (
+            self.select_related('genre')
+            .prefetch_related(
+                Prefetch(
+                    'users_files',
+                    queryset=apps.apps.get_model('games', 'UserGameFile').objects.all()
+                )
+            )
+        )
 
     def published(self) -> 'GameQuerySet':
         """
@@ -32,23 +41,3 @@ class GameManager(Manager):
             .related_tables()
             .published()
         )
-
-
-class AdminGameFileQuerySet(QuerySet):
-    """QuerySet для работы с моделью AdminGameFile."""
-    def published(self) -> 'AdminGameFileQuerySet':
-        """
-        Возвращает QuerySet,
-        фильтрующий опубликованные админские файлы игры.
-        """
-        return self.filter(is_published=True)
-
-
-class UserGameFileQuerySet(QuerySet):
-    """QuerySet для работы с моделью UserGameFile."""
-    def published(self) -> 'UserGameFileQuerySet':
-        """
-        Возвращает QuerySet,
-        фильтрующий опубликованые пользовательские файлы игры.
-        """
-        return self.filter(is_published=True)
