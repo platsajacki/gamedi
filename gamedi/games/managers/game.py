@@ -13,7 +13,19 @@ class GameQuerySet(QuerySet):
             .prefetch_related(
                 Prefetch(
                     'users_files',
-                    queryset=apps.apps.get_model('games', 'UserGameFile').objects.all()
+                    queryset=(
+                        apps.apps.get_model('games', 'UserGameFile')
+                        .objects.published()
+                    )
+                )
+            )
+            .prefetch_related(
+                Prefetch(
+                    'admin_files',
+                    queryset=(
+                        apps.apps.get_model('games', 'AdminGameFile')
+                        .objects.published()
+                    )
                 )
             )
         )
@@ -25,7 +37,7 @@ class GameQuerySet(QuerySet):
         """
         return self.filter(
             is_published=True,
-            genre__is_published=True
+            genre__is_published=True,
         )
 
 

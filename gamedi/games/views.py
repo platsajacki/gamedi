@@ -4,12 +4,12 @@ from .models import Game
 
 
 class GameListView(generic.ListView):
-    """Представление главной странцы сайта."""
+    """Представление главной страницы сайта."""
     model = Game
     queryset = Game.published.all()
 
 
 class GameDetailView(generic.DetailView):
-    """Представление отдельной странцы игры."""
+    """Представление отдельной страницы игры."""
     model = Game
     queryset = Game.published.all()
