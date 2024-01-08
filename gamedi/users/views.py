@@ -3,13 +3,13 @@ from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from .forms import UserCreateForm, UserUpdateForm
+from .mixins import UserAttribute, UserDispatch
 from .models import User
-from .mixins import UserDispatch, UserAttribute
 
 
 class UserCreateView(generic.CreateView):

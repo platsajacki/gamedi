@@ -1,11 +1,5 @@
+from core.models import Description, NameString, PublishedModel, SlugModel
 from django.db import models
-
-from core.models import (
-    Description,
-    NameString,
-    PublishedModel,
-    SlugModel,
-)
 
 
 class Genre(NameString, Description, SlugModel,

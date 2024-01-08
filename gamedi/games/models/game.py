@@ -1,19 +1,12 @@
 from typing import Any
 
+from core.models import Description, NameString, OrderNumberModel, PublishedModel, SlugModel
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
-
-from games.managers import GameQuerySet, GameManager
-from games.validators import validate_order_number
+from games.managers import GameManager, GameQuerySet
 from games.utils import get_cover_path, get_hover_path
-from core.models import (
-    Description,
-    NameString,
-    OrderNumberModel,
-    PublishedModel,
-    SlugModel,
-)
+from games.validators import validate_order_number
 
 
 class Game(NameString, Description, SlugModel,

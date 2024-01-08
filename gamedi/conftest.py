@@ -1,6 +1,5 @@
 import pytest
-
-from games.models import Game, Gener
+from games.models import Game, Genre
 
 
 @pytest.fixture
@@ -28,7 +27,7 @@ def username(user):
 @pytest.fixture
 def genre():
     """Фикстура, создающая и возвращающая объект жанра."""
-    genre = Gener.objects.create(
+    genre = Genre.objects.create(
         name='Жанр',
         description='Описание',
     )
@@ -47,6 +46,8 @@ def game(genre):
         max_players=8,
         price=1500,
         discount=40,
+        time=4,
+        age_restriction=5,
     )
     return game
 

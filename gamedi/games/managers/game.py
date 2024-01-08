@@ -1,5 +1,5 @@
 from django import apps
-from django.db.models import QuerySet, Manager, Prefetch
+from django.db.models import Manager, Prefetch, QuerySet
 
 
 class GameQuerySet(QuerySet):

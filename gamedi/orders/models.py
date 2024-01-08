@@ -1,7 +1,6 @@
 from typing import Any
 
 from django.db import models
-
 from games.models import Game
 from users.models import User
 
@@ -35,9 +34,7 @@ class Order(models.Model):
         editable=False,
     )
 
-    def save(
-            self, *args: tuple[Any], **kwargs: dict[str, Any]
-    ) -> None:
+    def save(self, *args: tuple[Any], **kwargs: dict[str, Any]) -> None:
         self.price = self.game.final_price
         return super().save(*args, **kwargs)
 
