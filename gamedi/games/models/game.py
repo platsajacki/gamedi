@@ -96,9 +96,7 @@ class Game(NameString, Description, SlugModel,
         validate_order_number(self.order_number, self.is_published)
         super().clean()
 
-    def save(
-            self, *args: tuple[Any], **kwargs: dict[str, Any]
-    ) -> None:
+    def save(self, *args: tuple[Any], **kwargs: dict[str, Any]) -> None:
         """Высчитывает final_price перед сохранением."""
         self.final_price = round(self.price * (1 - self.discount / 100), 0)
         super().save(*args, **kwargs)

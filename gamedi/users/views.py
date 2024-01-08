@@ -1,6 +1,5 @@
 from typing import Any
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -9,7 +8,7 @@ from django.views import generic
 
 from .forms import UserCreateForm, UserUpdateForm
 from .mixins import UserAttribute, UserDispatch
-from .models import User
+from .models import User, Game
 
 
 class UserCreateView(generic.CreateView):
@@ -18,9 +17,7 @@ class UserCreateView(generic.CreateView):
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('login')
 
-    def dispatch(
-            self, request: HttpRequest, *args: Any, **kwargs: Any
-    ) -> HttpResponse:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         """
         Если пользователь уже прошел аутентификацию,
         он перенаправляется на домашнюю страницу.
@@ -30,16 +27,12 @@ class UserCreateView(generic.CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileDetailView(
-    LoginRequiredMixin, UserAttribute, UserDispatch, generic.DetailView
-):
+class ProfileDetailView(UserAttribute, UserDispatch, generic.DetailView):
     """Представление личного кабинета пользователя."""
     queryset = User.objects.related_games()
 
 
-class ProfileUpdateView(
-    LoginRequiredMixin, UserAttribute, UserDispatch, generic.UpdateView
-):
+class ProfileUpdateView(UserAttribute, UserDispatch, generic.UpdateView):
     """Представление личного кабинета пользователя."""
     form_class = UserUpdateForm
 
@@ -54,13 +47,11 @@ class ProfileUpdateView(
         )
 
 
-class ProfileGameDetailView(
-    LoginRequiredMixin, UserDispatch, generic.DetailView
-):
+class ProfileGameDetailView(UserDispatch, generic.DetailView):
     """Представление игры в профиле пользователя."""
     template_name = 'users/user_game.html'
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Game]:
         """Возвращает QuerySet игр, связанных с указанным пользователем."""
         user: User = get_object_or_404(User, username=self.kwargs['username'])
-        return user.games
+        return user.games.all()

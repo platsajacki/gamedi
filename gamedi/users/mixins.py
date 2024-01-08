@@ -1,5 +1,6 @@
 from typing import Any
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 
@@ -13,11 +14,9 @@ class UserAttribute:
     slug_url_kwarg = 'username'
 
 
-class UserDispatch:
+class UserDispatch(LoginRequiredMixin):
     """Миксин для проверки доступа к представлениям для пользователей."""
-    def dispatch(
-            self, request: HttpRequest, *args: Any, **kwargs: Any
-    ) -> HttpResponse | PermissionDenied:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse | PermissionDenied:
         """
         Проверяет, имеет ли текущий пользователь доступ к представлению,
         и если нет, вызывает исключение PermissionDenied.
