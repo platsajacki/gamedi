@@ -58,9 +58,7 @@ def test_pages_availability_for_anonymous_user(client, name, args):
         ),
     )
 )
-def test_profile_availability_for_only_profile_owner(
-    name, visitor, username, status
-):
+def test_profile_availability_for_only_profile_owner(name, visitor, username, status):
     """Проверяет доступность страниц профиля только для владельцев профиля."""
     url = reverse(name, args=username)
     response = visitor.get(url)
@@ -87,9 +85,7 @@ def test_profile_availability_for_only_profile_owner(
         ),
     )
 )
-def test_game_availability_for_only_game_owner(
-        name, visitor, owner, game_slug, status
-):
+def test_game_availability_for_only_game_owner(name, visitor, owner, game_slug, status):
     """
     Проверяет доступность страницы игры в профиле
     только для владельцев игры.

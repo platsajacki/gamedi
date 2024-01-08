@@ -13,19 +13,13 @@ class GameQuerySet(QuerySet):
             .prefetch_related(
                 Prefetch(
                     'users_files',
-                    queryset=(
-                        apps.apps.get_model('games', 'UserGameFile')
-                        .objects.published()
-                    )
+                    queryset=(apps.apps.get_model('games', 'UserGameFile').objects.published())
                 )
             )
             .prefetch_related(
                 Prefetch(
                     'admin_files',
-                    queryset=(
-                        apps.apps.get_model('games', 'AdminGameFile')
-                        .objects.published()
-                    )
+                    queryset=(apps.apps.get_model('games', 'AdminGameFile').objects.published())
                 )
             )
         )
@@ -35,10 +29,7 @@ class GameQuerySet(QuerySet):
         Возвращает QuerySet, фильтрующий опубликованные игры,
         принадлежащие опубликованным жанрам.
         """
-        return self.filter(
-            is_published=True,
-            genre__is_published=True,
-        )
+        return self.filter(is_published=True, genre__is_published=True)
 
 
 class GameManager(Manager):
@@ -48,8 +39,4 @@ class GameManager(Manager):
         Возвращает QuerySet для модели Game
         с выбранными связанными таблицами и фильтрацией для опубликованных игр.
         """
-        return (
-            GameQuerySet(self.model)
-            .related_tables()
-            .published()
-        )
+        return GameQuerySet(self.model).related_tables().published()

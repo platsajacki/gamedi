@@ -19,9 +19,7 @@ class NameString(models.Model):
 
 class Description(models.Model):
     """Абстарктная модель с полем 'description'."""
-    description = models.TextField(
-        max_length=1024, verbose_name='Описание'
-    )
+    description = models.TextField(max_length=1024, verbose_name='Описание')
 
     class Meta:
         abstract = True
@@ -45,11 +43,7 @@ class SlugModel(models.Model):
 
 class OrderNumberModel(models.Model):
     """Абстрактная модель с полем 'order_number'."""
-    order_number = models.PositiveSmallIntegerField(
-        verbose_name='Порядковый номер',
-        null=True,
-        blank=True
-    )
+    order_number = models.PositiveSmallIntegerField(verbose_name='Порядковый номер', null=True, blank=True)
 
     class Meta:
         abstract = True

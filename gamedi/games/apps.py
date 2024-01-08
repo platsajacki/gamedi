@@ -7,5 +7,5 @@ class GamesConfig(AppConfig):
 
     def ready(self) -> None:
         """Функция, которая выполняется при загрузке приложения."""
-        import games.signals
+        import games.signals  # noqa: F401
         return super().ready()

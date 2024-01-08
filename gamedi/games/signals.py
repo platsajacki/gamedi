@@ -12,9 +12,7 @@ from .models import Game, AdminGameFile, UserGameFile
 @receiver(pre_delete, sender=Game)
 @receiver(pre_delete, sender=AdminGameFile)
 @receiver(pre_delete, sender=UserGameFile)
-def delete_gamefile(
-    sender: Model, instance: Model, **kwargs: dict[str, Any]
-) -> None:
+def delete_gamefile(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
     """Удаляет файл, связанный с объектом, если он существует."""
     for field_name in sender.get_files_filds():
         path = getattr(instance, field_name).path
@@ -25,9 +23,7 @@ def delete_gamefile(
 @receiver(pre_save, sender=Game)
 @receiver(pre_save, sender=AdminGameFile)
 @receiver(pre_save, sender=UserGameFile)
-def update_gamefile(
-    sender: Model, instance: Model, **kwargs: dict[str, Any]
-) -> None:
+def update_gamefile(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
     """
     Обновляет файл, связанный с объектом перед обновлением,
     удаляя старый файл.
@@ -43,9 +39,7 @@ def update_gamefile(
 @receiver(pre_save, sender=Game)
 @receiver(pre_save, sender=AdminGameFile)
 @receiver(pre_save, sender=UserGameFile)
-def update_orders_numbers(
-    sender: Model, instance: Model, **kwargs: dict[str, Any]
-) -> None:
+def update_orders_numbers(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
     """
     Меняет порядковые номера элементов при создании или изменении элемента.
     """
@@ -123,9 +117,7 @@ def update_orders_numbers(
 @receiver(post_delete, sender=Game)
 @receiver(post_delete, sender=AdminGameFile)
 @receiver(post_delete, sender=UserGameFile)
-def delete_orders_numbers(
-    sender: Model, instance: Model, **kwargs: dict[str, Any]
-) -> None:
+def delete_orders_numbers(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
     """Меняет порядковые номера элементов при удалении элемента."""
     if sender == Game:
         queryset: QuerySet = sender.objects.all()
