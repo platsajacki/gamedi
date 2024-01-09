@@ -3,10 +3,14 @@ from pytest_lazyfixture import lazy_fixture as lf
 
 from http import HTTPStatus
 
+from django.test import Client
 from django.urls import reverse
 
+from users.models import User
 
-@pytest.mark.django_db
+pytestmark = pytest.mark.django_db
+
+
 @pytest.mark.parametrize(
     'name, args',
     (
@@ -18,7 +22,7 @@ from django.urls import reverse
         ('games:detail', lf('game_slug'))
     )
 )
-def test_pages_availability_for_anonymous_user(client, name, args):
+def test_pages_availability_for_anonymous_user(client: Client, name: str, args: tuple[str]):
     """Проверяет доступность страниц для анонимных пользователей."""
     url = reverse(name, args=args)
     response = client.get(url)
@@ -28,39 +32,17 @@ def test_pages_availability_for_anonymous_user(client, name, args):
 @pytest.mark.parametrize(
     'name, visitor, status',
     (
-        (
-            'users:profile',
-            lf('user_client'),
-            HTTPStatus.OK
-        ),
-        (
-            'users:profile',
-            lf('client'),
-            HTTPStatus.FORBIDDEN
-        ),
-        (
-            'users:profile',
-            lf('admin_client'),
-            HTTPStatus.FORBIDDEN
-        ),
-        (
-            'users:update',
-            lf('user_client'),
-            HTTPStatus.OK
-        ),
-        (
-            'users:update',
-            lf('client'),
-            HTTPStatus.FORBIDDEN
-        ),
-        (
-            'users:update',
-            lf('admin_client'),
-            HTTPStatus.FORBIDDEN
-        ),
+        ('users:profile', lf('user_client'), HTTPStatus.OK),
+        ('users:profile', lf('client'), HTTPStatus.FORBIDDEN),
+        ('users:profile', lf('admin_client'), HTTPStatus.FORBIDDEN),
+        ('users:update', lf('user_client'), HTTPStatus.OK),
+        ('users:update', lf('client'), HTTPStatus.FORBIDDEN),
+        ('users:update', lf('admin_client'), HTTPStatus.FORBIDDEN),
     )
 )
-def test_profile_availability_for_only_profile_owner(name, visitor, username, status):
+def test_profile_availability_for_only_profile_owner(name: str, visitor: Client, username: tuple[str], status: int):
+le_availability_for_only_profile_owner(name, visitor, username, status):
+
     """Проверяет доступность страниц профиля только для владельцев профиля."""
     url = reverse(name, args=username)
     response = visitor.get(url)
@@ -68,30 +50,16 @@ def test_profile_availability_for_only_profile_owner(name, visitor, username, st
 
 
 @pytest.mark.parametrize(
-    'name, visitor, status',
+    'visitor, status',
     (
-        (
-            'users:game',
-            lf('owner_client'),
-            HTTPStatus.OK
-        ),
-        (
-            'users:game',
-            lf('user_client'),
-            HTTPStatus.FORBIDDEN
-        ),
-        (
-            'users:game',
-            lf('client'),
-            HTTPStatus.FORBIDDEN
-        ),
+        (lf('owner_client'), HTTPStatus.OK),
+        (lf('user_client'), HTTPStatus.FORBIDDEN),
+        (lf('client'), HTTPStatus.FORBIDDEN),
     )
 )
-def test_game_availability_for_only_game_owner(name, visitor, owner, game_slug, status):
-    """
-    Проверяет доступность страницы игры в профиле
-    только для владельцев игры.
-    """
-    url = reverse(name, args=(owner.username, game_slug[0]))
+def test_game_availability_for_only_game_owner(visitor: Client, owner: User, game_slug: tuple[str], status: int):
+    """Проверяет доступность страницы игры в профиле только для владельцев игры."""
+    url = reverse('users:game', args=(owner.username, game_slug[0]))
+
     response = visitor.get(url)
     assert response.status_code == status
