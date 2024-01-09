@@ -1,7 +1,7 @@
 import os
 from typing import Any
 
-from django.db.models import F, FileField, Max, Model, QuerySet
+from django.db.models import F, FileField, Max, QuerySet
 from django.db.models.signals import post_delete, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -11,7 +11,11 @@ from games.models import AdminGameFile, Game, UserGameFile
 @receiver(pre_delete, sender=Game)
 @receiver(pre_delete, sender=AdminGameFile)
 @receiver(pre_delete, sender=UserGameFile)
-def delete_gamefile(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
+def delete_gamefile(
+    sender: Game | AdminGameFile | UserGameFile,
+    instance: Game | AdminGameFile | UserGameFile,
+    **kwargs: dict[str, Any]
+) -> None:
     """Удаляет файл, связанный с объектом, если он существует."""
     for field_name in sender.get_files_filds():
         path = getattr(instance, field_name).path
@@ -32,7 +36,7 @@ def update_gamefile(
     удаляя старый файл.
     """
     for field_name in sender.get_files_filds():
-        if (old_instance := sender.objects.filter(id=instance.id)).exists():
+        if (old_instance := sender.objects.filter(id=instance.id)).exists():  # type: ignore
             old_file: FileField = getattr(old_instance.first(), field_name)
             old_file_path: str = getattr(old_file, 'path')
             file: FileField = getattr(instance, field_name)
@@ -52,9 +56,9 @@ def update_orders_numbers(
     Меняет порядковые номера элементов при создании или изменении элемента.
     """
     if sender == Game:
-        queryset: QuerySet = sender.objects.all()
+        queryset: QuerySet = sender.objects.all()  # type: ignore
     else:
-        queryset: QuerySet = sender.objects.filter(game=instance.game)
+        queryset: QuerySet = sender.objects.filter(game=instance.game)  # type: ignore
     # Если в модели нет элементов.
     if not queryset:
         if instance.is_published:
@@ -65,7 +69,7 @@ def update_orders_numbers(
     old_elem: QuerySet = queryset.filter(id=instance.id)
     old_elem_exists: bool = old_elem.exists()
     if old_elem_exists:
-        old_order_number: int = old_elem.first().order_number
+        old_order_number: int = old_elem.first().order_number  # type: ignore
     # У неопубликованного и только что снятого с публикации
     # элемента нет порядкового номера.
     if not instance.is_published:
@@ -100,7 +104,7 @@ def update_orders_numbers(
         return
     # Eсли элемент меняет порядковый номер.
     if instance.order_number != old_order_number:
-        if instance.order_number > max_order_number:
+        if instance.order_number and instance.order_number > max_order_number:
             queryset.filter(
                 order_number__gt=old_order_number
             ).update(
@@ -132,9 +136,9 @@ def delete_orders_numbers(
 ) -> None:
     """Меняет порядковые номера элементов при удалении элемента."""
     if sender == Game:
-        queryset: QuerySet = sender.objects.all()
+        queryset: QuerySet = sender.objects.all()  # type: ignore
     else:
-        queryset: QuerySet = sender.objects.filter(game=instance.game)
+        queryset: QuerySet = sender.objects.filter(game=instance.game)  # type: ignore
     queryset.filter(
         order_number__gt=instance.order_number
     ).update(

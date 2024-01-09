@@ -18,7 +18,7 @@ class User(AbstractUser):
         blank=True,
     )
 
-    objects = CustomUserManager()
+    objects = CustomUserManager()  # type: ignore[misc]
 
     class Meta:
         verbose_name = 'Пользователь'
