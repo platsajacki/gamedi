@@ -13,7 +13,7 @@ from users.models import Game, User
 
 
 class UserCreateView(generic.CreateView):
-    """Представление создания профиля пользовтеля."""
+    """Представление создания профиля пользователя."""
     form_class = UserCreateForm
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('login')

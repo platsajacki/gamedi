@@ -28,6 +28,17 @@ def user_client(user: User, client: Client) -> Client:
 
 
 @pytest.fixture
+def registration_data() -> dict[str, str]:
+    """Возвращает словарь с регистрационными данными."""
+    return {
+        'username': 'test',
+        'email': 'test@test.ru',
+        'password1': 'first_test',
+        'password2': 'first_test',
+    }
+
+
+@pytest.fixture
 def username(user: User) -> tuple[str]:
     """Фикстура, возвращающая 'username' пользователя."""
     return user.username,

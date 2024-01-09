@@ -8,8 +8,9 @@ from django.urls import reverse
 
 from users.models import User
 
+pytestmark = pytest.mark.django_db
 
-@pytest.mark.django_db
+
 @pytest.mark.parametrize(
     'name, args',
     (
