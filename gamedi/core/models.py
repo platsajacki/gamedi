@@ -13,7 +13,11 @@ class NameString(models.Model):
 
     def __str__(self) -> str:
         """Строкового предсталение поля 'name'."""
-        return self.name
+        name = getattr(self, 'name', None)
+        if name is not None:
+            return str(name)
+
+        return super().__str__()
 
 
 class Description(models.Model):

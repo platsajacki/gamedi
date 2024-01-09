@@ -1,8 +1,7 @@
 import os
 from typing import Any
 
-from django.db.models import F, Max, Model, QuerySet
-from django.db.models.fields import Field
+from django.db.models import F, FileField, Max, Model, QuerySet
 from django.db.models.signals import post_delete, pre_delete, pre_save
 from django.dispatch import receiver
 
@@ -23,23 +22,32 @@ def delete_gamefile(sender: Model, instance: Model, **kwargs: dict[str, Any]) ->
 @receiver(pre_save, sender=Game)
 @receiver(pre_save, sender=AdminGameFile)
 @receiver(pre_save, sender=UserGameFile)
-def update_gamefile(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
+def update_gamefile(
+    sender: Game | AdminGameFile | UserGameFile,
+    instance: Game | AdminGameFile | UserGameFile,
+    **kwargs: dict[str, Any]
+) -> None:
     """
     Обновляет файл, связанный с объектом перед обновлением,
     удаляя старый файл.
     """
     for field_name in sender.get_files_filds():
         if (old_instance := sender.objects.filter(id=instance.id)).exists():
-            old_file: Field = getattr(old_instance.first(), field_name)
-            file: Field = getattr(instance, field_name)
-            if old_file != file and os.path.isfile(old_file.path):
-                os.remove(old_file.path)
+            old_file: FileField = getattr(old_instance.first(), field_name)
+            old_file_path: str = getattr(old_file, 'path')
+            file: FileField = getattr(instance, field_name)
+            if old_file != file and os.path.isfile(old_file_path):
+                os.remove(old_file_path)
 
 
 @receiver(pre_save, sender=Game)
 @receiver(pre_save, sender=AdminGameFile)
 @receiver(pre_save, sender=UserGameFile)
-def update_orders_numbers(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
+def update_orders_numbers(
+    sender: Game | AdminGameFile | UserGameFile,
+    instance: Game | AdminGameFile | UserGameFile,
+    **kwargs: dict[str, Any]
+) -> None:
     """
     Меняет порядковые номера элементов при создании или изменении элемента.
     """
@@ -117,7 +125,11 @@ def update_orders_numbers(sender: Model, instance: Model, **kwargs: dict[str, An
 @receiver(post_delete, sender=Game)
 @receiver(post_delete, sender=AdminGameFile)
 @receiver(post_delete, sender=UserGameFile)
-def delete_orders_numbers(sender: Model, instance: Model, **kwargs: dict[str, Any]) -> None:
+def delete_orders_numbers(
+    sender: Game | AdminGameFile | UserGameFile,
+    instance: Game | AdminGameFile | UserGameFile,
+    **kwargs: dict[str, Any]
+) -> None:
     """Меняет порядковые номера элементов при удалении элемента."""
     if sender == Game:
         queryset: QuerySet = sender.objects.all()

@@ -1,8 +1,8 @@
+import pytest
+
 from http import HTTPStatus
 
 from django.urls import reverse
-
-import pytest
 
 
 @pytest.mark.django_db

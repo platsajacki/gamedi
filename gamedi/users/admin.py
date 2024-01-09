@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from games.models import User
+from users.models import User
 
 
 @admin.register(User)

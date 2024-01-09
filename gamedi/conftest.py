@@ -1,4 +1,5 @@
 import pytest
+
 from games.models import Game, Genre
 
 

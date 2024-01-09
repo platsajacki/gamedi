@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from users.forms import UserCreateForm, UserUpdateForm
-from users.mixins import UserAttribute, UserDispatch
+from users.mixins import UserDispatch, UserSlug
 from users.models import Game, User
 
 
@@ -28,13 +28,15 @@ class UserCreateView(generic.CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileDetailView(UserAttribute, UserDispatch, generic.DetailView):
+class ProfileDetailView(UserSlug, UserDispatch, generic.DetailView):
     """Представление личного кабинета пользователя."""
+    model = User
     queryset = User.objects.related_games()
 
 
-class ProfileUpdateView(UserAttribute, UserDispatch, generic.UpdateView):
+class ProfileUpdateView(UserSlug, UserDispatch, generic.UpdateView):
     """Представление личного кабинета пользователя."""
+    model = User
     form_class = UserUpdateForm
 
     def get_success_url(self) -> str:
@@ -50,6 +52,7 @@ class ProfileUpdateView(UserAttribute, UserDispatch, generic.UpdateView):
 
 class ProfileGameDetailView(UserDispatch, generic.DetailView):
     """Представление игры в профиле пользователя."""
+    model = User
     template_name = 'users/user_game.html'
 
     def get_queryset(self) -> QuerySet[Game]:

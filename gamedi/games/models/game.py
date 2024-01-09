@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Iterable
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
@@ -86,23 +86,23 @@ class Game(NameString, Description, SlugModel,
 
     def clean(self) -> None:
         """Проверка валидности полей."""
-        if (
-            self.min_players and self.max_players
-            and self.min_players > self.max_players
-        ):
-            raise ValidationError(
-                'Минимальное количество игроков '
-                'не может быть больше максимального.'
-            )
+        if self.min_players and self.max_players and self.min_players > self.max_players:
+            raise ValidationError('Минимальное количество игроков не может быть больше максимального.')
         validate_order_number(self.order_number, self.is_published)
         super().clean()
 
-    def save(self, *args: tuple[Any], **kwargs: dict[str, Any]) -> None:
+    def save(
+        self,
+        force_insert: bool = False,
+        force_update: bool = False,
+        using: str | None = None,
+        update_fields: Iterable[str] | None = None
+    ) -> None:
         """Высчитывает final_price перед сохранением."""
         self.final_price = round(self.price * (1 - self.discount / 100), 0)
-        super().save(*args, **kwargs)
+        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     @staticmethod
-    def get_files_filds() -> tuple[str]:
+    def get_files_filds() -> tuple[str, str]:
         """Получает строчное наименование полей с файлами."""
         return ('cover', 'hover_cover')
