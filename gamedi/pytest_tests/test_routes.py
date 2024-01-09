@@ -41,8 +41,6 @@ def test_pages_availability_for_anonymous_user(client: Client, name: str, args: 
     )
 )
 def test_profile_availability_for_only_profile_owner(name: str, visitor: Client, username: tuple[str], status: int):
-le_availability_for_only_profile_owner(name, visitor, username, status):
-
     """Проверяет доступность страниц профиля только для владельцев профиля."""
     url = reverse(name, args=username)
     response = visitor.get(url)
