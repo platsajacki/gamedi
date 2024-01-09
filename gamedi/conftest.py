@@ -1,12 +1,21 @@
 import pytest
 
+from django.conf import settings
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 from games.models import Game, Genre
+
+IMAGEFILE: SimpleUploadedFile = SimpleUploadedFile(
+    name='test_image.jpg',
+    content=open(f'{settings.BASE_DIR}/pytest_tests/image.png', 'rb').read(),
+    content_type='image/png',
+)
 
 
 @pytest.fixture
 def user(django_user_model):
     """Фикстура, создающая и возвращающая первого пользователя."""
-    return django_user_model.objects.create(username='first_user')
+    return django_user_model.objects.create(username='first_user', email='first_user@django.ru')
 
 
 @pytest.fixture
@@ -49,6 +58,8 @@ def game(genre):
         discount=40,
         time=4,
         age_restriction=5,
+        cover=IMAGEFILE,
+        hover_cover=IMAGEFILE,
     )
     return game
 
@@ -62,7 +73,7 @@ def game_slug(game):
 @pytest.fixture
 def owner(django_user_model, game):
     """Фикстура, создающая и возвращающая владельца игры."""
-    owner = django_user_model.objects.create(username='owner_game')
+    owner = django_user_model.objects.create(username='owner_game', email='owner_game@django.ru')
     owner.games.add(game)
     return owner
 

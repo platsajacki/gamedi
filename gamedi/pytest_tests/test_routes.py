@@ -36,12 +36,12 @@ def test_pages_availability_for_anonymous_user(client, name, args):
         (
             'users:profile',
             lf('client'),
-            HTTPStatus.FOUND
+            HTTPStatus.FORBIDDEN
         ),
         (
             'users:profile',
             lf('admin_client'),
-            HTTPStatus.NOT_FOUND
+            HTTPStatus.FORBIDDEN
         ),
         (
             'users:update',
@@ -51,12 +51,12 @@ def test_pages_availability_for_anonymous_user(client, name, args):
         (
             'users:update',
             lf('client'),
-            HTTPStatus.FOUND
+            HTTPStatus.FORBIDDEN
         ),
         (
             'users:update',
             lf('admin_client'),
-            HTTPStatus.NOT_FOUND
+            HTTPStatus.FORBIDDEN
         ),
     )
 )
@@ -78,12 +78,12 @@ def test_profile_availability_for_only_profile_owner(name, visitor, username, st
         (
             'users:game',
             lf('user_client'),
-            HTTPStatus.NOT_FOUND
+            HTTPStatus.FORBIDDEN
         ),
         (
             'users:game',
             lf('client'),
-            HTTPStatus.FOUND
+            HTTPStatus.FORBIDDEN
         ),
     )
 )
