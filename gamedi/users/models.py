@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from games.models import Game
 
-from .managers import CustomUserManager
+from games.models import Game
+from users.managers import CustomUserManager
 
 
 class User(AbstractUser):

@@ -1,6 +1,6 @@
 from django.views import generic
 
-from .models import Game
+from games.models import Game
 
 
 class GameListView(generic.ListView):

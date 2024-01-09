@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ProfileDetailView, ProfileGameDetailView, ProfileUpdateView
+from users.views import ProfileDetailView, ProfileGameDetailView, ProfileUpdateView
 
 app_name = 'users'
 

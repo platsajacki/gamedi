@@ -6,7 +6,7 @@ from django.db.models.fields import Field
 from django.db.models.signals import post_delete, pre_delete, pre_save
 from django.dispatch import receiver
 
-from .models import AdminGameFile, Game, UserGameFile
+from games.models import AdminGameFile, Game, UserGameFile
 
 
 @receiver(pre_delete, sender=Game)

@@ -1,5 +1,5 @@
-from django.core.exceptions import ValidationError
 from django.db import models
+
 from games.utils import get_file_path
 from games.validators import validate_order_number
 
@@ -74,7 +74,7 @@ class FileModel(OrderNumberModel, PublishedModel, models.Model):
     class Meta:
         abstract = True
 
-    def clean(self) -> None | ValidationError:
+    def clean(self) -> None:
         """Проверка валидности полей."""
         validate_order_number(self.order_number, self.is_published)
         super().clean()

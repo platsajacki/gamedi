@@ -1,5 +1,6 @@
-from core.models import FileModel, NameString
 from django.db import models
+
+from core.models import FileModel, NameString
 from games.managers import AdminGameFileQuerySet, UserGameFileQuerySet
 
 

@@ -13,7 +13,7 @@ def get_cover_path(instance: Model, filename: str) -> str:
     """
     Генерирует путь для сохранения обложки на основе ID игры.
     """
-    return 'game_files/game_{instance.slug}/Covers/cover_{filename}'
+    return f'game_files/game_{instance.slug}/Covers/cover_{filename}'
 
 
 def get_hover_path(instance: Model, filename: str) -> str:

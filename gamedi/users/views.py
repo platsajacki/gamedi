@@ -1,14 +1,15 @@
 from typing import Any
 
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
+from django.http.response import HttpResponseBase
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from .forms import UserCreateForm, UserUpdateForm
-from .mixins import UserAttribute, UserDispatch
-from .models import User, Game
+from users.forms import UserCreateForm, UserUpdateForm
+from users.mixins import UserAttribute, UserDispatch
+from users.models import Game, User
 
 
 class UserCreateView(generic.CreateView):
@@ -17,7 +18,7 @@ class UserCreateView(generic.CreateView):
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('login')
 
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         """
         Если пользователь уже прошел аутентификацию,
         он перенаправляется на домашнюю страницу.

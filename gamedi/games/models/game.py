@@ -1,9 +1,10 @@
 from typing import Any
 
-from core.models import Description, NameString, OrderNumberModel, PublishedModel, SlugModel
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
+
+from core.models import Description, NameString, OrderNumberModel, PublishedModel, SlugModel
 from games.managers import GameManager, GameQuerySet
 from games.utils import get_cover_path, get_hover_path
 from games.validators import validate_order_number
@@ -83,7 +84,7 @@ class Game(NameString, Description, SlugModel,
         verbose_name_plural = 'Игры'
         ordering = ('order_number',)
 
-    def clean(self) -> None | ValidationError:
+    def clean(self) -> None:
         """Проверка валидности полей."""
         if (
             self.min_players and self.max_players
