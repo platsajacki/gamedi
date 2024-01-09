@@ -19,10 +19,7 @@ class UserCreateView(generic.CreateView):
     success_url = reverse_lazy('login')
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
-        """
-        Если пользователь уже прошел аутентификацию,
-        он перенаправляется на домашнюю страницу.
-        """
+        """Если пользователь уже прошел аутентификацию, он перенаправляется на домашнюю страницу."""
         if request.user.is_authenticated:
             return redirect('games:home')
         return super().dispatch(request, *args, **kwargs)
@@ -40,14 +37,8 @@ class ProfileUpdateView(UserSlug, UserDispatch, generic.UpdateView):
     form_class = UserUpdateForm
 
     def get_success_url(self) -> str:
-        """
-        Возвращает URL для перенаправления
-        после успешного обновления профиля.
-        """
-        return reverse(
-            'users:profile',
-            kwargs={'username': self.request.user.username}
-        )
+        """Возвращает URL для перенаправленияпосле успешного обновления профиля."""
+        return reverse('users:profile', kwargs={'username': self.request.user.username})
 
 
 class ProfileGameDetailView(UserDispatch, generic.DetailView):

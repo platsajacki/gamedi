@@ -6,20 +6,22 @@
 {% endblock %}
 
 {% block content %}
-  <h2>{{ user.username }}</h2>
-  <a href="{% url 'users:update' user.username %}">Обновить профиль</a>
-  <a href="{% url 'password_change' %}">Сменить пароль</a>
-  <h3>Список игр пользователя:</h3>
-  <ul>
-    {% for game in user.games.all %}
-      <li>
-        <a href="{% url 'users:game' user.username game.slug %}">
-          {{ game.name }}
-        </a>
-      </li>
-      <li>{{ game.genre.name }}</li>
-      <li>{{ game.users_files.all }}</li>
-      <li>{{ game.admin_files.all }}</li>
-    {% endfor %}
-  </ul>
+  <div class="content">
+    <h2>{{ user.username }}</h2>
+    <a href="{% url 'users:update' user.username %}">Обновить профиль</a>
+    <a href="{% url 'password_change' %}">Сменить пароль</a>
+    <h3>Список игр пользователя:</h3>
+    <ul>
+      {% for game in user.games.all %}
+        <li>
+          <a href="{% url 'users:game' user.username game.slug %}">
+            {{ game.name }}
+          </a>
+        </li>
+        <li>{{ game.genre.name }}</li>
+        <li>{{ game.users_files.all }}</li>
+        <li>{{ game.admin_files.all }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}

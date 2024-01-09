@@ -2,8 +2,10 @@ import pytest
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import Client
 
 from games.models import Game, Genre
+from users.models import User
 
 IMAGEFILE: SimpleUploadedFile = SimpleUploadedFile(
     name='test_image.jpg',
@@ -13,41 +15,34 @@ IMAGEFILE: SimpleUploadedFile = SimpleUploadedFile(
 
 
 @pytest.fixture
-def user(django_user_model):
+def user(django_user_model: User) -> User:
     """Фикстура, создающая и возвращающая первого пользователя."""
     return django_user_model.objects.create(username='first_user', email='first_user@django.ru')
 
 
 @pytest.fixture
-def user_client(user, client):
-    """
-    Фикстура, создающая и возвращающая
-    аутентифицированного первого пользователя.
-    """
+def user_client(user: User, client: Client) -> Client:
+    """Фикстура, создающая и возвращающая аутентифицированного первого пользователя."""
     client.force_login(user)
     return client
 
 
 @pytest.fixture
-def username(user):
+def username(user: User) -> tuple[str]:
     """Фикстура, возвращающая 'username' пользователя."""
     return user.username,
 
 
 @pytest.fixture
-def genre():
+def genre() -> Genre:
     """Фикстура, создающая и возвращающая объект жанра."""
-    genre = Genre.objects.create(
-        name='Жанр',
-        description='Описание',
-    )
-    return genre
+    return Genre.objects.create(name='Жанр', description='Описание')
 
 
 @pytest.fixture
-def game(genre):
+def game(genre: Genre) -> Game:
     """Фикстура, создающая и возвращающая объект игры."""
-    game = Game.objects.create(
+    return Game.objects.create(
         name='Игра',
         description='Описание',
         slug='slug',
@@ -61,17 +56,16 @@ def game(genre):
         cover=IMAGEFILE,
         hover_cover=IMAGEFILE,
     )
-    return game
 
 
 @pytest.fixture
-def game_slug(game):
+def game_slug(game) -> tuple[str]:
     """Фикстура, возвращающая слаг игры."""
     return game.slug,
 
 
 @pytest.fixture
-def owner(django_user_model, game):
+def owner(django_user_model: User, game: Game) -> User:
     """Фикстура, создающая и возвращающая владельца игры."""
     owner = django_user_model.objects.create(username='owner_game', email='owner_game@django.ru')
     owner.games.add(game)
@@ -79,10 +73,7 @@ def owner(django_user_model, game):
 
 
 @pytest.fixture
-def owner_client(owner, client):
-    """
-    Фикстура, создающая и возвращающая
-    аутентифицированного владельца игры.
-    """
+def owner_client(owner: User, client: Client) -> Client:
+    """Фикстура, создающая и возвращающая аутентифицированного владельца игры."""
     client.force_login(owner)
     return client
