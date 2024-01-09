@@ -1,8 +1,6 @@
-import pytest
-from pytest_lazyfixture import lazy_fixture as lf
-
 from http import HTTPStatus
 
+import pytest
 from django.urls import reverse
 
 
@@ -15,7 +13,7 @@ from django.urls import reverse
         ('registration', None),
         ('pages:about', None),
         ('pages:rules', None),
-        ('games:detail', lf('game_slug'))
+        ('games:detail', pytest.lazy_fixture('game_slug'))
     )
 )
 def test_pages_availability_for_anonymous_user(client, name, args):
@@ -30,37 +28,39 @@ def test_pages_availability_for_anonymous_user(client, name, args):
     (
         (
             'users:profile',
-            lf('user_client'),
+            pytest.lazy_fixture('user_client'),
             HTTPStatus.OK
         ),
         (
             'users:profile',
-            lf('client'),
-            HTTPStatus.FORBIDDEN
+            pytest.lazy_fixture('client'),
+            HTTPStatus.FOUND
         ),
         (
             'users:profile',
-            lf('admin_client'),
-            HTTPStatus.FORBIDDEN
+            pytest.lazy_fixture('admin_client'),
+            HTTPStatus.NOT_FOUND
         ),
         (
             'users:update',
-            lf('user_client'),
+            pytest.lazy_fixture('user_client'),
             HTTPStatus.OK
         ),
         (
             'users:update',
-            lf('client'),
-            HTTPStatus.FORBIDDEN
+            pytest.lazy_fixture('client'),
+            HTTPStatus.FOUND
         ),
         (
             'users:update',
-            lf('admin_client'),
-            HTTPStatus.FORBIDDEN
+            pytest.lazy_fixture('admin_client'),
+            HTTPStatus.NOT_FOUND
         ),
     )
 )
-def test_profile_availability_for_only_profile_owner(name, visitor, username, status):
+def test_profile_availability_for_only_profile_owner(
+    name, visitor, username, status
+):
     """Проверяет доступность страниц профиля только для владельцев профиля."""
     url = reverse(name, args=username)
     response = visitor.get(url)
@@ -72,22 +72,24 @@ def test_profile_availability_for_only_profile_owner(name, visitor, username, st
     (
         (
             'users:game',
-            lf('owner_client'),
+            pytest.lazy_fixture('owner_client'),
             HTTPStatus.OK
         ),
         (
             'users:game',
-            lf('user_client'),
-            HTTPStatus.FORBIDDEN
+            pytest.lazy_fixture('user_client'),
+            HTTPStatus.NOT_FOUND
         ),
         (
             'users:game',
-            lf('client'),
-            HTTPStatus.FORBIDDEN
+            pytest.lazy_fixture('client'),
+            HTTPStatus.FOUND
         ),
     )
 )
-def test_game_availability_for_only_game_owner(name, visitor, owner, game_slug, status):
+def test_game_availability_for_only_game_owner(
+        name, visitor, owner, game_slug, status
+):
     """
     Проверяет доступность страницы игры в профиле
     только для владельцев игры.

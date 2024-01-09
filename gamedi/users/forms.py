@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
-from users.models import User
+from .models import User
 
 
 class UserCreateForm(UserCreationForm):

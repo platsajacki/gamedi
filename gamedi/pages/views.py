@@ -17,14 +17,20 @@ class RulesTemplateView(TemplateView):
 
 def csrf_failure(request: HttpRequest, reason='') -> HttpResponse:
     """Обработчик ошибки токена CSRF."""
-    return render(request, 'pages/403.html', status=HTTPStatus.FORBIDDEN)
+    return render(
+        request, 'pages/403.html', status=HTTPStatus.FORBIDDEN
+    )
 
 
 def page_not_found(request: HttpRequest, exception: Exception) -> HttpResponse:
     """Обработчик ошибки 404 (страница не найдена)."""
-    return render(request, 'pages/404.html', status=HTTPStatus.NOT_FOUND)
+    return render(
+        request, 'pages/404.html', status=HTTPStatus.NOT_FOUND
+    )
 
 
 def server_error(request: HttpRequest) -> HttpResponse:
     """Обработчик внутренней ошибки сервера."""
-    return render(request, 'pages/500.html', status=HTTPStatus.INTERNAL_SERVER_ERROR)
+    return render(
+        request, 'pages/500.html', status=HTTPStatus.INTERNAL_SERVER_ERROR
+    )

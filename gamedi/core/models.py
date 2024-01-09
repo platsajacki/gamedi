@@ -1,7 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
-from games.utils import get_file_path
 from games.validators import validate_order_number
+from games.utils import get_file_path
 
 
 class NameString(models.Model):
@@ -13,16 +14,14 @@ class NameString(models.Model):
 
     def __str__(self) -> str:
         """Строкового предсталение поля 'name'."""
-        name = getattr(self, 'name', None)
-        if name is not None:
-            return str(name)
-
-        return super().__str__()
+        return self.name
 
 
 class Description(models.Model):
     """Абстарктная модель с полем 'description'."""
-    description = models.TextField(max_length=1024, verbose_name='Описание')
+    description = models.TextField(
+        max_length=1024, verbose_name='Описание'
+    )
 
     class Meta:
         abstract = True
@@ -46,7 +45,11 @@ class SlugModel(models.Model):
 
 class OrderNumberModel(models.Model):
     """Абстрактная модель с полем 'order_number'."""
-    order_number = models.PositiveSmallIntegerField(verbose_name='Порядковый номер', null=True, blank=True)
+    order_number = models.PositiveSmallIntegerField(
+        verbose_name='Порядковый номер',
+        null=True,
+        blank=True
+    )
 
     class Meta:
         abstract = True
@@ -78,7 +81,7 @@ class FileModel(OrderNumberModel, PublishedModel, models.Model):
     class Meta:
         abstract = True
 
-    def clean(self) -> None:
+    def clean(self) -> None | ValidationError:
         """Проверка валидности полей."""
         validate_order_number(self.order_number, self.is_published)
         super().clean()

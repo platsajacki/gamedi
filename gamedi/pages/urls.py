@@ -1,6 +1,6 @@
 from django.urls import path
 
-from pages.views import AboutTemplateView, RulesTemplateView
+from .views import AboutTemplateView, RulesTemplateView
 
 app_name = 'pages'
 

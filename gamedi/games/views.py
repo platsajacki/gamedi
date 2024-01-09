@@ -1,15 +1,15 @@
 from django.views import generic
 
-from games.models import Game
+from .models import Game
 
 
 class GameListView(generic.ListView):
-    """Представление главной страницы сайта."""
+    """Представление главной странцы сайта."""
     model = Game
     queryset = Game.published.all()
 
 
 class GameDetailView(generic.DetailView):
-    """Представление отдельной страницы игры."""
+    """Представление отдельной странцы игры."""
     model = Game
-    queryset = Game.published.all()
+    queryset = Game.published.all()  # Prefetch
