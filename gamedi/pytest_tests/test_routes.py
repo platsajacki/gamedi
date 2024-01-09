@@ -41,6 +41,8 @@ def test_pages_availability_for_anonymous_user(client: Client, name: str, args: 
     )
 )
 def test_profile_availability_for_only_profile_owner(name: str, visitor: Client, username: tuple[str], status: int):
+le_availability_for_only_profile_owner(name, visitor, username, status):
+
     """Проверяет доступность страниц профиля только для владельцев профиля."""
     url = reverse(name, args=username)
     response = visitor.get(url)
@@ -58,5 +60,6 @@ def test_profile_availability_for_only_profile_owner(name: str, visitor: Client,
 def test_game_availability_for_only_game_owner(visitor: Client, owner: User, game_slug: tuple[str], status: int):
     """Проверяет доступность страницы игры в профиле только для владельцев игры."""
     url = reverse('users:game', args=(owner.username, game_slug[0]))
+
     response = visitor.get(url)
     assert response.status_code == status
