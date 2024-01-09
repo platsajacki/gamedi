@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Iterable
 
 from django.db import models
 
@@ -36,10 +36,14 @@ class Order(models.Model):
     )
 
     def save(
-            self, *args: tuple[Any], **kwargs: dict[str, Any]
+        self,
+        force_insert: bool = False,
+        force_update: bool = False,
+        using: str | None = None,
+        update_fields: Iterable[str] | None = None
     ) -> None:
-        self.price = self.game.final_price
-        return super().save(*args, **kwargs)
+        self.price = self.game.final_price  # type: ignore[assignment]
+        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     class Meta:
         verbose_name = 'Покупка'

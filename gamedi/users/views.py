@@ -1,15 +1,15 @@
 from typing import Any
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpRequest
+from django.http.response import HttpResponseBase
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from .forms import UserCreateForm, UserUpdateForm
-from .models import User
-from .mixins import UserDispatch, UserAttribute
+from users.forms import UserCreateForm, UserUpdateForm
+from users.mixins import UserDispatch, UserSlug
+from users.models import Game, User
 
 
 class UserCreateView(generic.CreateView):
@@ -18,9 +18,7 @@ class UserCreateView(generic.CreateView):
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('login')
 
-    def dispatch(
-            self, request: HttpRequest, *args: Any, **kwargs: Any
-    ) -> HttpResponse:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         """
         Если пользователь уже прошел аутентификацию,
         он перенаправляется на домашнюю страницу.
@@ -30,17 +28,15 @@ class UserCreateView(generic.CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileDetailView(
-    LoginRequiredMixin, UserAttribute, UserDispatch, generic.DetailView
-):
+class ProfileDetailView(UserSlug, UserDispatch, generic.DetailView):
     """Представление личного кабинета пользователя."""
+    model = User
     queryset = User.objects.related_games()
 
 
-class ProfileUpdateView(
-    LoginRequiredMixin, UserAttribute, UserDispatch, generic.UpdateView
-):
+class ProfileUpdateView(UserSlug, UserDispatch, generic.UpdateView):
     """Представление личного кабинета пользователя."""
+    model = User
     form_class = UserUpdateForm
 
     def get_success_url(self) -> str:
@@ -54,13 +50,12 @@ class ProfileUpdateView(
         )
 
 
-class ProfileGameDetailView(
-    LoginRequiredMixin, UserDispatch, generic.DetailView
-):
+class ProfileGameDetailView(UserDispatch, generic.DetailView):
     """Представление игры в профиле пользователя."""
+    model = User
     template_name = 'users/user_game.html'
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Game]:
         """Возвращает QuerySet игр, связанных с указанным пользователем."""
         user: User = get_object_or_404(User, username=self.kwargs['username'])
-        return user.games
+        return user.games.all()
