@@ -1,4 +1,5 @@
 import pytest
+from pytest_lazyfixture import lazy_fixture as lf
 
 from http import HTTPStatus
 
@@ -14,7 +15,7 @@ from django.urls import reverse
         ('registration', None),
         ('pages:about', None),
         ('pages:rules', None),
-        ('games:detail', pytest.lazy_fixture('game_slug'))
+        ('games:detail', lf('game_slug'))
     )
 )
 def test_pages_availability_for_anonymous_user(client, name, args):
@@ -29,32 +30,32 @@ def test_pages_availability_for_anonymous_user(client, name, args):
     (
         (
             'users:profile',
-            pytest.lazy_fixture('user_client'),
+            lf('user_client'),
             HTTPStatus.OK
         ),
         (
             'users:profile',
-            pytest.lazy_fixture('client'),
+            lf('client'),
             HTTPStatus.FOUND
         ),
         (
             'users:profile',
-            pytest.lazy_fixture('admin_client'),
+            lf('admin_client'),
             HTTPStatus.NOT_FOUND
         ),
         (
             'users:update',
-            pytest.lazy_fixture('user_client'),
+            lf('user_client'),
             HTTPStatus.OK
         ),
         (
             'users:update',
-            pytest.lazy_fixture('client'),
+            lf('client'),
             HTTPStatus.FOUND
         ),
         (
             'users:update',
-            pytest.lazy_fixture('admin_client'),
+            lf('admin_client'),
             HTTPStatus.NOT_FOUND
         ),
     )
@@ -71,17 +72,17 @@ def test_profile_availability_for_only_profile_owner(name, visitor, username, st
     (
         (
             'users:game',
-            pytest.lazy_fixture('owner_client'),
+            lf('owner_client'),
             HTTPStatus.OK
         ),
         (
             'users:game',
-            pytest.lazy_fixture('user_client'),
+            lf('user_client'),
             HTTPStatus.NOT_FOUND
         ),
         (
             'users:game',
-            pytest.lazy_fixture('client'),
+            lf('client'),
             HTTPStatus.FOUND
         ),
     )
