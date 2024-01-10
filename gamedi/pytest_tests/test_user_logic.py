@@ -3,7 +3,7 @@ from pytest_lazyfixture import lazy_fixture as lf
 
 from http import HTTPStatus
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.test.client import Client
 from django.urls import reverse
 
@@ -16,7 +16,7 @@ class TestUserLogic:
     def test_anonymous_can_registation(self, client: Client, registration_data: dict[str, str]):
         """Анонимный пользователь может успешно зарегистрироваться."""
         old_count_users: int = User.objects.count()
-        response: HttpResponse = client.post(reverse('registration'), data=registration_data)  # type: ignore
+        response: HttpResponseRedirect = client.post(reverse('registration'), data=registration_data)  # type: ignore
 
         assert response.status_code == HTTPStatus.FOUND
         assert response.url == reverse('login')
@@ -25,7 +25,10 @@ class TestUserLogic:
     def test_authorized_user_can_not_registation(self, user_client: Client, registration_data: dict[str, str]):
         """Автороризованный пользователь не может успешно зарегистрироваться."""
         old_count_users: int = User.objects.count()
-        response: HttpResponse = user_client.post(reverse('registration'), data=registration_data)  # type: ignore
+        response: HttpResponseRedirect = user_client.post(  # type: ignore
+            reverse('registration'),
+            data=registration_data,
+        )
 
         assert response.status_code == HTTPStatus.FOUND
         assert response.url == reverse('games:home')

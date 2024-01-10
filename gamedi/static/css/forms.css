@@ -212,7 +212,19 @@ form.reset {
 }
 
 /* Изменение пароля. */
-
 .change_pass {
   height: 450px;
+}
+
+
+/* Обновление профиля */
+.update-profile {
+  align-self: center;
+  align-items: center;
+  height: 480px;
+  grid-template-rows: 15% 85%;
+}
+
+.update-profile .log-button-style {
+  width: 7.5em;
 }

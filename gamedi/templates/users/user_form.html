@@ -6,10 +6,17 @@
 {% endblock %}
 
 {% block content %}
-  <h2>Редактирование профиля {{ user.username }}:</h2>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button class="" type="submit">Обновить</button>
-  </form>
+  <script type="module" src="/static/js/users/udate_profile.js" defer></script>
+  <div class="content">
+    <div class="login update-profile">
+      <div class="title">
+        Редактирование профиля:
+      </div>
+      <form class="main" method="post">
+          {% csrf_token %}
+          {% include "includes/custom_form.html" %}
+          <button class="log-button-style" type="submit">Обновить</button>
+      </form>
+      </div>
+  </div>
 {% endblock %}
