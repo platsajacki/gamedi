@@ -1,4 +1,4 @@
-import { getUrlById, setLalbelByFocusInput } from '../main.js'
+import { setLalbelByFocusInput } from '../main.js'
 
 const formClass = 'form.main'
 

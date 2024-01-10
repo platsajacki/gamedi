@@ -7,21 +7,34 @@
 
 {% block content %}
   <div class="content">
-    <h2>{{ user.username }}</h2>
-    <a href="{% url 'users:update' user.username %}">Обновить профиль</a>
-    <a href="{% url 'password_change' %}">Сменить пароль</a>
-    <h3>Список игр пользователя:</h3>
-    <ul>
-      {% for game in user.games.all %}
-        <li>
-          <a href="{% url 'users:game' user.username game.slug %}">
-            {{ game.name }}
-          </a>
-        </li>
-        <li>{{ game.genre.name }}</li>
-        <li>{{ game.users_files.all }}</li>
-        <li>{{ game.admin_files.all }}</li>
-      {% endfor %}
-    </ul>
+    <div class="profile">
+      <div class="profile-info">
+        <img class="avatar"src="/static/img/avatar.jpeg">
+        <div class="info">
+          <div class="profile-name">
+            {% if object.first_name %}
+              {{ object.first_name }}{% if object.last_name %}&nbsp;{{ object.last_name}}{% endif %}
+            {% else %}
+              {{ object.username }}
+            {% endif %}
+          </div>
+          <a href="{% url 'users:update' user.username %}">Обновить профиль</a>
+          <a href="{% url 'password_change' %}">Сменить пароль</a>
+        </div>
+      </div>
+      <div class="profile-game">
+        <h3>Список игр пользователя:</h3>
+          <ul>
+          {% for game in user.games.all %}
+            <li>
+              <a href="{% url 'users:game' user.username game.slug %}">
+                {{ game.name }}
+              </a>
+            </li>
+            <li>{{ game.genre.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 {% endblock %}

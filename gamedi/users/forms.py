@@ -16,7 +16,4 @@ class UserUpdateForm(forms.ModelForm):
     """Кастомная форма обновления профиля пользователя."""
     class Meta:
         model = User
-        fields = (
-            'username', 'first_name',
-            'last_name', 'email',
-        )
+        fields = ('first_name', 'last_name', 'email')

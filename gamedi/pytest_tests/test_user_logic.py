@@ -45,7 +45,6 @@ class TestUserLogic:
     def test_only_authenticated_user_can_edit_profile(self, vistor: Client, expected_status: int, owner: User):
         """Только авторизованный пользователь может менять свои данные."""
         update_user_data: dict[str, str] = {
-            'username': 'owner_game',
             'email': 'owner_game@django.ru',
             'first_name': 'owner',
             'last_name': 'game',

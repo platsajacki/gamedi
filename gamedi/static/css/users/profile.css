@@ -1,0 +1,35 @@
+.profile {
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    margin-top: 2rem;
+}
+
+.profile-info {
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-columns: min-content;
+    gap: 1rem;
+}
+
+img.avatar {
+    height: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.profile-info .info {
+    display: grid;
+    grid-template-rows: repeat(3, max-content);
+    font-family: 'Circe Bold', sans-serif;
+}
+
+.profile-name {
+    font-size: 1.3em;
+    color: var(--main-orange);
+}
+
+.profile-info .info a {
+  color: var(--main-grey);
+}
+
+
