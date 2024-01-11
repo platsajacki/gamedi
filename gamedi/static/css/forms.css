@@ -145,6 +145,23 @@ a.log-button-style {
   justify-content: center;
 }
 
+/* Стили страницы ошибок сильно похожи на стили выхода,
+*  поэтому они размещены здесь.
+*/
+.logout .http-error-title {
+  align-items: center;
+  flex-direction: column;
+}
+
+.logout .http-error-title h2 {
+  margin: 0;
+}
+
+.logout .http-error-buttons {
+  grid-template-columns: 1fr;
+}
+
+
 /* Регистрация. */
 .registration {
   align-self: center;
