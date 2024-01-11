@@ -68,3 +68,7 @@ img.profile-img {
   text-decoration: none;
   color: var(--main-pink);
 }
+
+.not-game {
+  text-align: center;
+}

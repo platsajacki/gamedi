@@ -33,7 +33,9 @@
           </div>
           {% endfor %}
         {% else %}
-          У тебя пока нет игр. Перейди на <a href="{% url 'games:home' %}">главную</a> и быстрее покупай.
+          <div class="not-game">
+            У тебя пока нет игр. Перейди на <a href="{% url 'games:home' %}">главную</a> и быстрее покупай.
+          </div>
         {% endif %}
       </div>
     </div>
