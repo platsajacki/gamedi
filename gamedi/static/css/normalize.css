@@ -222,6 +222,10 @@
   form.main label {
     width: 45vw;
   }
+
+  img.main {
+    border-width: 0.25rem;
+  }
 }
 
 

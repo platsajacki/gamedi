@@ -1,35 +1,70 @@
 .profile {
-    display: grid;
-    grid-template-rows: repeat(2, max-content);
-    margin-top: 2rem;
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .profile-info {
-    display: grid;
-    grid-template-rows: repeat(2, max-content);
-    grid-template-columns: min-content;
-    gap: 1rem;
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  grid-template-columns: max-content;
+  gap: 1rem;
+  justify-content: center;
+  justify-items: center;
 }
 
 img.avatar {
-    height: 150px;
-    height: 150px;
-    border-radius: 50%;
+  height: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 
 .profile-info .info {
-    display: grid;
-    grid-template-rows: repeat(3, max-content);
-    font-family: 'Circe Bold', sans-serif;
+  display: grid;
+  grid-template-rows: repeat(3, max-content);
+  font-family: 'Circe Bold', sans-serif;
 }
 
 .profile-name {
-    font-size: 1.3em;
-    color: var(--main-orange);
+  font-size: 1.3em;
+  color: var(--main-orange);
+  justify-self: center;
 }
 
 .profile-info .info a {
   color: var(--main-grey);
+  justify-self: center;
 }
 
+.profile-games {
+  font-family: 'Circe Bold', sans-serif;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 320px);
+  padding: 0;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
 
+.profile-game {
+  display: grid;
+  grid-template-rows: min-content 1.1rem min-content;
+  gap: 8px;
+  width: 310px;
+  height: 250px;
+  justify-items: center;
+  align-items: center;
+}
+
+img.profile-img {
+  border-width: 3px;
+}
+
+.profile-game a.profile-game-name {
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: var(--main-pink);
+}

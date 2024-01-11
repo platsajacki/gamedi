@@ -5,7 +5,6 @@ const scrollLeftButton = document.getElementById('scroll-left')
 const scrollRightButton = document.getElementById('scroll-right')
 const mainImage = document.querySelector('.main-detail')
 const imagesContainer = document.querySelector('.box-img')
-const images = imagesContainer.querySelectorAll('.box-img img')
 const activeScrollImage = 'active-image'
 const notActiveScrollImage = 'not-active-image'
 
@@ -14,6 +13,7 @@ const notActiveScrollImage = 'not-active-image'
  * Прокручивает изображения в контейнере при нажатии на кнопки прокрутки влево и вправо.
  */
 async function getScrollImg(scrollLeftButton, scrollRightButton, imagesContainer) {
+  if (imagesContainer === null) return
   let scrollPosition = 0
   const imageWidth = imagesContainer.firstElementChild.offsetWidth
 
@@ -55,8 +55,9 @@ async function getScrollImg(scrollLeftButton, scrollRightButton, imagesContainer
  * и удаляет этот класс у остальных изображений
  * из переданного массива `images`.
  */
-async function getActiveImage(images, currentImageScr, activeScrollImage) {
-  images.forEach(
+async function getActiveImage(imagesContainer, currentImageScr, activeScrollImage) {
+  if (imagesContainer === null) return
+  imagesContainer.querySelectorAll('img').forEach(
     image => {
       if (image.getAttribute('src') === currentImageScr) {
         image.classList.remove(notActiveScrollImage)
@@ -76,7 +77,18 @@ async function getActiveImage(images, currentImageScr, activeScrollImage) {
 async function handleImageClick(event) {
   const clickedImageSrc = event.target.getAttribute('src')
   mainImage.setAttribute('src', clickedImageSrc)
-  await getActiveImage(images, clickedImageSrc, activeScrollImage)
+  await getActiveImage(imagesContainer, clickedImageSrc, activeScrollImage)
+}
+
+
+/**
+ * Присоединяет обработчик события клика к изображениям внутри указанного контейнера.
+ */
+async function attachClickEventToImages(imagesContainer) {
+  if (imagesContainer === null) return
+  imagesContainer.querySelectorAll('img').forEach(
+    image => {image.addEventListener('click', handleImageClick)}
+  )
 }
 
 
@@ -84,26 +96,18 @@ async function handleImageClick(event) {
 async function wiretapping () {
   for (const action of ['resize', 'load']) {
     window.addEventListener(action,
-      async () => await setBorderRadiusBasedOnHeight(
-        gameImgMain, coefImgMain, minRadiusImgMain
-      )
+      async () => await setBorderRadiusBasedOnHeight(gameImgMain, coefImgMain, minRadiusImgMain)
     )
   }
 
   document.addEventListener(
     'DOMContentLoaded',
-    async () => await getScrollImg(
-      scrollLeftButton, scrollRightButton, imagesContainer
-    )
+    async () => await getScrollImg(scrollLeftButton, scrollRightButton, imagesContainer)
   )
 
-  imagesContainer.querySelectorAll('img').forEach(
-    image => {image.addEventListener('click', handleImageClick)}
-  )
+  attachClickEventToImages(imagesContainer)
 }
 
 
-await getActiveImage(
-  images, mainImage.getAttribute('src'), activeScrollImage
-)
+await getActiveImage(imagesContainer, mainImage.getAttribute('src'), activeScrollImage)
 await wiretapping()

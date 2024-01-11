@@ -19,7 +19,7 @@ async function isAlpha(str) {
  * исключая кавычки.
  */
 async function containsPunctuation(str) {
-  return /^[.,!?;:-]+$/.test(str)
+  return /^[.,!?;: -]+$/.test(str)
 }
 
 
@@ -43,11 +43,29 @@ export async function getMaxWordsInElement(className, maxWords) {
 }
 
 
+/** Устанавливает количество символов в элементе. */
+export async function getMaxCharInElement(className, maxChars) {
+  const elements = document.getElementsByClassName(className)
+  for (const element of elements) {
+    let chars = element.textContent
+    if (chars.length > maxChars) {
+      chars = chars.slice(0, maxChars)
+      let lastChar = chars[maxChars-1]
+      while (await containsPunctuation(lastChar)) {
+        chars = chars.slice(0, -1)
+        lastChar = chars[chars.length - 1]
+      }
+      element.textContent =  chars + '...'
+    }
+  }
+}
+
+
 /** Устанавливает 'border-radius' в зависимости от coef высоты объекта. */
 export async function setBorderRadiusBasedOnHeight(className, coef, minRadius) {
   const elements = document.querySelectorAll(className)
   elements.forEach(element => {
-  element.style.borderRadius = Math.max(element.height * coef, minRadius) + 'px'
+    element.style.borderRadius = Math.max(element.height * coef, minRadius) + 'px'
   })
 }
 
@@ -73,9 +91,7 @@ export async function changeImage(classImgName, changedAttr) {
 /** Присваивает по 'ID' ссылку указанную в 'data-url' в теге. */
 export async function getUrlById(id) {
   document.getElementById(id).addEventListener(
-    'click', function() {
-      window.location.href = this.getAttribute('data-url')
-    }
+    'click', function() {window.location.href = this.getAttribute('data-url')}
   )
 }
 
@@ -89,13 +105,13 @@ export async function setLalbelByFocusInput(formClass) {
 
       if (label) {
         async function handleFocus() {
-          label.style.backgroundColor = mainOrangeColor;
-          label.style.color = whiteColor;
+          label.style.backgroundColor = mainOrangeColor
+          label.style.color = whiteColor
         }
 
         async function handleBlur() {
-          label.style.backgroundColor = whiteColor;
-          label.style.color = mainOrangeColor;
+          label.style.backgroundColor = whiteColor
+          label.style.color = mainOrangeColor
         }
 
         input.addEventListener('focus', handleFocus)
@@ -113,7 +129,5 @@ export async function setLalbelByFocusInput(formClass) {
 /** Меняет текст 'label' элемента 'input'. */
 export async function changeTextContentByInput(idInput, textContent) {
   const input = document.getElementById(idInput)
-  if (input) {
-    input.previousElementSibling.textContent = textContent
-  }
+  if (input) {input.previousElementSibling.textContent = textContent}
 }

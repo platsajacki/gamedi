@@ -106,7 +106,7 @@
 img.main {
   box-sizing: border-box;
   width: 100%;
-  border: calc(6px + 6 * (100vw - 320px) / 2240) solid var(--main-pink);
+  border: 0.4rem solid var(--main-pink);
   transition: border-radius 0.45s;
 }
 
