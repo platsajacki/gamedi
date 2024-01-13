@@ -1,9 +1,0 @@
-{% if request.user.is_authenticated and game in user.games.all%}
-  <a class="buy" href="{% url 'users:game' user.username game.slug %}">Играть</a>
-{% else %}
-  {% if not request.user.is_authenticated %}
-    <a class="buy" href="{% url 'registration' %}">Купить</a>
-  {% else %}
-    <a class="buy" href="#">Купить</a>
-  {% endif %}
-{% endif %}
