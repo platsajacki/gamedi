@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Редактирование профиля {{ object.username }}
+{% endblock %}
+
+{% block content %}
+  <script type="module" src="/static/js/users/udate_profile.js" defer></script>
+  <div class="content">
+    <div class="login update-profile">
+      <div class="title">
+        Редактирование профиля:
+      </div>
+      <form class="main" method="post">
+          {% csrf_token %}
+          {% include "includes/custom_form.html" %}
+          <button class="log-button-style" type="submit">Обновить</button>
+      </form>
+      </div>
+  </div>
+{% endblock %}

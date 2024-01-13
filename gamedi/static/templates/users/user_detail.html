@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ object.username }}
+{% endblock %}
+
+{% block content %}
+  <script type="module" src="/static/js/users/user_detail.js" defer></script>
+  <div class="content">
+    <div class="profile">
+      <div class="profile-info">
+        <img class="avatar" src="/static/img/avatar.jpeg">
+        <div class="info">
+          <div class="profile-name">
+            {% if object.first_name %}
+              {{ object.first_name }}{% if object.last_name %} {{ object.last_name}}{% endif %}
+            {% else %}
+              {{ object.username }}
+            {% endif %}
+          </div>
+          <a href="{% url 'users:update' user.username %}">Обновить профиль</a>
+          <a href="{% url 'password_change' %}">Сменить пароль</a>
+        </div>
+      </div>
+      <div class="profile-games">
+        {% if user.games.all %}
+          {% for game in user.games.all %}
+          <div class="profile-game">
+            <img class="main profile-img" src="{{ game.cover.url }}">
+            <a class="profile-game-name" href="{% url 'users:game' user.username game.slug %}">{{ game.name }}</a>
+            <a class="buy" href="{% url 'users:game' user.username game.slug %}">Играть</a>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="not-game">
+            У тебя пока нет игр. Перейди на <a href="{% url 'games:home' %}">главную</a> и быстрее покупай.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

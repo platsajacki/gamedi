@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="login logout">
+      <img class="sad-fox" src="/static/img/registration/sad_fox.svg">
+      <div class="title http-error-title">
+        Страница не найдена
+        <h2>404</h2>
+      </div>
+      <div class="buttons http-error-buttons">
+        <a class="log-button-style" href="{% url 'games:home' %}">На главную</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

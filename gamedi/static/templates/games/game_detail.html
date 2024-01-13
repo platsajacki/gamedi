@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ object.name }}
+{% endblock %}
+
+{% block content %}
+  <script type="module" src="/static/js/games/game_detail.js" defer></script>
+  <div class="content">
+    <div class="game-detail">
+      <div class="left">
+        <div class="line-circle-left">
+          <div class="line"></div><div class="circle"></div>
+        </div>
+        <div class="scroll-img">
+          <img class="main main-detail" src="{{ object.cover.url }}">
+          {% if object.users_files.all %}
+            <div class="scroll">
+              <div class="scroll-arrow left-arrow" id="scroll-left">
+                <div></div>
+              </div>
+              <div class="box-img" id="box-img">
+                <img src="{{ object.cover.url }}">
+                {% for users_file in object.users_files.all %}
+                  <img src="{{ users_file.file.url }}">
+                {% endfor %}
+              </div>
+              <div class="scroll-arrow right-arrow" id="scroll-right">
+                <div></div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="description">
+        <div class="game-name">
+          <a class="name-detail" href="{% url 'games:detail' game.slug %}">
+            {{ object.name }}
+          </a>
+        </div>
+        <div class="price">
+          <div class="final">
+            {{ object.final_price }}&nbsp;<b>₽</b>
+          </div>
+          <div class="main">
+            {{ object.price }}
+          </div>
+          {% include "includes/buttom_buy.html" %}
+        </div>
+        <div id="text-description" class="text-description">
+          {{ object.description }}
+        </div>
+        <div class="param-description">
+          Возрастные ограничения: <span>{{ object.age_restriction }}+</span><br>
+          Количество участников: <span>{% if object.min_players == object.max_players %}
+            {{ object.max_players }}
+          {% else %}
+            {{ object.min_players }}-{{ object.max_players }}
+          {% endif %}</span><br>
+          Примерное время игры: <span>{{ object.time }} ч.</span>
+        </div>
+      </div>
+    </div>
+{% endblock %}

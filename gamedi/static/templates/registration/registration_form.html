@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+ Регистрация
+{% endblock %}
+
+{% block content %}
+  <script type="module" src="/static/js/registration/registration.js" defer></script>
+  <div class="content">
+    <div class="login registration">
+      <div class="title">Регистрация</div>
+      <form class="main registration" method="post" action="{% url 'registration' %}">
+          {% csrf_token %}
+          {% include "includes/custom_form.html" %}
+          <div class="buttons">
+            <button class="log-button-style" type="submit">Зарегистрироваться</button>
+          </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
