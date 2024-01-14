@@ -10,8 +10,7 @@ from games.utils import get_cover_path, get_hover_path
 from games.validators import validate_order_number
 
 
-class Game(NameString, Description, SlugModel,
-           OrderNumberModel, PublishedModel, models.Model):
+class Game(NameString, Description, SlugModel, OrderNumberModel, PublishedModel, models.Model):
     """Модель для хранения информации о игре."""
     name = models.CharField(
         max_length=128, unique=True,

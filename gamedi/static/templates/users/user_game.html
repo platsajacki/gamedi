@@ -6,12 +6,30 @@
 {% endblock %}
 
 {% block content %}
-    Игра {{ request.user }}
-    {{ object.name }}
-    <ul>
-      <li>{{ object.name }}</li>
-      <li>{{ object.genre.name }}</li>
-      <li>{{ object.users_files.all }}</li>
-      <li>{{ object.admin_files.all }}</li>
-    </ul>
+  Игра {{ request.user }}
+  {{ object.name }}
+  <ul>
+    <li>{{ object.name }}</li>
+    <li>{{ object.genre.name }}</li>
+    <li>{{ object.admin_files.all }}</li>
+  </ul>
+  {% if formset %}
+    <form class="main" method="post">
+      {% csrf_token %}
+      {{ formset.management_form }}
+      {% for form in formset %}
+        {% include "includes/custom_form.html" %}
+      {% endfor %}
+      {% if not formset.is_valid %}
+        <div class="errorlist">
+          <strong>{{ formset.non_form_errors }}</strong>
+        </div>
+      {% endif %}
+      <div class="buttons">
+        <button class="log-button-style" type="submit">Зарегистрироваться</button>
+      </div>
+    </form>
+  {% else %}
+    Okey и отправить снова <a href="">ТУТ</a>
+  {% endif %}
 {% endblock %}

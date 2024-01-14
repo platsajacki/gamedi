@@ -10,6 +10,7 @@ class GameQuerySet(QuerySet):
         """
         return (
             self.select_related('genre')
+            .prefetch_related('users')
             .prefetch_related(
                 Prefetch(
                     'users_files',

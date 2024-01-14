@@ -22,8 +22,8 @@ class UserUpdateForm(forms.ModelForm):
 
 class UserMessageForm(forms.Form):
     """Отправка файлов игры."""
-    file_name = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    email = forms.EmailField()
+    role = forms.CharField(label='Роль', widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    email = forms.EmailField(label='Электронная почта')
 
 
 UserMessageFormSetDefault = forms.formset_factory(form=UserMessageForm, extra=0)
@@ -31,7 +31,7 @@ UserMessageFormSetDefault = forms.formset_factory(form=UserMessageForm, extra=0)
 
 class UserMessageFormSet(UserMessageFormSetDefault):  # type: ignore
     """FormSet для отправки файлов игры с дополнительной проверкой электронной почты."""
-    def emails_valide(self) -> None:
+    def valide_emails(self) -> None:
         """Проверяет, что все поля электронной почты заполнены, и нет дубликатов адресов электронной почты."""
         total_forms: int = int(self.data.get('form-INITIAL_FORMS', 0))
         if not total_forms:
@@ -45,4 +45,4 @@ class UserMessageFormSet(UserMessageFormSetDefault):  # type: ignore
 
     def clean(self) -> None:
         """Запуск валидации."""
-        self.emails_valide()
+        self.valide_emails()

@@ -1,4 +1,4 @@
-{% if request.user.is_authenticated and game in user.games.all%}
+{% if request.user.is_authenticated and request.user in game.users.all %}
   <a class="buy" href="{% url 'users:game' user.username game.slug %}">Играть</a>
 {% else %}
   {% if not request.user.is_authenticated %}
