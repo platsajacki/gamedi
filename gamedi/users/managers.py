@@ -17,4 +17,5 @@ class CustomUserManager(UserManager):
                 'games__admin_files',
                 'games__genre',
             )
+            .order_by('games__users_files__order_number', )
         )
