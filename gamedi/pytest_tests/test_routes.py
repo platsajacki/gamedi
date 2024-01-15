@@ -25,8 +25,8 @@ pytestmark = pytest.mark.django_db
 def test_pages_availability_for_anonymous_user(client: Client, name: str, args: tuple[str]):
     """Проверяет доступность страниц для анонимных пользователей."""
     url = reverse(name, args=args)
-    response = client.get(url)
-    assert response.status_code == HTTPStatus.OK
+
+    assert client.get(url).status_code == HTTPStatus.OK
 
 
 @pytest.mark.parametrize(
@@ -43,21 +43,25 @@ def test_pages_availability_for_anonymous_user(client: Client, name: str, args: 
 def test_profile_availability_for_only_profile_owner(name: str, visitor: Client, username: tuple[str], status: int):
     """Проверяет доступность страниц профиля только для владельцев профиля."""
     url = reverse(name, args=username)
-    response = visitor.get(url)
-    assert response.status_code == status
+
+    assert visitor.get(url).status_code == status
 
 
 @pytest.mark.parametrize(
-    'visitor, status',
+    'name, visitor, status',
     (
-        (lf('owner_client'), HTTPStatus.OK),
-        (lf('user_client'), HTTPStatus.FORBIDDEN),
-        (lf('client'), HTTPStatus.FORBIDDEN),
+        ('users:game', lf('owner_client'), HTTPStatus.OK),
+        ('users:game', lf('user_client'), HTTPStatus.FORBIDDEN),
+        ('users:game', lf('client'), HTTPStatus.FORBIDDEN),
+        ('users:download_files', lf('owner_client'), HTTPStatus.OK),
+        ('users:download_files', lf('user_client'), HTTPStatus.FORBIDDEN),
+        ('users:download_files', lf('client'), HTTPStatus.FORBIDDEN),
     )
 )
-def test_game_availability_for_only_game_owner(visitor: Client, owner: User, game_slug: tuple[str], status: int):
+def test_game_availability_for_only_game_owner(
+    name: str, visitor: Client, owner: User, game_slug: tuple[str], status: int
+):
     """Проверяет доступность страницы игры в профиле только для владельцев игры."""
-    url = reverse('users:game', args=(owner.username, game_slug[0]))
+    url = reverse(name, args=(owner.username, game_slug[0]))
 
-    response = visitor.get(url)
-    assert response.status_code == status
+    assert visitor.get(url).status_code == status

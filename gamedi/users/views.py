@@ -1,13 +1,17 @@
 import logging
+from io import BytesIO
+from os.path import basename
 from typing import Any
+from zipfile import ZipFile
 
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import FileResponse, HttpRequest, HttpResponse
 from django.http.response import HttpResponseBase
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
+from games.managers.files_managers import UserGameFileQuerySet
 from users.forms import UserCreateForm, UserMessageFormSet, UserUpdateForm
 from users.mixins import UserDispatch, UserSlug
 from users.models import Game, User
@@ -22,7 +26,7 @@ class UserCreateView(generic.CreateView):
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('login')
 
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
+    def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
         """Если пользователь уже прошел аутентификацию, он перенаправляется на домашнюю страницу."""
         if request.user.is_authenticated:
             return redirect('games:home')
@@ -59,27 +63,43 @@ class ProfileGameDetailView(UserDispatch, generic.DetailView):
         Получает контекст для отображения.
         Флаг "need_formset - (bool)" указывает, нужно ли включать пустой FormSet в контекст.
         """
-        if self.request.method == 'POST':
-            self.object = self.get_object()
         context: dict[str, Any] = super().get_context_data(**kwargs)
         if need_formset:
-            formset: UserMessageFormSet = UserMessageFormSet(
-                initial=[{'role': file.name} for file in self.object.users_files.all()]
-            )
+            formset = UserMessageFormSet(initial=[{'role': file.name} for file in self.object.users_files.all()])
             context['formset'] = formset
         return context
 
     def post(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponse:
         """Обрабатывает POST запрос. При валидности FormSet направляет игрокам файлы."""
-        formset: UserMessageFormSet = UserMessageFormSet(request.POST)
+        formset = UserMessageFormSet(request.POST)
+        self.object: Game = self.get_object()
         if formset.is_valid():
             context: dict[str, Any] = self.get_context_data(need_formset=False, **kwargs)
             try:
                 send_role_and_file_email(request=request, context=context, formset=formset)
             except Exception as e:
-                context['exception'] = 'Ошибка отправки. Скачайте полный файл с игрой или попробуйте отправить снова.'
+                context['exception'] = 'Ошибка отправки. Попробуйте отправить снова или скачайте полный файл с игрой.'
                 logger.error(msg=e, exc_info=True)
             return self.render_to_response(context)
         context: dict[str, Any] = self.get_context_data(**kwargs)  # type: ignore
         context['formset'] = formset
         return self.render_to_response(context)
+
+
+class DownloadingGameFilesTemplateView(UserDispatch, generic.TemplateView):
+    """Класс представления для скачивания файлов игры в виде zip-архива."""
+    def get_game_files(self) -> UserGameFileQuerySet:
+        """Получает QuerySet файлов игры в кабинете указанного пользователя и для указанной игры.."""
+        return (
+            get_object_or_404(User, username=self.kwargs['username'])
+            .games.get(slug=self.kwargs['slug'])
+            .users_files.all()
+        )
+
+    def get(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> FileResponse:  # type: ignore
+        """Формирует zip-архив и отдает его пользователю."""
+        with ZipFile(zip_buffer := BytesIO(), 'w') as zip_file:
+            for file in self.get_game_files():
+                zip_file.write(file.file.path, basename(file.file.path))
+        zip_buffer.seek(0)
+        return FileResponse(zip_buffer, as_attachment=True, filename=f'{kwargs["slug"]}_files.zip')

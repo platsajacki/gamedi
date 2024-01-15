@@ -12,6 +12,7 @@
     <li>{{ object.name }}</li>
     <li>{{ object.genre.name }}</li>
     <li>{{ object.admin_files.all }}</li>
+    <a href="{% url 'users:download_files' user.username game.slug %}">DOWNLOAD</a>
   </ul>
   {% if formset %}
     <form class="main" method="post">

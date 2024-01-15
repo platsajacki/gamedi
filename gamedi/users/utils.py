@@ -2,7 +2,7 @@ from typing import Any, Mapping
 
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, get_connection
 from django.forms import BaseFormSet
 from django.http import HttpRequest
 
@@ -29,16 +29,20 @@ def get_role_and_file_email(username: str, email: str, role: str, game_name: str
     return msg
 
 
-def send_role_and_file_email(request: HttpRequest, formset: BaseFormSet, context: dict[str, Any]):
+def send_role_and_file_email(request: HttpRequest, formset: BaseFormSet, context: dict[str, Any]) -> None:
     """Отправляет письма с информацией о роли и прикрепленным файлом игры для каждой формы в FormSet."""
     username: str = define_name(request.user)
     formset_data: Mapping[str, Any] = formset.data
+    emails_to_send: list[EmailMessage] = []
     for i in range(int(formset_data.get('form-INITIAL_FORMS', 0))):
         role: str = formset_data.get(f'form-{i}-role', '')
-        get_role_and_file_email(
+        email_message: EmailMessage = get_role_and_file_email(
             username=username,
             email=formset_data.get(f'form-{i}-email', ''),
             role=role,
             game_name=context['object'].name,
-            file_path=context['object'].users_files.filter(name=role).first().file.path,
-        ).send()
+            file_path=context['object'].users_files.get(name=role).file.path,
+        )
+        emails_to_send.append(email_message)
+    with get_connection() as connection:
+        connection.send_messages(emails_to_send)
