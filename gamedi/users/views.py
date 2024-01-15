@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 from django.db.models import QuerySet
@@ -10,6 +11,9 @@ from django.views import generic
 from users.forms import UserCreateForm, UserUpdateForm, UserMessageFormSet
 from users.mixins import UserDispatch, UserSlug
 from users.models import Game, User
+from users.utils import send_role_and_file_email
+
+logger = logging.getLogger(__name__)
 
 
 class UserCreateView(generic.CreateView):
@@ -66,11 +70,23 @@ class ProfileGameDetailView(UserDispatch, generic.DetailView):
         return context
 
     def post(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponse:
-        """Получает контекст для отображения. При валидности FormSet направляет игрокам файлы."""
+        """Обрабатывает POST запрос. При валидности FormSet направляет игрокам файлы."""
         formset: UserMessageFormSet = UserMessageFormSet(request.POST)
         if formset.is_valid():
             context: dict[str, Any] = self.get_context_data(need_formset=False, **kwargs)
-            # Тут направляем сообщения.
+            try:
+                for i in range(int(formset.data.get('form-INITIAL_FORMS'))):
+                    role: str = formset.data.get(f'form-{i}-role')
+                    send_role_and_file_email(
+                        username=request.user.username,
+                        email=formset.data.get(f'form-{i}-email'),
+                        role=role,
+                        game_name=context['object'].name,
+                        file_path=context['object'].users_files.filter(name=role).first().file.path,
+                    )
+            except Exception as e:
+                context['exception'] = 'Ошибка отправки. Скачайте полный файл с игрой или попробуйте отправить снова.'
+                logger.error(msg=e, exc_info=True)
             return self.render_to_response(context)
         context: dict[str, Any] = self.get_context_data(**kwargs)  # type: ignore
         context['formset'] = formset

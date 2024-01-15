@@ -29,7 +29,9 @@
         <button class="log-button-style" type="submit">Зарегистрироваться</button>
       </div>
     </form>
+  {% elif exception %}
+    {{ exception }} <a href="">Отправить повторно.</a>
   {% else %}
-    Okey и отправить снова <a href="">ТУТ</a>
+    Okey и отправить снова <a href="">Отправить повторно.</a>
   {% endif %}
 {% endblock %}
