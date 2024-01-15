@@ -7,7 +7,6 @@ from django.test import Client
 from games.models import Game, Genre
 from users.models import User
 
-
 IMAGEFILE: SimpleUploadedFile = SimpleUploadedFile(
     name='test_image.jpg',
     content=open(f'{settings.BASE_DIR}/pytest_tests/image.png', 'rb').read(),

@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from users.forms import UserCreateForm, UserUpdateForm, UserMessageFormSet
+from users.forms import UserCreateForm, UserMessageFormSet, UserUpdateForm
 from users.mixins import UserDispatch, UserSlug
 from users.models import Game, User
 from users.utils import send_role_and_file_email
@@ -75,15 +75,7 @@ class ProfileGameDetailView(UserDispatch, generic.DetailView):
         if formset.is_valid():
             context: dict[str, Any] = self.get_context_data(need_formset=False, **kwargs)
             try:
-                for i in range(int(formset.data.get('form-INITIAL_FORMS'))):
-                    role: str = formset.data.get(f'form-{i}-role')
-                    send_role_and_file_email(
-                        username=request.user.username,
-                        email=formset.data.get(f'form-{i}-email'),
-                        role=role,
-                        game_name=context['object'].name,
-                        file_path=context['object'].users_files.filter(name=role).first().file.path,
-                    )
+                send_role_and_file_email(request=request, context=context, formset=formset)
             except Exception as e:
                 context['exception'] = 'Ошибка отправки. Скачайте полный файл с игрой или попробуйте отправить снова.'
                 logger.error(msg=e, exc_info=True)
