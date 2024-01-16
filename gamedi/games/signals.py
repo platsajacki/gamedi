@@ -31,16 +31,12 @@ def update_gamefile(
     instance: Game | AdminGameFile | UserGameFile,
     **kwargs: dict[str, Any]
 ) -> None:
-    """
-    Обновляет файл, связанный с объектом перед обновлением,
-    удаляя старый файл.
-    """
+    """Если обновляется файл, связанный с объектом, удаляет старый файл."""
     for field_name in sender.get_files_filds():
         if (old_instance := sender.objects.filter(id=instance.id)).exists():  # type: ignore
             old_file: FileField = getattr(old_instance.first(), field_name)
             old_file_path: str = getattr(old_file, 'path')
-            file: FileField = getattr(instance, field_name)
-            if old_file != file and os.path.isfile(old_file_path):
+            if old_file != getattr(instance, field_name) and os.path.isfile(old_file_path):
                 os.remove(old_file_path)
 
 
@@ -52,19 +48,14 @@ def update_orders_numbers(
     instance: Game | AdminGameFile | UserGameFile,
     **kwargs: dict[str, Any]
 ) -> None:
-    """
-    Меняет порядковые номера элементов при создании или изменении элемента.
-    """
+    """Меняет порядковые номера элементов при создании или изменении элемента."""
     if sender == Game:
         queryset: QuerySet = sender.objects.all()  # type: ignore
     else:
         queryset: QuerySet = sender.objects.filter(game=instance.game)  # type: ignore
     # Если в модели нет элементов.
     if not queryset:
-        if instance.is_published:
-            instance.order_number = 1
-        else:
-            instance.order_number = None
+        instance.order_number = 1 if instance.is_published else None
         return
     old_elem: QuerySet = queryset.filter(id=instance.id)
     old_elem_exists: bool = old_elem.exists()

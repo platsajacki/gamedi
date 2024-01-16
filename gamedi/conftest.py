@@ -7,6 +7,8 @@ from django.test import Client
 from games.models import Game, Genre
 from users.models import User
 
+pytest_plugins = ['pytest_tests.test_signals.fixtures']
+
 
 @pytest.fixture
 def user(django_user_model: User) -> User:
@@ -48,13 +50,14 @@ def genre() -> Genre:
 def game(genre: Genre) -> Game:
     """Фикстура, создающая и возвращающая объект игры."""
     with NamedTemporaryFile(prefix='file', suffix='.png') as file:
-        game_obj = Game.objects.create(
+        return Game.objects.create(
             name='Игра',
             description='Описание',
             slug='slug',
             genre=genre,
             min_players=8,
             max_players=8,
+            order_number=1,
             price=1500,
             discount=40,
             time=4,
@@ -62,7 +65,6 @@ def game(genre: Genre) -> Game:
             cover=file.name,
             hover_cover=file.name,
         )
-    return game_obj
 
 
 @pytest.fixture

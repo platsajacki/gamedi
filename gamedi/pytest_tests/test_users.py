@@ -12,7 +12,7 @@ from users.models import User
 pytestmark = pytest.mark.django_db
 
 
-class TestUserLogic:
+class TestUserRegistrationLogic:
     def test_anonymous_can_registation(self, client: Client, registration_data: dict[str, str]):
         """Анонимный пользователь может успешно зарегистрироваться."""
         old_count_users: int = User.objects.count()
@@ -55,3 +55,7 @@ class TestUserLogic:
         )
 
         assert response.status_code == expected_status
+
+
+class TestUserProfileLogic:
+    ...
