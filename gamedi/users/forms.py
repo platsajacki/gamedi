@@ -33,12 +33,11 @@ class UserMessageFormSet(UserMessageFormSetDefault):  # type: ignore
     """FormSet для отправки файлов игры с дополнительной проверкой электронной почты."""
     def valide_emails(self) -> None:
         """Проверяет, что все поля электронной почты заполнены, и нет дубликатов адресов электронной почты."""
-        total_forms: int = int(self.data.get('form-INITIAL_FORMS', 0))
-        if not total_forms:
-            raise ValidationError('Все поля электронной почты должны быть заполнены.')
         email_set: set = set()
-        for i in range(total_forms):
+        for i in range(int(self.data.get('form-INITIAL_FORMS', 0))):
             email: str = self.data.get(f'form-{i}-email')
+            if email == '':
+                raise ValidationError('Все поля электронной почты должны быть заполнены.')
             if email in email_set:
                 raise ValidationError('Дублирование адресов электронной почты не разрешено.')
             email_set.add(email)

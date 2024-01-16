@@ -1,4 +1,5 @@
 import pytest
+from tempfile import NamedTemporaryFile
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -53,20 +54,22 @@ def genre() -> Genre:
 @pytest.fixture
 def game(genre: Genre) -> Game:
     """Фикстура, создающая и возвращающая объект игры."""
-    return Game.objects.create(
-        name='Игра',
-        description='Описание',
-        slug='slug',
-        genre=genre,
-        min_players=8,
-        max_players=8,
-        price=1500,
-        discount=40,
-        time=4,
-        age_restriction=5,
-        cover=IMAGEFILE,
-        hover_cover=IMAGEFILE,
-    )
+    with NamedTemporaryFile(prefix='file', suffix='.png') as file:
+        game_obj = Game.objects.create(
+            name='Игра',
+            description='Описание',
+            slug='slug',
+            genre=genre,
+            min_players=8,
+            max_players=8,
+            price=1500,
+            discount=40,
+            time=4,
+            age_restriction=5,
+            cover=file.name,
+            hover_cover=file.name,
+        )
+    return game_obj
 
 
 @pytest.fixture
