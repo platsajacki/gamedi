@@ -46,12 +46,12 @@ def test_profile_availability_for_only_profile_owner(name: str, visitor: Client,
 @pytest.mark.parametrize(
     'name, visitor, status',
     [
-        ('users:game', lf('owner_client'), HTTPStatus.OK),
-        ('users:game', lf('user_client'), HTTPStatus.FORBIDDEN),
-        ('users:game', lf('client'), HTTPStatus.FORBIDDEN),
-        ('users:download_files', lf('owner_client'), HTTPStatus.OK),
-        ('users:download_files', lf('user_client'), HTTPStatus.FORBIDDEN),
-        ('users:download_files', lf('client'), HTTPStatus.FORBIDDEN),
+        ('games:game', lf('owner_client'), HTTPStatus.OK),
+        ('games:game', lf('user_client'), HTTPStatus.FORBIDDEN),
+        ('games:game', lf('client'), HTTPStatus.FORBIDDEN),
+        ('games:download_files', lf('owner_client'), HTTPStatus.OK),
+        ('games:download_files', lf('user_client'), HTTPStatus.FORBIDDEN),
+        ('games:download_files', lf('client'), HTTPStatus.FORBIDDEN),
     ]
 )
 def test_game_availability_for_only_game_owner(
