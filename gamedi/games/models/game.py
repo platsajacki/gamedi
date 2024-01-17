@@ -102,6 +102,6 @@ class Game(NameString, Description, SlugModel, OrderNumberModel, PublishedModel,
         super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     @staticmethod
-    def get_files_filds() -> tuple[str, str]:
+    def get_files_fields() -> tuple[str, str]:
         """Получает строчное наименование полей с файлами."""
         return ('cover', 'hover_cover')

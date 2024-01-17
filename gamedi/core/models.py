@@ -29,7 +29,7 @@ class Description(models.Model):
 
 
 class SlugModel(models.Model):
-    """Абстарктная модель с полем 'slug'."""
+    """Абстрактная модель с полем 'slug'."""
     slug = models.SlugField(
         max_length=100,
         unique=True,
@@ -68,7 +68,7 @@ class PublishedModel(models.Model):
 
 
 class FileModel(OrderNumberModel, PublishedModel, models.Model):
-    """Абстарктная модель с полем 'file' и методом 'get_files_filds'."""
+    """Абстрактная модель с полем 'file' и методом 'get_files_fields'."""
     file = models.FileField(
         upload_to=get_file_path,
         verbose_name='Файл',
@@ -84,6 +84,6 @@ class FileModel(OrderNumberModel, PublishedModel, models.Model):
         super().clean()
 
     @staticmethod
-    def get_files_filds() -> tuple[str]:
+    def get_files_fields() -> tuple[str]:
         """Получает строчное наименование полей с файлами."""
         return ('file',)

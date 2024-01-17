@@ -17,7 +17,7 @@ def delete_gamefile(
     **kwargs: dict[str, Any]
 ) -> None:
     """Удаляет файл, связанный с объектом, если он существует."""
-    for field_name in sender.get_files_filds():
+    for field_name in sender.get_files_fields():
         path = getattr(instance, field_name).path
         if os.path.isfile(path):
             os.remove(path)
@@ -32,7 +32,7 @@ def update_gamefile(
     **kwargs: dict[str, Any]
 ) -> None:
     """Если обновляется файл, связанный с объектом, удаляет старый файл."""
-    for field_name in sender.get_files_filds():
+    for field_name in sender.get_files_fields():
         if (old_instance := sender.objects.filter(id=instance.id)).exists():  # type: ignore
             old_file: FileField = getattr(old_instance.first(), field_name)
             old_file_path: str = getattr(old_file, 'path')

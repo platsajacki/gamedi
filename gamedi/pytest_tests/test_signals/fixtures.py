@@ -21,8 +21,7 @@ def image_data() -> dict:
 def image_with_another_name(image_data: dict) -> SimpleUploadedFile:
     """Фикстура, возвращающая словарь с данными изображения."""
     image_data.update(name='test_image2.jpg')
-    with SimpleUploadedFile(**image_data) as file:
-        return file
+    return SimpleUploadedFile(**image_data)
 
 
 @pytest.fixture
