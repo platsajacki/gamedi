@@ -27,7 +27,7 @@ class UserCreateView(generic.CreateView):
 class ProfileDetailView(UserSlug, UserDispatch, generic.DetailView):
     """Представление личного кабинета пользователя."""
     model = User
-    queryset = User.objects.related_games()
+    queryset = User.objects.prefetch_related('games')
 
 
 class ProfileUpdateView(UserSlug, UserDispatch, generic.UpdateView):

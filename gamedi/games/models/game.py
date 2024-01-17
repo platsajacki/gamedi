@@ -5,8 +5,8 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 
 from core.models import Description, NameString, OrderNumberModel, PublishedModel, SlugModel
+from core.utils import get_cover_path, get_hover_path
 from games.managers import GameManager, GameQuerySet
-from games.utils import get_cover_path, get_hover_path
 from games.validators import validate_order_number
 
 

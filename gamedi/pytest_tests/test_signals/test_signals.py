@@ -30,8 +30,8 @@ class TestFileSignals:
 
         assert not path.exists(path_img)
         game_with_img.cover == image_with_another_name
-        assert path.exists(game_with_img.cover.path)
-        remove(game_with_img.cover.path)
+        assert path.exists(game_with_img.cover.path)  # type: ignore[attr-defined]
+        remove(game_with_img.cover.path)  # type: ignore[attr-defined]
         remove(game_with_img.hover_cover.path)
 
     def test_signal_update_gamefile_file_models(
@@ -42,7 +42,7 @@ class TestFileSignals:
         file_instance.file = image_with_another_name
         file_instance.save()
 
-        assert path.exists(file_instance.file.path)
+        assert path.exists(file_instance.file.path)  # type: ignore[attr-defined]
         file_instance.file != old_file
         file_instance.file == image_with_another_name
-        remove(file_instance.file.path)
+        remove(file_instance.file.path)  # type: ignore[attr-defined]

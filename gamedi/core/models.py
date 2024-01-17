@@ -1,6 +1,6 @@
 from django.db import models
 
-from games.utils import get_file_path
+from core.utils import get_file_path
 from games.validators import validate_order_number
 
 

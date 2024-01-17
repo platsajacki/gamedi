@@ -1,6 +1,6 @@
 from django.urls import path
 
-from games.views import GameDetailView, GameListView, DownloadingGameFilesTemplateView, GameProfileDetailView
+from games.views import DownloadingGameFilesTemplateView, GameDetailView, GameListView, GameProfileDetailView
 
 app_name = 'games'
 
