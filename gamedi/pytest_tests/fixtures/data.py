@@ -43,8 +43,19 @@ def image_with_another_name(image_data: dict) -> SimpleUploadedFile:
     return SimpleUploadedFile(**image_data)
 
 
-@pytest.fixture(
-    params=[Game, AdminGameFile, UserGameFile]
-)
+@pytest.fixture(params=[Game, AdminGameFile, UserGameFile])
 def order_number_models(request: pytest.FixtureRequest):
     return request.param
+
+
+@pytest.fixture
+def objs_without_order_number_and_published(
+    game_obj_without_order_number_and_is_published: Game,
+    admin_game_file_obj_without_order_number_and_is_published: AdminGameFile,
+    user_game_file_obj_without_order_number_and_is_published: UserGameFile,
+) -> dict:
+    return {
+        Game: game_obj_without_order_number_and_is_published,
+        AdminGameFile: admin_game_file_obj_without_order_number_and_is_published,
+        UserGameFile: user_game_file_obj_without_order_number_and_is_published,
+    }

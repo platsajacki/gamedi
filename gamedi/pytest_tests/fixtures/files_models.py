@@ -64,13 +64,11 @@ def five_user_files(
 
 
 @pytest.fixture
-def admin_game_file_obj_without_order_number_and_is_published(
-    game: Game, temp_img_data: dict
-) -> AdminGameFile:
+def admin_game_file_obj_without_order_number_and_is_published(game: Game, temp_img_data: dict) -> AdminGameFile:
     """Фикстура,  создающая и возвращающая объект пользовательского файла c картинкой, не сохраняя в базе."""
     with NamedTemporaryFile(**temp_img_data) as file:
         return AdminGameFile(
-            name='Файл для администратора',
+            name='Файл для администратора без ПП и публикации',
             file=file.name,
             game=game,
         )
@@ -98,7 +96,7 @@ def user_game_file_with_img(game: Game, image_data: dict) -> UserGameFile:
     """Фикстура, создающая и возвращающая объект пользовательского файла c картинкой."""
     with SimpleUploadedFile(**image_data) as file:
         return UserGameFile.objects.create(
-            name='Файл для пользователя',
+            name='Файл для пользователя без ПП и публикации',
             file=file,
             game=game,
         )

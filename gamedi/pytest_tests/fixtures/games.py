@@ -69,9 +69,9 @@ def game_obj_without_order_number_and_is_published(genre: Genre, temp_img_data: 
     """Фикстура, создающая и возвращающая объект игры c картинкой, не сохраняя в базе."""
     with NamedTemporaryFile(**temp_img_data) as file:
         return Game(
-            name='Игра',
+            name='Игра без ПП и публикации',
             description='Описание',
-            slug='game',
+            slug='game_without_order_number_and_is_published',
             genre=genre,
             min_players=8,
             max_players=8,
