@@ -49,10 +49,7 @@ def update_orders_numbers(
     **kwargs: dict[str, Any]
 ) -> None:
     """Меняет порядковые номера элементов при создании или изменении элемента."""
-    if sender == Game:
-        queryset: QuerySet = sender.objects.all()  # type: ignore
-    else:
-        queryset: QuerySet = sender.objects.filter(game=instance.game)  # type: ignore
+    queryset = sender.objects.all() if sender == Game else sender.objects.filter(game=instance.game)  # type: ignore
     # Если у модели еще нет элементов.
     if not queryset:
         instance.order_number = 1 if instance.is_published else None
@@ -72,18 +69,10 @@ def update_orders_numbers(
                 order_number=F('order_number') - 1
             )
         return
-    max_order_number: int = (
-        queryset
-        .aggregate(Max('order_number'))
-        ['order_number__max']
-    )
+    max_order_number: int = queryset.aggregate(Max('order_number'))['order_number__max']
     # Если элемент новый или вновь опубликованный,
     # обновляем порядковые номера после его порядкого номера.
-    if (
-        instance.id is None
-        or old_elem_exists
-        and old_order_number is None
-    ):
+    if instance.id is None or old_elem_exists and old_order_number is None:
         if instance.order_number > max_order_number:
             instance.order_number = max_order_number + 1
             return
@@ -126,10 +115,7 @@ def delete_orders_numbers(
     **kwargs: dict[str, Any]
 ) -> None:
     """Меняет порядковые номера элементов при удалении элемента."""
-    if sender == Game:
-        queryset: QuerySet = sender.objects.all()  # type: ignore
-    else:
-        queryset: QuerySet = sender.objects.filter(game=instance.game)  # type: ignore
+    queryset = sender.objects.all() if sender == Game else sender.objects.filter(game=instance.game)  # type: ignore
     queryset.filter(
         order_number__gt=instance.order_number
     ).update(
