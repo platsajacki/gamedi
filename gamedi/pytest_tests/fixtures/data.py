@@ -3,6 +3,8 @@ import pytest
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from games.models import AdminGameFile, Game, UserGameFile
+
 
 @pytest.fixture
 def registration_data() -> dict[str, str]:
@@ -39,3 +41,10 @@ def image_with_another_name(image_data: dict) -> SimpleUploadedFile:
     """Фикстура, возвращающая словарь с данными изображения."""
     image_data.update(name='test_image2.jpg')
     return SimpleUploadedFile(**image_data)
+
+
+@pytest.fixture(
+    params=[Game, AdminGameFile, UserGameFile]
+)
+def order_number_models(request: pytest.FixtureRequest):
+    return request.param

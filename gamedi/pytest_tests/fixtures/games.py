@@ -1,5 +1,6 @@
 import pytest
 
+from copy import deepcopy
 from tempfile import NamedTemporaryFile
 
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -24,7 +25,7 @@ def game(genre: Genre, temp_img_data: dict) -> Game:
             genre=genre,
             min_players=8,
             max_players=8,
-            order_number=1,
+            order_number=6,
             is_published=True,
             price=1500,
             discount=40,
@@ -68,9 +69,9 @@ def game_obj_without_order_number_and_is_published(genre: Genre, temp_img_data: 
     """Фикстура, создающая и возвращающая объект игры c картинкой, не сохраняя в базе."""
     with NamedTemporaryFile(**temp_img_data) as file:
         return Game(
-            name='Игра без ПП и статуса публикации',
+            name='Игра',
             description='Описание',
-            slug='without_order_number',
+            slug='game',
             genre=genre,
             min_players=8,
             max_players=8,
@@ -81,3 +82,20 @@ def game_obj_without_order_number_and_is_published(genre: Genre, temp_img_data: 
             cover=file.name,
             hover_cover=file.name,
         )
+
+
+@pytest.fixture
+def five_games(game_obj_without_order_number_and_is_published: Game, temp_img_data: dict) -> list[Game]:
+    """Фикстура, создающая и возвращающая 5 объектов игры."""
+    games = []
+    for i in range(1, 6):
+        with NamedTemporaryFile(**temp_img_data) as file:
+            game = deepcopy(game_obj_without_order_number_and_is_published)
+            game.order_number = i
+            game.name = f'Игра_{i}'
+            game.slug = f'game_{i}'
+            game.is_published = True
+            game.cover = file.name
+            game.hover_cover = file.name
+            games.append(game)
+    return Game.objects.bulk_create(games)

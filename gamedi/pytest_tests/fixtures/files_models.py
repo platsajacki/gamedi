@@ -1,6 +1,7 @@
 import pytest
 from pytest_lazyfixture import lazy_fixture as lf
 
+from copy import deepcopy
 from tempfile import NamedTemporaryFile
 
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -46,6 +47,23 @@ def user_game_file_obj_without_order_number_and_is_published(game: Game, temp_im
 
 
 @pytest.fixture
+def five_user_files(
+    user_game_file_obj_without_order_number_and_is_published: UserGameFile, temp_img_data: dict
+) -> list[UserGameFile]:
+    """Фикстура, создающая и возвращающая 5 объектов файлов пользователя."""
+    user_files = []
+    for i in range(1, 6):
+        with NamedTemporaryFile(**temp_img_data) as file:
+            user_file = deepcopy(user_game_file_obj_without_order_number_and_is_published)
+            user_file.order_number = i
+            user_file.is_published = True
+            user_file.name = f'Файл для пользователя_{i}'
+            user_file.file = file.name
+            user_files.append(user_file)
+    return UserGameFile.objects.bulk_create(user_files)
+
+
+@pytest.fixture
 def admin_game_file_obj_without_order_number_and_is_published(
     game: Game, temp_img_data: dict
 ) -> AdminGameFile:
@@ -56,6 +74,23 @@ def admin_game_file_obj_without_order_number_and_is_published(
             file=file.name,
             game=game,
         )
+
+
+@pytest.fixture
+def five_admin_files(
+    admin_game_file_obj_without_order_number_and_is_published: AdminGameFile, temp_img_data: dict
+) -> list[AdminGameFile]:
+    """Фикстура, создающая и возвращающая 5 объектов файлов администратора."""
+    admin_files = []
+    for i in range(1, 6):
+        with NamedTemporaryFile(**temp_img_data) as file:
+            admin_file = deepcopy(admin_game_file_obj_without_order_number_and_is_published)
+            admin_file.order_number = i
+            admin_file.is_published = True
+            admin_file.name = f'Файл для администратора_{i}'
+            admin_file.file = file.name
+            admin_files.append(admin_file)
+    return AdminGameFile.objects.bulk_create(admin_files)
 
 
 @pytest.fixture

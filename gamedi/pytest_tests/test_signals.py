@@ -84,11 +84,58 @@ class TestOrdersNumbersSignalsFirstObj:
         assert obj.__class__.objects.first().order_number == 1  # type: ignore[union-attr]
 
 
+@pytest.mark.parametrize('obj', [lf('game'), lf('user_game_file'), lf('admin_game_file')])
+def test_unpublish_published_obj(obj: Game | UserGameFile | AdminGameFile):
+    """У снятого с публикации объекта нет порядкового номера."""
+    assert obj.is_published
+    obj.is_published = False
+    obj.save()
+    assert obj.__class__.objects.first().order_number is None  # type: ignore[union-attr]
+
+
+@pytest.mark.usefixtures('five_games', 'five_user_files', 'five_admin_files')
 class TestOrdersNumbersSignalsDelete:
     """Проверяет автоперестановку порядковых номеров при удалении или снятии объекта с публикации."""
-    @pytest.mark.parametrize('obj', [lf('game'), lf('user_game_file'), lf('admin_game_file')])
-    def test_unpublish_published_obj(self, obj: Game | UserGameFile | AdminGameFile):
-        """У снятого с публикации объекта нет порядкового номера."""
-        obj.is_published = False
-        obj.save()
-        assert obj.__class__.objects.first().order_number is None  # type: ignore[union-attr]
+    def test_delete_object_from_beginning(self, order_number_models: Game | UserGameFile | AdminGameFile):
+        """Если удаляется из начала списка, все порядковые номера должны уменьшиться на 1."""
+        queryset = order_number_models.objects.order_by('order_number')  # type: ignore[misc]
+        queryset[0].delete()
+        for i in range(1, len(queryset)):
+            assert queryset[i-1].order_number == i
+
+    def test_delete_object_from_middle(self, order_number_models: Game | UserGameFile | AdminGameFile):
+        """Если удаляется из середины списка, порядковые номера после должны уменьшиться на 1."""
+        queryset = order_number_models.objects.order_by('order_number')  # type: ignore[misc]
+        queryset[3].delete()
+        for i in range(1, len(queryset)):
+            assert queryset[i-1].order_number == i
+
+    def test_delete_object_from_end(self, order_number_models: Game | UserGameFile | AdminGameFile):
+        """Если удаляется из конца списка, порядковые номера не меняются.."""
+        queryset = order_number_models.objects.order_by('order_number')   # type: ignore[misc]
+        queryset[len(queryset) - 1].delete()
+        for i in range(1, len(queryset)):
+            assert queryset[i-1].order_number == i
+
+    def test_unpublish_object_from_beginning(self, order_number_models: Game | UserGameFile | AdminGameFile):
+        """Если снимается с публикации из начала списка, все порядковые номера должны уменьшиться на 1."""
+        queryset = order_number_models.objects.order_by('order_number')  # type: ignore[misc]
+        queryset.filter(order_number=queryset[0].order_number).update(is_published=False)
+        queryset[0].save()
+        for i in range(1, len(queryset)):
+            assert queryset[i-1].order_number == i
+
+    def test_unpublish_object_from_middle(self, order_number_models: Game | UserGameFile | AdminGameFile):
+        """Если снимается с публикации из середины списка, порядковые номера после должны уменьшиться на 1."""
+        queryset = order_number_models.objects.order_by('order_number')  # type: ignore[misc]
+        queryset.filter(order_number=queryset[3].order_number).update(is_published=False)
+        queryset[3].save()
+        for i in range(1, len(queryset)):
+            assert queryset[i-1].order_number == i
+
+    def test_unpublish_object_from_end(self, order_number_models: Game | UserGameFile | AdminGameFile):
+        """Если снимается с публикации из конца списка, порядковые номера не меняются."""
+        queryset = order_number_models.objects.order_by('order_number')   # type: ignore[misc]
+        queryset[len(queryset) - 1].delete()
+        for i in range(1, len(queryset)):
+            assert queryset[i-1].order_number == i
