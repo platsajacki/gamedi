@@ -2,9 +2,10 @@ import pytest
 
 from tempfile import NamedTemporaryFile
 
+from django.conf import settings
 from django.test import Client
 
-from games.models import Game, Genre
+from games.models import AdminGameFile, Game, Genre, UserGameFile
 from users.models import User
 
 pytest_plugins = ['pytest_tests.test_signals.fixtures']
@@ -47,9 +48,18 @@ def genre() -> Genre:
 
 
 @pytest.fixture
-def game(genre: Genre) -> Game:
+def temp_img_data() -> dict:
+    return {
+        'prefix': 'file',
+        'suffix': '.png',
+        'dir': settings.MEDIA_ROOT,
+    }
+
+
+@pytest.fixture
+def game(genre: Genre, temp_img_data: dict) -> Game:
     """Фикстура, создающая и возвращающая объект игры."""
-    with NamedTemporaryFile(prefix='file', suffix='.png') as file:
+    with NamedTemporaryFile(**temp_img_data) as file:
         return Game.objects.create(
             name='Игра',
             description='Описание',
@@ -58,12 +68,39 @@ def game(genre: Genre) -> Game:
             min_players=8,
             max_players=8,
             order_number=1,
+            is_published=True,
             price=1500,
             discount=40,
             time=4,
             age_restriction=5,
             cover=file.name,
             hover_cover=file.name,
+        )
+
+
+@pytest.fixture
+def user_game_file(game: Game, temp_img_data: dict) -> UserGameFile:
+    """Фикстура, создающая и возвращающая объект пользовательского файла."""
+    with NamedTemporaryFile(**temp_img_data) as file:
+        return UserGameFile.objects.create(
+            name='Файл для пользователя',
+            file=file.name,
+            game=game,
+            order_number=1,
+            is_published=True,
+        )
+
+
+@pytest.fixture
+def admin_game_file(game: Game, temp_img_data: dict) -> AdminGameFile:
+    """Фикстура, создающая и возвращающая объект файла админа."""
+    with NamedTemporaryFile(**temp_img_data) as file:
+        return AdminGameFile.objects.create(
+            name='Файл для администратора',
+            file=file.name,
+            game=game,
+            order_number=1,
+            is_published=True,
         )
 
 

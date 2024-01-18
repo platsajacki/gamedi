@@ -53,7 +53,7 @@ def update_orders_numbers(
         queryset: QuerySet = sender.objects.all()  # type: ignore
     else:
         queryset: QuerySet = sender.objects.filter(game=instance.game)  # type: ignore
-    # Если в модели нет элементов.
+    # Если у модели еще нет элементов.
     if not queryset:
         instance.order_number = 1 if instance.is_published else None
         return
