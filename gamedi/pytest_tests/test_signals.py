@@ -3,8 +3,8 @@ from pytest_lazyfixture import lazy_fixture as lf
 
 from os import path, remove
 
-from django.db.models import QuerySet
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db.models import QuerySet
 
 from games.models import AdminGameFile, Game, UserGameFile
 

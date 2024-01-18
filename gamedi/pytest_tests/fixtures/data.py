@@ -54,8 +54,23 @@ def objs_without_order_number_and_published(
     admin_game_file_obj_without_order_number_and_is_published: AdminGameFile,
     user_game_file_obj_without_order_number_and_is_published: UserGameFile,
 ) -> dict:
+    "Словарь неопубликованных объектов без порядкового номера, без записи в базу."
     return {
         Game: game_obj_without_order_number_and_is_published,
         AdminGameFile: admin_game_file_obj_without_order_number_and_is_published,
         UserGameFile: user_game_file_obj_without_order_number_and_is_published,
+    }
+
+
+@pytest.fixture
+def formset_data() -> dict:
+    """Данные для заполнения FormSet."""
+    return {
+        'form-TOTAL_FORMS': '2',
+        'form-INITIAL_FORMS': '2',
+        'form-MAX_NUM_FORMS': '',
+        'form-0-role': 'Role1',
+        'form-0-email': 'email1@example.com',
+        'form-1-role': 'Role2',
+        'form-1-email': 'email2@example.com',
     }

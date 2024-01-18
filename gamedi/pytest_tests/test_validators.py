@@ -1,5 +1,7 @@
 import pytest
+
 from django.core.exceptions import ValidationError
+
 from games.validators import validate_order_number
 
 
