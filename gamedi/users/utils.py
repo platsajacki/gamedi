@@ -6,6 +6,7 @@ from django.core.mail import EmailMessage, get_connection
 from django.forms import BaseFormSet
 from django.http import HttpRequest
 
+from users.constants import EMAIL_INVITATION_BODY, EMAIL_INVITATION_SUBJECT
 from users.models import User
 
 
@@ -22,8 +23,8 @@ def define_name(user: User | AnonymousUser) -> str:
 
 def get_role_and_file_email(username: str, email: str, role: str, game_name: str, file_path: str) -> EmailMessage:
     """Создает объект EmailMessage с информацией о роли и прикрепленным файлом игры.."""
-    subject: str = f'Приглашение от {username}. GameDi.'
-    body: str = f'Ты - {role} в игре {game_name}.'
+    subject: str = EMAIL_INVITATION_SUBJECT.format(username=username)
+    body: str = EMAIL_INVITATION_BODY.format(role=role, game_name=game_name)
     msg: EmailMessage = EmailMessage(subject=subject, body=body, from_email=settings.DEFAULT_FROM_EMAIL, to=[email])
     msg.attach_file(file_path)
     return msg

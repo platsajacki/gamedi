@@ -10,9 +10,9 @@ from django.views import generic
 
 from games.forms import RoleMessageFormSet
 from games.managers.files_managers import UserGameFileQuerySet
-from games.utils import send_role_and_file_email
 from users.mixins import UserDispatch
 from users.models import Game
+from users.utils import send_role_and_file_email
 
 logger = logging.getLogger(__name__)
 

@@ -69,8 +69,8 @@ def formset_data() -> dict:
         'form-TOTAL_FORMS': '2',
         'form-INITIAL_FORMS': '2',
         'form-MAX_NUM_FORMS': '',
-        'form-0-role': 'Role1',
+        'form-0-role': 'Файл для пользователя_1',
         'form-0-email': 'email1@example.com',
-        'form-1-role': 'Role2',
+        'form-1-role': 'Файл для пользователя_2',
         'form-1-email': 'email2@example.com',
     }

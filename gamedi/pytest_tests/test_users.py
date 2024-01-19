@@ -13,6 +13,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestUserRegistrationLogic:
+    """Проверяет корректность регистрации и авторизации."""
     def test_anonymous_can_registation(self, client: Client, registration_data: dict[str, str]):
         """Анонимный пользователь может успешно зарегистрироваться."""
         old_count_users: int = User.objects.count()
