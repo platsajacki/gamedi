@@ -31,7 +31,7 @@ class ProfileDetailView(UserSlug, UserDispatch, generic.DetailView):
 
 
 class ProfileUpdateView(UserSlug, UserDispatch, generic.UpdateView):
-    """Представление личного кабинета пользователя."""
+    """Обновление данных пользователя."""
     model = User
     form_class = UserUpdateForm
 

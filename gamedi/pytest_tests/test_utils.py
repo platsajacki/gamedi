@@ -27,9 +27,7 @@ def test_define_name(user: User):
 
 
 @pytest.mark.usefixtures('five_user_files')
-def test_send_role_and_file_email(
-    mailoutbox: list | None, owner: User,  game: Game, game_slug: tuple[str], formset_data: dict
-):
+def test_send_role_and_file_email(mailoutbox: list, owner: User, game: Game, game_slug: tuple[str], formset_data: dict):
     """Проверяет, что функция send_role_and_file_email корректно отправляет электронные письма."""
     with patch('django.core.mail.message.EmailMessage.attach_file') as mock_attach_file:
         request: HttpRequest = RequestFactory().post(reverse('games:game', args=(owner.username, game_slug[0])))

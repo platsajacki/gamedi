@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.test.client import Client
 from django.urls import reverse
 
+from games.models import Game
 from users.models import User
 
 pytestmark = pytest.mark.django_db
@@ -58,5 +59,25 @@ class TestUserRegistrationLogic:
         assert response.status_code == expected_status
 
 
-class TestUserProfileLogic:
-    ...
+@pytest.mark.usefixtures('five_games')
+class TestUserProfileContent:
+    """Проверяет содержимое личного кабинета пользователя."""
+    def test_games_presence_in_users_profile(self, user: User, username: tuple[str], user_client: Client):
+        """Наличие приобретенных игр в личном кабинете."""
+        user.games.add(*Game.objects.all())
+        user.save()
+        response = user_client.get(reverse('users:profile', args=username))
+        assert response.status_code == 200
+        assert response.context['user'] == user
+        for game_name in user.games.values_list('name', flat=True):
+            assert game_name in response.content.decode()
+
+    def test_no_games_for_other_user_profile(self, user: User, username: tuple[str], user_client: Client, owner: User):
+        """В личном кабинете нет игр других пользователей."""
+        owner.games.add(*Game.objects.all())
+        owner.save()
+        response = user_client.get(reverse('users:profile', args=username))
+        assert response.status_code == 200
+        assert response.context['user'] == user
+        for game_name in owner.games.values_list('name', flat=True):
+            assert game_name not in response.content.decode()
