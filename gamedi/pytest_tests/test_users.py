@@ -4,7 +4,7 @@ from pytest_lazyfixture import lazy_fixture as lf
 from http import HTTPStatus
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.test.client import Client
+from django.test import Client
 from django.urls import reverse
 
 from games.models import Game
