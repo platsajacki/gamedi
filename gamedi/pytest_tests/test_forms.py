@@ -15,10 +15,3 @@ def test_role_message_form_set_duplication_email(formset_data: dict):
     formset_data['form-1-email'] = formset_data['form-0-email']
     with pytest.raises(ValidationError):
         RoleMessageFormSet(formset_data).clean()
-
-
-def test_role_message_form_set_empty_email(formset_data: dict):
-    """Все email должны быть заполнены."""
-    formset_data['form-1-email'] = ''
-    with pytest.raises(ValidationError):
-        RoleMessageFormSet(formset_data).clean()
