@@ -22,7 +22,7 @@ class NameString(models.Model):
 
 class Description(models.Model):
     """Абстарктная модель с полем 'description'."""
-    description = models.TextField(max_length=1024, verbose_name='Описание')
+    description = models.TextField(max_length=2048, verbose_name='Описание')
 
     class Meta:
         abstract = True

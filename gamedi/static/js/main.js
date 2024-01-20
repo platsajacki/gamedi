@@ -27,7 +27,7 @@ async function containsPunctuation(str) {
 export async function getMaxWordsInElement(className, maxWords) {
   const elements = document.getElementsByClassName(className)
   for (const element of elements) {
-    let words = element.textContent.trim().split(' ')
+    let words = element.innerHTML.trim().split(' ')
     if (words.length > maxWords) {
       words = words.slice(0, maxWords)
       let lastWord = words[maxWords - 1]
@@ -37,7 +37,7 @@ export async function getMaxWordsInElement(className, maxWords) {
         }
         words[maxWords - 1] = lastWord
       }
-      element.textContent = words.join(' ') + '...'
+      element.innerHTML = words.join(' ') + '...'
     }
   }
 }

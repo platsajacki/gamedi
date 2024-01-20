@@ -229,3 +229,8 @@ main {
   grid-template-columns: 0.9fr;
   justify-content: center;
 }
+
+.pages-info {
+  font-size: 1.1em;
+  margin-top: 2rem;
+}

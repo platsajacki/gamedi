@@ -26,7 +26,7 @@
           {% include "includes/buttom_buy.html" %}
         </div>
         <div id="text-description" class="text-description">
-          {{ object.description }}
+          {{ object.description|safe }}
         </div>
         {% include "games/includes/param_game.html" %}
       </div>
