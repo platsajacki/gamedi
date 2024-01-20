@@ -16,9 +16,14 @@ class RoleMessageFormSet(RoleMessageFormSetDefault):  # type: ignore
     def valide_emails(self) -> None:
         """Проверяет, что все поля электронной почты заполнены, и нет дубликатов адресов электронной почты."""
         email_set: set = set()
-        for i in range(int(self.data.get('form-INITIAL_FORMS', 0))):
+        cnt_empty_emails: int = 0
+        for i in range(INITIAL_FORMS := int(self.data.get('form-INITIAL_FORMS', 0))):
             email: str = self.data.get(f'form-{i}-email')
-            if email in email_set and email is not None:
+            if not email:
+                cnt_empty_emails += 1
+            if cnt_empty_emails == INITIAL_FORMS:
+                raise ValidationError('Должна быть заполнена минимум одна электронная почта.')
+            if email and email in email_set:
                 raise ValidationError('Дублирование адресов электронной почты не разрешено.')
             email_set.add(email)
 

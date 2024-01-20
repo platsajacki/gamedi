@@ -24,7 +24,7 @@ class TestUserRegistrationLogic:
         assert response.url == reverse('login')
         assert old_count_users < User.objects.count()
 
-    def test_authorized_user_can_not_registation(self, user_client: Client, registration_data: dict[str, str]):
+    def test_authorized_user_cannot_registation(self, user_client: Client, registration_data: dict[str, str]):
         """Автороризованный пользователь не может успешно зарегистрироваться."""
         old_count_users: int = User.objects.count()
         response: HttpResponseRedirect = user_client.post(  # type: ignore

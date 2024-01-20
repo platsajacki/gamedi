@@ -37,9 +37,12 @@ def send_role_and_file_email(request: HttpRequest, formset: BaseFormSet, context
     emails_to_send: list[EmailMessage] = []
     for i in range(int(formset_data.get('form-INITIAL_FORMS', 0))):
         role: str = formset_data.get(f'form-{i}-role', '')
+        email: str = formset_data.get(f'form-{i}-email', '')
+        if not email:
+            continue
         email_message: EmailMessage = get_role_and_file_email(
             username=username,
-            email=formset_data.get(f'form-{i}-email', ''),
+            email=email,
             role=role,
             game_name=context['object'].name,
             file_path=context['object'].users_files.get(name=role).file.path,
