@@ -1,0 +1,23 @@
+<div class="role-formset">
+	{% if formset %}
+		<form class="main formset" method="post">
+			{% csrf_token %}
+			{{ formset.management_form }}
+			{% for form in formset %}
+				{% include "includes/custom_form.html" %}
+			{% endfor %}
+			{% if not formset.is_valid %}
+				<div class="errorlist errorformset">{{ formset.non_form_errors }}</div>
+			{% endif %}
+			<button class="log-button-style" type="submit">Отправить</button>
+		</form>
+	{% elif exception %}
+	<div class="formset-info">
+		{{ exception }} <a href="">Отправить повторно?</a>
+	</div>
+	{% else %}
+	<div class="formset-info">
+		Письма успешно отправлены. <a href="">Отправить повторно?</a>
+	</div>
+	{% endif %}
+</div>

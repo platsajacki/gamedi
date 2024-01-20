@@ -245,3 +245,38 @@ form.reset {
 .update-profile .log-button-style {
   width: 7.5em;
 }
+
+/* Стили для FormSet */
+.role-formset {
+  margin-bottom: 2rem;
+  justify-items: center;
+}
+
+form.formset {
+  font-size: 0.9em;
+}
+
+form.formset .errorformset {
+  margin: 0;
+  width: 100%;
+  font-size: 0.9em;
+}
+
+.role-formset .formset-info {
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: -0.5rem;
+  color: var(--main-orange);
+}
+
+.role-formset .log-button-style {
+  width: 7.5em;
+  height: 2em;
+}
+
+a.all-download {
+  justify-self: left;
+  font-size: 0.9em;
+  margin-bottom: 0.5rem;
+}

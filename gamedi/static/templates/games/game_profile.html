@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ game.name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <script type="module" src="/static/js/games/scroll.js" defer></script>
+    <script type="module" src="/static/js/games/game_profile.js" defer></script>
+    <div class="game-detail">
+      {% include "games/includes/left_game_detail.html" %}
+      <div class="description">
+        <div class="game-name">
+          <a class="name-detail" href="{% url 'games:detail' game.slug %}">
+            {{ object.name }}
+          </a>
+        </div>
+        <div id="text-description" class="text-description">
+          Привет, Детектив!<br>
+          Первым делом тебе нужно определиться, хочешь ли ты быть ведущим. Если эта роль твоя, смело качай все файлы и изучай игру, чтобы распределить остальные роли.
+          Тут про логику отправки ролей и инструкция использования формы. Тут про логику отправки ролей и инструкция использования формы. Тут про логику отправки ролей и инструкция использования формы.
+          Тут про логику отправки ролей и инструкция использования формы. Тут про логику отправки ролей и инструкция использования формы. Тут про логику отправки ролей и инструкция использования формы.
+        </div>
+        <a class="log-button-style all-download" href="{% url 'games:download_files' user.username game.slug %}">Скачать всё</a>
+        {% include "games/includes/param_game.html" %}
+      </div>
+    </div>
+    {% include "games/includes/role_formset.html" %}
+  </div>
+{% endblock %}

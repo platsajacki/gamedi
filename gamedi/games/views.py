@@ -32,7 +32,7 @@ class GameDetailView(generic.DetailView):
 class GameProfileDetailView(UserDispatch, generic.DetailView):
     """Представление игры в профиле пользователя."""
     model = Game
-    template_name = 'users/user_game.html'
+    template_name = 'games/game_profile.html'
     queryset = Game.published.all()
 
     def get_context_data(self, need_formset: bool = True, **kwargs: dict[str, Any]) -> dict[str, Any]:

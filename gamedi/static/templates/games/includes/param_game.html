@@ -1,0 +1,9 @@
+<div class="param-description">
+	Возрастные ограничения: <span>{{ object.age_restriction }}+</span><br>
+	Количество участников: <span>{% if object.min_players == object.max_players %}
+	{{ object.max_players }}
+	{% else %}
+	{{ object.min_players }}-{{ object.max_players }}
+	{% endif %}</span><br>
+	Примерное время игры: <span>{{ object.time }} ч.</span>
+</div>

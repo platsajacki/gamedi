@@ -92,7 +92,7 @@ async function attachClickEventToImages(imagesContainer) {
 }
 
 
-/** Активирует все прослушки 'games_list'. */
+/** Активирует все прослушки на странице игры со скролом. */
 async function wiretapping () {
   for (const action of ['resize', 'load']) {
     window.addEventListener(action,
