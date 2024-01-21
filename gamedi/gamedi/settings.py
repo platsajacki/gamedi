@@ -33,8 +33,8 @@ INSTALLED_APPS = [
 
     'core',
     'games',
-    'orders',
     'pages',
+    'purchases',
     'users',
 
     'debug_toolbar',
