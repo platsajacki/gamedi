@@ -3,9 +3,9 @@ from typing import Any
 from django.http import FileResponse, HttpRequest, HttpResponse
 from django.views import generic
 
+from games.mixins import UserGameDispatch
 from games.models import Game
 from games.services import DownloadingGameFilesService, GameProfileDetailContextService, GameProfileDetailPostService
-from users.mixins import UserDispatch
 
 
 class GameListView(generic.ListView):
@@ -20,7 +20,7 @@ class GameDetailView(generic.DetailView):
     queryset = Game.published.all()
 
 
-class GameProfileDetailView(UserDispatch, generic.DetailView):
+class GameProfileDetailView(UserGameDispatch, generic.DetailView):
     """Представление игры в профиле пользователя."""
     model = Game
     template_name = 'games/game_profile.html'
@@ -41,7 +41,7 @@ class GameProfileDetailView(UserDispatch, generic.DetailView):
         )()
 
 
-class DownloadingGameFilesTemplateView(UserDispatch, generic.View):
+class DownloadingGameFilesTemplateView(UserGameDispatch, generic.View):
     """Класс представления для скачивания файлов игры в виде zip-архива."""
     def get(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> FileResponse:
         """Обрабатывает GET запрос и отдает zip-архив с файлами игры пользователю."""

@@ -8,8 +8,8 @@ from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 
 from core.services import BaseService
-from games.models import Game
 from games.managers import UserGameFileQuerySet
+from games.models import Game
 
 
 @dataclass
