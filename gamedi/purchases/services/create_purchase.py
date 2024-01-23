@@ -20,10 +20,6 @@ class CreatePurchaseService(BaseService):
     request: HttpRequest
     kwargs: dict[str, Any]
 
-    def get_user(self) -> User:
-        """Получаем пользователя."""
-        return get_object_or_404(User, username=self.kwargs.get('username'))
-
     def get_game(self) -> Game:
         """Получаем игру."""
         return get_object_or_404(Game, slug=self.kwargs.get('slug'))
@@ -44,7 +40,7 @@ class CreatePurchaseService(BaseService):
                 'confirmation': {
                     'type': 'redirect',
                     'return_url': self.request.build_absolute_uri(
-                        reverse('users:profile', args=(self.kwargs['username'],))
+                        reverse('users:profile', args=(user.username,))
                     )
                 },
                 'capture': True,
@@ -75,14 +71,14 @@ class CreatePurchaseService(BaseService):
 
     def act(self) -> HttpResponseRedirect:
         """Создаем покупку и перенаправляем на оплату."""
-        user, game, uuid = self.get_user(), self.get_game(), str(uuid4())
-        if game in user.games.all():
+        user, game, uuid = self.request.user, self.get_game(), str(uuid4())
+        if user.is_authenticated and game in user.games.all():
             raise Http404
         purchase: Purchase = Purchase.objects.create(
             idempotence_key=uuid, user=user, game=game, price=game.final_price  # type: ignore[misc]
         )
         self.set_configuration()
         return HttpResponseRedirect(
-            self.get_payment(user=user, game=game, idempotence_key=uuid, purchase=purchase)
+            self.get_payment(user=user, game=game, idempotence_key=uuid, purchase=purchase)  # type: ignore[arg-type]
             .confirmation.confirmation_url
         )

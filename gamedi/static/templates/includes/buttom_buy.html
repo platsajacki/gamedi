@@ -4,6 +4,6 @@
   {% if not request.user.is_authenticated %}
     <a class="buy" href="{% url 'registration' %}">Купить</a>
   {% else %}
-    <a class="buy" href="{% url 'purchases:payment' user.username game.slug %}">Купить</a>
+    <a class="buy" href="{% url 'purchases:payment' game.slug %}">Купить</a>
   {% endif %}
 {% endif %}

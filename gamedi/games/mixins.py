@@ -9,10 +9,7 @@ from django.http.response import HttpResponseBase
 class UserGameDispatch(LoginRequiredMixin):
     """Миксин для проверки доступа к игре в профиле для пользователей."""
     def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
-        """
-        Проверяет, имеет ли текущий пользователь доступ к представлению и игре,
-        и если нет, вызывает исключение PermissionDenied.
-        """
+        """Текущий пользователь доступ к игре в профиле? Если нет, вызывает исключение PermissionDenied."""
         if (
             request.user.username != kwargs['username']
             or request.user.is_authenticated

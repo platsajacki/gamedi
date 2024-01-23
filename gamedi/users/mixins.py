@@ -15,10 +15,7 @@ class UserSlug:
 class UserDispatch(LoginRequiredMixin):
     """Миксин для проверки доступа к представлениям для пользователей."""
     def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
-        """
-        Проверяет, имеет ли текущий пользователь доступ к представлению,
-        и если нет, вызывает исключение PermissionDenied.
-        """
+        """Текущий пользователь доступ к представлению? Если нет, вызывает исключение PermissionDenied."""
         if request.user.username != kwargs['username']:
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
