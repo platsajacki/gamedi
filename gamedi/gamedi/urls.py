@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('registration/', UserCreateView.as_view(), name='registration'),
     path('', include('games.urls', namespace='games')),
+    path('', include('purchases.urls', namespace='purchases')),
     path('info/', include('pages.urls', namespace='pages')),
     path('profile/', include('users.urls', namespace='users')),
 ]

@@ -149,3 +149,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = getenv('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD =getenv('EMAIL_HOST_PASSWORD')
 # EMAIL_PORT = getenv('EMAIL_PORT')
+
+
+# Yoomoney
+ID_YOOMONEY = getenv('ID_YOOMONEY')
+SECRET_KEY_YOOMONEY = getenv('SECRET_KEY_YOOMONEY')

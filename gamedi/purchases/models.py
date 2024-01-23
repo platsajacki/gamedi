@@ -13,6 +13,14 @@ class PurchaseStatus(models.TextChoices):
 
 class Purchase(models.Model):
     """Модель для хранения информации о покупках."""
+    idempotence_key = models.UUIDField(
+        editable=False,
+        unique=True,
+    )
+    payment_id = models.UUIDField(
+        editable=False,
+        null=True,
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -32,6 +40,13 @@ class Purchase(models.Model):
         decimal_places=2,
         verbose_name='Окончательная цена',
         blank=True,
+        editable=False,
+    )
+    income_without_tax = models.DecimalField(
+        max_digits=7,
+        decimal_places=2,
+        verbose_name='Доход без учета налогов',
+        default=0,
         editable=False,
     )
     status = models.CharField(
