@@ -1,20 +1,19 @@
 from typing import Any
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest
 from django.http.response import HttpResponseBase
 
 
-class UserGameDispatch(LoginRequiredMixin):
+class UserGameDispatch:
     """Миксин для проверки доступа к игре в профиле для пользователей."""
     def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
         """Текущий пользователь доступ к игре в профиле? Если нет, вызывает исключение PermissionDenied."""
-        if (
+        if request.user.is_anonymous or (
             request.user.username != kwargs['username']
             or request.user.is_authenticated
             and request.user.username == kwargs['username']
             and not request.user.games.filter(slug=kwargs['slug']).exists()
         ):
             raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)  # type: ignore[misc]

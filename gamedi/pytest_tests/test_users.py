@@ -13,6 +13,22 @@ from users.models import User
 pytestmark = pytest.mark.django_db
 
 
+@pytest.mark.parametrize(
+    'name, visitor, status',
+    [
+        ('users:profile', lf('user_client'), HTTPStatus.OK),
+        ('users:profile', lf('client'), HTTPStatus.FORBIDDEN),
+        ('users:profile', lf('admin_client'), HTTPStatus.FORBIDDEN),
+        ('users:update', lf('user_client'), HTTPStatus.OK),
+        ('users:update', lf('client'), HTTPStatus.FORBIDDEN),
+        ('users:update', lf('admin_client'), HTTPStatus.FORBIDDEN),
+    ]
+)
+def test_profile_availability_for_only_profile_owner(name: str, visitor: Client, username: tuple[str], status: int):
+    """Проверяет доступность страниц профиля. Только для владельцев профиля."""
+    assert visitor.get(reverse(name, args=username)).status_code == status
+
+
 class TestUserRegistrationLogic:
     """Проверяет корректность регистрации и авторизации."""
     def test_anonymous_can_registation(self, client: Client, registration_data: dict[str, str]):

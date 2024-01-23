@@ -1,4 +1,5 @@
 import pytest
+from pytest_lazyfixture import lazy_fixture as lf
 
 from http import HTTPStatus
 from unittest.mock import patch
@@ -10,6 +11,24 @@ from games.forms import RoleMessageFormSet
 from users.models import User
 
 pytestmark = pytest.mark.django_db
+
+
+@pytest.mark.parametrize(
+    'name, visitor, status',
+    [
+        ('games:game', lf('owner_client'), HTTPStatus.OK),
+        ('games:game', lf('user_client'), HTTPStatus.FORBIDDEN),
+        ('games:game', lf('client'), HTTPStatus.FORBIDDEN),
+        ('games:download_files', lf('owner_client'), HTTPStatus.OK),
+        ('games:download_files', lf('user_client'), HTTPStatus.FORBIDDEN),
+        ('games:download_files', lf('client'), HTTPStatus.FORBIDDEN),
+    ]
+)
+def test_game_availability_for_only_game_owner(
+    name: str, visitor: Client, owner: User, game_slug: tuple[str], status: int
+):
+    """Проверяет доступность страницы игры в профиле. Только для владельцев игры."""
+    assert visitor.get(reverse(name, args=(owner.username, game_slug[0]))).status_code == status
 
 
 class TestGameProfileDetailView:

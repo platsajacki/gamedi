@@ -72,13 +72,13 @@ class CreatePurchaseService(BaseService):
     def act(self) -> HttpResponseRedirect:
         """Создаем покупку и перенаправляем на оплату."""
         user, game, uuid = self.request.user, self.get_game(), str(uuid4())
-        if user.is_authenticated and game in user.games.all():
+        if user.is_anonymous or user.is_authenticated and game in user.games.all():
             raise Http404
         purchase: Purchase = Purchase.objects.create(
             idempotence_key=uuid, user=user, game=game, price=game.final_price  # type: ignore[misc]
         )
         self.set_configuration()
         return HttpResponseRedirect(
-            self.get_payment(user=user, game=game, idempotence_key=uuid, purchase=purchase)  # type: ignore[arg-type]
+            self.get_payment(user=user, game=game, idempotence_key=uuid, purchase=purchase)
             .confirmation.confirmation_url
         )
