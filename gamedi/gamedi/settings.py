@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -70,7 +69,7 @@ WSGI_APPLICATION = 'gamedi.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': getenv('ENGINE'),
         'NAME': getenv('POSTGRES_DB'),
         'USER': getenv('POSTGRES_USER'),
         'PASSWORD': getenv('POSTGRES_PASSWORD'),
@@ -151,6 +150,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_PORT = getenv('EMAIL_PORT')
 
 
-# Yoomoney
-ID_YOOMONEY = getenv('ID_YOOMONEY')
-SECRET_KEY_YOOMONEY = getenv('SECRET_KEY_YOOMONEY')
+# YooKassa
+ID_YOOKASSA = getenv('ID_YOOKASSA')
+SECRET_KEY_YOOKASSA = getenv('SECRET_KEY_YOOKASSA')

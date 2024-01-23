@@ -7,7 +7,7 @@ from django.http import Http404, HttpRequest, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
-from yookassa import Configuration, Payment
+from yookassa import Configuration, Payment  # type: ignore[import-untyped]
 
 from core.services import BaseService
 from games.models import Game
@@ -29,9 +29,9 @@ class CreatePurchaseService(BaseService):
         return get_object_or_404(Game, slug=self.kwargs.get('slug'))
 
     def set_configuration(self) -> None:
-        """Устанавливаем конфигурацию YooMoney."""
-        Configuration.account_id = settings.ID_YOOMONEY
-        Configuration.secret_key = settings.SECRET_KEY_YOOMONEY
+        """Устанавливаем конфигурацию YooKassa."""
+        Configuration.account_id = settings.ID_YOOKASSA
+        Configuration.secret_key = settings.SECRET_KEY_YOOKASSA
 
     def get_payment(self, user: User, game: Game, idempotence_key: str, purchase: Purchase) -> Payment:
         """Создаем объект платежа."""

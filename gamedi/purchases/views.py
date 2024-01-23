@@ -15,7 +15,7 @@ class CreatePurchaseView(UserDispatch, generic.View):
 
 
 class ConfirmationView(generic.View):
-    """Принимает статус платежа от Yookassa."""
+    """Принимает статус платежа от YooKassa."""
     def post(
         self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]
     ) -> HttpResponse | HttpResponseNotFound:
