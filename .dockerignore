@@ -2,6 +2,7 @@
 .vscode
 .coverage
 
+gamedi/pytest_tests
 db.sqlite3
 media
 venv
