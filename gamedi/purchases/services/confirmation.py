@@ -1,14 +1,16 @@
 import json
+import logging
 from dataclasses import dataclass
 from requests import HTTPError
 
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
-from django.shortcuts import get_object_or_404
 
 from yookassa import Payment  # type: ignore[import-untyped]
 
 from core.services import BaseService
 from purchases.models import Purchase
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -18,19 +20,18 @@ class ConfirmationService(BaseService):
 
     def act(self) -> HttpResponseNotFound | HttpResponse:
         """Обрабатывает данные платежа, если 'succeeded' присваивает пользователю игру."""
-        data: dict = json.loads(self.request.body.decode())
-        if payment := data.get('object'):
-            try:
-                Payment.find_one(payment_id := payment.get('id'))
-            except HTTPError:
-                return HttpResponseNotFound()
-            purchase: Purchase = get_object_or_404(
-                Purchase, idempotence_key=payment.get('metadata').get('idempotence_key')
-            )
-            purchase.payment_id, purchase.status = payment_id, payment.get('status')
-            if purchase.status == 'succeeded':
-                purchase.income_without_tax = payment.get('income_amount').get('value')
-                purchase.user.games.add(purchase.game)
-            purchase.save()
-            return HttpResponse()
+        try:
+            data: dict = json.loads(self.request.body.decode())
+            if self.request.user.is_anonymous and (payment := data.get('object')):
+                Payment.find_one(payment_id := payment['id'])
+                purchase: Purchase = Purchase.objects.get(idempotence_key=payment['metadata']['idempotence_key'])
+                purchase.payment_id, purchase.status = payment_id, payment['status']
+                if purchase.status == 'succeeded':
+                    purchase.income_without_tax = payment['income_amount']['value']
+                    purchase.user.games.add(purchase.game)
+                purchase.save()
+                return HttpResponse()
+        except (json.JSONDecodeError, HTTPError, Purchase.DoesNotExist, KeyError) as e:
+            logger.error(msg=e, exc_info=True)
+            return HttpResponseNotFound()
         return HttpResponseNotFound()

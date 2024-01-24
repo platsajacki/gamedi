@@ -3,7 +3,7 @@ from typing import Any
 from uuid import uuid4
 
 from django.conf import settings
-from django.http import Http404, HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
@@ -69,11 +69,11 @@ class CreatePurchaseService(BaseService):
             idempotency_key=idempotence_key,
         )
 
-    def act(self) -> HttpResponseRedirect:
+    def act(self) -> HttpResponseRedirect | HttpResponseNotFound:
         """Создаем покупку и перенаправляем на оплату."""
         user, game, uuid = self.request.user, self.get_game(), str(uuid4())
         if user.is_anonymous or user.is_authenticated and game in user.games.all():
-            raise Http404
+            return HttpResponseNotFound()
         purchase: Purchase = Purchase.objects.create(
             idempotence_key=uuid, user=user, game=game, price=game.final_price  # type: ignore[misc]
         )

@@ -1,4 +1,5 @@
 import pytest
+from pytest_lazyfixture import lazy_fixture as lf
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -74,3 +75,45 @@ def formset_data() -> dict:
         'form-1-role': 'Файл для пользователя_2',
         'form-1-email': 'email2@example.com',
     }
+
+
+@pytest.fixture
+def uuid_str() -> str:
+    return '22e12f66-000f-5000-8000-18db351245c7'
+
+
+@pytest.fixture
+def yookassa_valide_data_succeeded(uuid_str) -> dict:
+    """Фикстура, возвращающая данные для успешного платежа в Yookassa."""
+    return {
+        'object': {
+            'id': uuid_str,
+            'status': 'succeeded',
+            'metadata': {
+                'idempotence_key': uuid_str
+            },
+            'income_amount': {
+                'value': '100'
+            },
+        }
+    }
+
+
+@pytest.fixture
+def yookassa_valide_data_cancelled(uuid_str) -> dict:
+    """Фикстура, возвращающая данные для отмененного платежа в Yookassa."""
+    return {
+        'object': {
+            'id': uuid_str,
+            'status': 'canceled',
+            'metadata': {
+                'idempotence_key': uuid_str
+            },
+        }
+    }
+
+
+@pytest.fixture(params=[lf('yookassa_valide_data_cancelled'), lf('yookassa_valide_data_succeeded')])
+def yookassa_valide_data(request: pytest.FixtureRequest) -> dict:
+    """Фикстура, параметризованная для обеспечения разных данных платежа в Yookassa."""
+    return request.param
