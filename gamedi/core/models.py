@@ -5,9 +5,7 @@ from games.validators import validate_order_number
 
 
 class NameString(models.Model):
-    """
-    Абстарктная модель со строковым предсталением поля 'name'.
-    """
+    """Абстарктная модель со строковым предсталением поля 'name'."""
     class Meta:
         abstract = True
 
