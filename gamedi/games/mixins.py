@@ -6,7 +6,7 @@ from django.http.response import HttpResponseBase
 
 class UserGameDispatch:
     """Миксин для проверки доступа к игре в профиле для пользователей."""
-    def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         """Текущий пользователь доступ к игре в профиле? Если нет, возвращает Forbidden."""
         if request.user.is_anonymous or (
             request.user.username != kwargs['username']

@@ -12,7 +12,7 @@ class UserSlug:
 
 class UserDispatch:
     """Миксин для проверки доступа к представлениям для пользователей."""
-    def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         """Текущий пользователь доступ к представлению? Если нет, возвращает Forbidden."""
         if request.user.is_anonymous or request.user.is_authenticated and request.user.username != kwargs['username']:
             return HttpResponseForbidden()

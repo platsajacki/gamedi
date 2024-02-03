@@ -26,11 +26,11 @@ class GameProfileDetailView(UserGameDispatch, generic.DetailView):
     template_name = 'games/game_profile.html'
     queryset = Game.published.all()
 
-    def get_context_data(self, **kwargs: dict[str, Any]) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """Получает контекст для отображения игры в профиле пользователя."""
         return GameProfileDetailContextService(context=super().get_context_data(**kwargs))()
 
-    def post(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponse:
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         """Обрабатывает POST запрос."""
         self.object: Game = self.get_object()
         return GameProfileDetailPostService(
@@ -43,6 +43,6 @@ class GameProfileDetailView(UserGameDispatch, generic.DetailView):
 
 class DownloadingGameFilesTemplateView(UserGameDispatch, generic.View):
     """Класс представления для скачивания файлов игры в виде zip-архива."""
-    def get(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> FileResponse:
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> FileResponse:
         """Обрабатывает GET запрос и отдает zip-архив с файлами игры пользователю."""
         return DownloadingGameFilesService(kwargs=kwargs)()

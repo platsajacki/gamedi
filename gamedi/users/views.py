@@ -17,7 +17,7 @@ class UserCreateView(generic.CreateView):
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('login')
 
-    def dispatch(self, request: HttpRequest, *args: tuple[Any], **kwargs: dict[str, Any]) -> HttpResponseBase:
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         """Если пользователь уже прошел аутентификацию, он перенаправляется на домашнюю страницу."""
         if request.user.is_authenticated:
             return redirect('games:home')

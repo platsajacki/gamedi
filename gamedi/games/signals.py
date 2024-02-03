@@ -14,7 +14,7 @@ from games.models import AdminGameFile, Game, UserGameFile
 def delete_gamefile(
     sender: Game | AdminGameFile | UserGameFile,
     instance: Game | AdminGameFile | UserGameFile,
-    **kwargs: dict[str, Any]
+    **kwargs: Any
 ) -> None:
     """Удаляет файл, связанный с объектом, если он существует."""
     for field_name in sender.get_files_fields():
@@ -29,7 +29,7 @@ def delete_gamefile(
 def update_gamefile(
     sender: Game | AdminGameFile | UserGameFile,
     instance: Game | AdminGameFile | UserGameFile,
-    **kwargs: dict[str, Any]
+    **kwargs: Any
 ) -> None:
     """Если обновляется файл, связанный с объектом, удаляет старый файл."""
     for field_name in sender.get_files_fields():
@@ -46,7 +46,7 @@ def update_gamefile(
 def update_orders_numbers(
     sender: Game | AdminGameFile | UserGameFile,
     instance: Game | AdminGameFile | UserGameFile,
-    **kwargs: dict[str, Any]
+    **kwargs: Any
 ) -> None:
     """Меняет порядковые номера элементов при создании или изменении элемента."""
     queryset = sender.objects.all() if sender == Game else sender.objects.filter(game=instance.game)  # type: ignore
@@ -112,7 +112,7 @@ def update_orders_numbers(
 def delete_orders_numbers(
     sender: Game | AdminGameFile | UserGameFile,
     instance: Game | AdminGameFile | UserGameFile,
-    **kwargs: dict[str, Any]
+    **kwargs: Any
 ) -> None:
     """Меняет порядковые номера элементов при удалении элемента."""
     queryset = sender.objects.all() if sender == Game else sender.objects.filter(game=instance.game)  # type: ignore
