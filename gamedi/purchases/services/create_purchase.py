@@ -74,7 +74,7 @@ class CreatePurchaseService(BaseService):
         user, game, uuid = self.request.user, self.get_game(), str(uuid4())
         if user.is_anonymous or user.is_authenticated and game in user.games.all():
             return HttpResponseNotFound()
-        purchase: Purchase = Purchase.objects.create(
+        purchase = Purchase.objects.create(
             idempotence_key=uuid, user=user, game=game, price=game.final_price  # type: ignore[misc]
         )
         self.set_configuration()

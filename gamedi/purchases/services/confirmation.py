@@ -3,6 +3,7 @@ import logging
 from dataclasses import dataclass
 from requests import HTTPError
 
+from django.db import transaction
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 
 from yookassa import Payment  # type: ignore[import-untyped]
@@ -18,13 +19,14 @@ class ConfirmationService(BaseService):
     """Сервис подтверждения платежей."""
     request: HttpRequest
 
+    @transaction.atomic
     def act(self) -> HttpResponseNotFound | HttpResponse:
         """Обрабатывает данные платежа, если 'succeeded' присваивает пользователю игру."""
         try:
             data: dict = json.loads(self.request.body.decode())
             if self.request.user.is_anonymous and (payment := data.get('object')):
                 Payment.find_one(payment_id := payment['id'])
-                purchase: Purchase = Purchase.objects.get(idempotence_key=payment['metadata']['idempotence_key'])
+                purchase = Purchase.objects.get(idempotence_key=payment['metadata']['idempotence_key'])
                 purchase.payment_id, purchase.status = payment_id, payment['status']
                 if purchase.status == 'succeeded':
                     purchase.income_without_tax = payment['income_amount']['value']

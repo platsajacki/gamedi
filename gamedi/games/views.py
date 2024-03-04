@@ -32,7 +32,7 @@ class GameProfileDetailView(UserGameDispatch, generic.DetailView):
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         """Обрабатывает POST запрос."""
-        self.object: Game = self.get_object()
+        self.object = self.get_object()
         return GameProfileDetailPostService(
             request=request,
             context=super().get_context_data(),

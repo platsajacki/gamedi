@@ -15,8 +15,8 @@ class RoleMessageFormSet(RoleMessageFormSetDefault):  # type: ignore
     """FormSet для отправки файлов игры с дополнительной проверкой электронной почты."""
     def valide_emails(self) -> None:
         """Проверяет, что все поля электронной почты заполнены, и нет дубликатов адресов электронной почты."""
-        email_set: set = set()
-        cnt_empty_emails: int = 0
+        email_set = set()
+        cnt_empty_emails = 0
         for i in range(INITIAL_FORMS := int(self.data.get('form-INITIAL_FORMS', 0))):
             email: str = self.data.get(f'form-{i}-email')
             if not email:
